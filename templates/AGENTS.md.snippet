@@ -1,0 +1,19 @@
+<!--
+Lithos AGENTS.md snippet.
+Paste into your repository's AGENTS.md and replace every [bracketed] value.
+This is the agent-facing contract; your local workflow file is the full spec.
+Lithos: https://github.com/jovijovi/lithos
+-->
+
+## AI collaboration (Lithos)
+
+This project follows [Lithos](https://github.com/jovijovi/lithos). Read `[path/to/local-workflow-file]` for the full rules. The essentials:
+
+- **You propose; the owner approves.** Never self-approve, and never assign approval authority to an agent.
+- **Respect the four approval gates.** Preparation is the default. Merging needs implementation approval. Destructive or external actions ([force-push, history rewrite, publishing, deleting data, external calls]) need explicit, per-action owner approval. This project [does NOT / does] operate at the live/runtime layer.
+- **Stay isolated.** One intent per branch off `[main]`, named `[type/short-description]`. Do not commit to `[main]` directly.
+- **Verify with evidence, not assertions.** Behavioral changes need a re-runnable test or recorded command + output; report failures and skipped steps faithfully. Do not claim "done" without observing the verifying result.
+- **Keep scope tight.** Do only the approved work; return to the owner before widening scope.
+- **Be precise and neutral.** Match the project's voice; do not embellish.
+
+When unsure which gate an action falls under, treat it as the higher gate and ask.
