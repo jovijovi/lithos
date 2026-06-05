@@ -10,6 +10,7 @@ Entry format:
 ## Documentation governance
 
 - `docs/lessons/2026-06-05-docs-index-boundary.md` — Keep generated `docs/INDEX.md` scoped to docs-directory files and leave root entry points outside the generated corpus.
+- `docs/practices/2026-06-05-governed-project-knowledge-spine.md` — Capture dev logs, lessons, practices, docs-only indexes, drift reports, and bilingual README sync in a mature governed project.
 
 ## Testing and verification
 

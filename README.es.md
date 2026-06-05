@@ -30,10 +30,10 @@ Lithos se lee en tres planos:
 - **Semántica de aprobación** — umbrales distintos para la preparación/comprobación previa, la implementación, los efectos destructivos o externos, y la ejecución en vivo/en tiempo de ejecución. Véase [`docs/approval-semantics.md`](docs/approval-semantics.md).
 - **Disciplina de árboles de trabajo y ramas** — el aislamiento del trabajo en curso para que los cambios humanos y de los agentes sigan siendo revisables. Véase [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Normas de verificación** — la evidencia por encima del acuerdo: pruebas, CI, revisiones, artefactos, reproducibilidad. Véase [`docs/verification-standards.md`](docs/verification-standards.md).
+- **Plantillas** — archivos de flujo local listos para copiar en [`templates/`](templates/), mínimo y gobernado.
 - **Estructura de proyecto gobernado** — una cadena de autoridad documental más completa para repositorios maduros: `GOAL.md`, PRD, diseño, hoja de ruta/estado, seguimiento de funciones, planes de fase y `docs/AI_FLOW.md`. Véase [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Columna vertebral de conocimiento** — registros de desarrollo, lecciones, prácticas, índices generados solo para `docs/` e informes de deriva para repositorios gobernados: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` y `tools/`.
 - **Gobernanza de README bilingües** — el README fuente y los README localizados se mantienen semánticamente alineados cuando cambian las afirmaciones visibles.
-- **Plantillas** — archivos de flujo local listos para copiar en [`templates/`](templates/), mínimo y gobernado.
 - **Habilidades** — procedimientos operativos reutilizables en [`skills/`](skills/) para crear, auditar y adaptar un flujo de IA local.
 - **Ejemplos** — adopciones trabajadas en [`examples/`](examples/), desde un único colaborador hasta un proyecto gobernado.
 
