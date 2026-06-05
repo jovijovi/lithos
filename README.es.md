@@ -28,8 +28,10 @@ Lithos se lee en tres planos:
 
 - **Roles** — un reparto genérico (propietario, controlador/operador, arquitecto, agente de implementación, revisor, verificador) con límites de autoridad claros. Véase [`docs/roles.md`](docs/roles.md).
 - **Semántica de aprobación** — umbrales distintos para la preparación/comprobación previa, la implementación, los efectos destructivos o externos, y la ejecución en vivo/en tiempo de ejecución. Véase [`docs/approval-semantics.md`](docs/approval-semantics.md).
+- **Política de entorno y aislamiento** — dónde puede ejecutarse una ejecución y qué puede tocar (sistema de archivos, red, credenciales, efectos secundarios), separada de la aprobación. Véase [`docs/environment-and-sandbox-policy.md`](docs/environment-and-sandbox-policy.md).
 - **Disciplina de árboles de trabajo y ramas** — el aislamiento del trabajo en curso para que los cambios humanos y de los agentes sigan siendo revisables. Véase [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Normas de verificación** — la evidencia por encima del acuerdo: pruebas, CI, revisiones, artefactos, reproducibilidad. Véase [`docs/verification-standards.md`](docs/verification-standards.md).
+- **Manifiesto de ejecución de agente** — un registro de auditoría por ejecución de qué se autorizó, qué se ejecutó realmente, y las evidencias y el límite implicados; un registro, no una autorización. Véase [`docs/agent-run-manifest.md`](docs/agent-run-manifest.md).
 - **Plantillas** — archivos de flujo local listos para copiar en [`templates/`](templates/), para adopción de solo flujo de trabajo y plenamente gobernada.
 - **Estructura de proyecto gobernado** — una cadena de autoridad documental más completa para repositorios maduros: `GOAL.md`, PRD, diseño, hoja de ruta/estado, seguimiento de funciones, planes de fase y `docs/AI_FLOW.md`. Véase [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Columna vertebral de conocimiento** — registros de desarrollo, lecciones, prácticas, índices generados solo para `docs/` e informes de deriva para repositorios gobernados: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` y `tools/`.
@@ -66,9 +68,11 @@ Un recorrido completo se encuentra en [`examples/governed-project/`](examples/go
 │   ├── core-concepts.md
 │   ├── roles.md
 │   ├── approval-semantics.md
+│   ├── environment-and-sandbox-policy.md
 │   ├── local-adoption.md
 │   ├── governed-project-structure.md
 │   ├── verification-standards.md
+│   ├── agent-run-manifest.md
 │   └── versioning-and-governance.md
 ├── skills/                    Procedimientos operativos reutilizables
 │   ├── create-local-ai-flow/

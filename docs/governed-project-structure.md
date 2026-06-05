@@ -33,6 +33,10 @@ Each link has one job:
 | `docs/AI_FLOW.md` | Local human-AI development workflow and gate semantics. | Runtime authorization beyond what the project separately approves. |
 | `AGENTS.md` | Short agent-facing contract and preflight order. | Full product truth; it points to the authority chain. |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Per-unit review checklist and evidence capture. | Long-form design or roadmap content. |
+| `docs/environment-policy.md` (or a section of `docs/AI_FLOW.md`) | Declared environment/sandbox boundaries: filesystem roots, network egress, credential scope, and external side effects a run may touch. | Product authority, gate approval, or any live/runtime authorization. |
+| Agent run manifests / audit log (retained with run evidence, e.g. under `docs/dev_log/`) | Per-run record of what was authorized, what actually ran (local/offline vs external/live), and the boundary that held. | Product authority, granting approval, or licensing live/runtime execution. |
+
+The environment policy and run manifests are boundary and evidence records: one describes limits, the other documents runs. Neither carries product authority, clears a [gate](approval-semantics.md), or authorizes live/runtime execution. See [environment and sandbox policy](environment-and-sandbox-policy.md) and [agent run manifest](agent-run-manifest.md).
 
 ## Recommended directory map
 
@@ -47,6 +51,7 @@ Each link has one job:
 ├── .github/workflows/verify.yml
 ├── docs/
 │   ├── AI_FLOW.md
+│   ├── environment-policy.md     # declared run boundaries (optional; may live inside AI_FLOW.md)
 │   ├── INDEX.md                 # generated docs-directory index
 │   ├── product/prd.md
 │   ├── design/architecture.md

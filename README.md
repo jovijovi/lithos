@@ -28,8 +28,10 @@ Read Lithos at three layers:
 
 - **Roles** — a generic cast (owner, controller/operator, architect, implementation agent, reviewer, verifier) with clear authority boundaries. See [`docs/roles.md`](docs/roles.md).
 - **Approval semantics** — distinct gates for preflight/preparation, implementation, destructive or external side effects, and live/runtime execution. See [`docs/approval-semantics.md`](docs/approval-semantics.md).
+- **Environment & sandbox policy** — where a run may execute and what it may touch (filesystem, network, credentials, side effects), kept distinct from approval. See [`docs/environment-and-sandbox-policy.md`](docs/environment-and-sandbox-policy.md).
 - **Worktree & branch discipline** — isolation of in-progress work so human and agent changes stay reviewable. See [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Verification standards** — evidence over agreement: tests, CI, reviews, artifacts, reproducibility. See [`docs/verification-standards.md`](docs/verification-standards.md).
+- **Agent run manifest** — a per-run audit record of what was authorized, what actually ran, and the evidence and boundary involved; a record, not an authorization. See [`docs/agent-run-manifest.md`](docs/agent-run-manifest.md).
 - **Templates** — ready-to-copy local workflow files in [`templates/`](templates/), for workflow-only and full governed adoption.
 - **Governed project structure** — a fuller document authority chain for mature repos: `GOAL.md`, PRD, design, roadmap/status, feature tracker, phase plans, and `docs/AI_FLOW.md`. See [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Knowledge spine** — development logs, lessons, practices, generated docs-only indexes, and drift reports for governed repos: `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, and `tools/`.
@@ -66,9 +68,11 @@ A worked walkthrough lives in [`examples/governed-project/`](examples/governed-p
 │   ├── core-concepts.md
 │   ├── roles.md
 │   ├── approval-semantics.md
+│   ├── environment-and-sandbox-policy.md
 │   ├── local-adoption.md
 │   ├── governed-project-structure.md
 │   ├── verification-standards.md
+│   ├── agent-run-manifest.md
 │   └── versioning-and-governance.md
 ├── skills/                    Reusable operational procedures
 │   ├── create-local-ai-flow/

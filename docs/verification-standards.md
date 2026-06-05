@@ -40,6 +40,10 @@ Evidence that cannot be reproduced is testimony, not proof. Prefer evidence that
 
 The [verifier](roles.md) owns the production and reporting of this evidence. The verifier **should** be independent of the implementer where project size allows, and **must** report outcomes without optimistic rounding.
 
+## Recording evidence in a run manifest
+
+Where a project keeps per-run records, the [agent run manifest](agent-run-manifest.md) is where this evidence is gathered for a single run, alongside the boundary that held and the approval that was referenced. The manifest keeps **verification evidence** — proof the work is sound — distinct from the **approval reference** — the record that the work was allowed; neither substitutes for the other. The same honesty obligations apply: an explicit "unverified" entry in the manifest is worth more than an implied pass.
+
 ## Relationship to approval
 
 Verification evidence is a precondition for [implementation approval](approval-semantics.md), not a substitute for it. Evidence shows the work is sound; the owner's approval decides that it ships. Neither replaces the other.

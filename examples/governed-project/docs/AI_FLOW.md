@@ -71,6 +71,16 @@ Approval authority is never held by an implementation agent.
 
 Clearing one gate never clears a higher gate.
 
+## Environment and sandbox boundaries
+
+These state where a run may execute and what it may touch. They describe limits; they do not grant capability, and they never authorize live settlement or autonomous operation.
+
+- **Isolation:** one git worktree per task keeps version-controlled changes separate and revertible; Granite adds no OS/process sandbox beyond that worktree isolation. A worktree does not sandbox a process; a sandbox does not version changes.
+- **Filesystem roots:** writes stay within the task's working tree; reads outside the project — home directory, system configuration, unrelated repositories — are out of scope.
+- **Network:** as a local library example, Granite runs with no network egress or ingress, and makes no payment-network or external-service calls.
+- **Credentials:** Granite needs no credentials or secrets to build or test. Use `[REDACTED]` placeholders for any sensitive example value, and never write secrets into the working tree, logs, or a run manifest.
+- **Escalation:** on meeting a boundary — an unexpected credential prompt, a write outside the working tree, or any action with an external or live effect — stop and request the higher gate instead of working around it.
+
 ## Per-task lifecycle
 
 1. **Preflight** — read the document hierarchy and state whether the requested work matches current roadmap/status.
@@ -107,9 +117,20 @@ Secret/static safety gates:
 - Run static dangerous-pattern scans for new subprocess, network, config-write, or external-delivery surfaces when relevant.
 - Use `[REDACTED]` placeholders for sensitive examples.
 
+## Run manifest and audit trail
+
+When a collaboration unit is executed by an agent and needs to be auditable, retain an agent run manifest for the run, keeping these distinct:
+
+- the approval reference (which gate, who granted it, the scope) versus the verification evidence;
+- the claimed scope versus the actual commands and artifacts, each marked local/offline or external/live/runtime;
+- execution status versus the maintainer's business verdict;
+- what was redacted, where the manifest is retained, and what was left unverified or skipped.
+
+A manifest records a run; it does not authorize one and never licenses live settlement or autonomous operation. Retain manifests alongside dev-log and verification evidence under `docs/dev_log/`.
+
 ## PR requirements
 
-Every non-trivial PR should include summary, source-of-truth docs touched, feature tracker/current-status impact, test plan with command results, review evidence, secret-safety statement, and boundary statement for explicit non-approvals.
+Every non-trivial PR should include summary, source-of-truth docs touched, feature tracker/current-status impact, test plan with command results, review evidence, secret-safety statement, an environment/sandbox boundary statement (with an agent run manifest or audit entry when the unit was agent-executed and needs auditability), and a boundary statement for explicit non-approvals.
 
 Target `main` unless the roadmap introduces another integration trunk.
 

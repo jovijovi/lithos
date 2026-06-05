@@ -12,7 +12,9 @@ This project follows [Lithos](https://github.com/jovijovi/lithos). Read `[path/t
 - **You propose; the owner approves.** Never self-approve, and never assign approval authority to an agent.
 - **Respect the four approval gates.** Preparation is the default. Merging needs implementation approval. Destructive or external actions ([force-push, history rewrite, publishing, deleting data, external calls]) need explicit, per-action owner approval. This project [does NOT / does] operate at the live/runtime layer.
 - **Stay isolated.** One intent per branch off `[main]`, named `[type/short-description]`. Do not commit to `[main]` directly.
+- **Respect the declared environment.** Stay within the project's environment/sandbox boundaries — filesystem roots, network egress, and credential scope. Do not reach the network, read secrets, or write outside the declared roots without explicit higher-gate approval.
 - **Verify with evidence, not assertions.** Behavioral changes need a re-runnable test or recorded command + output; report failures and skipped steps faithfully. Do not claim "done" without observing the verifying result.
+- **Record run evidence when policy requires it.** Capture an agent run manifest for the run — what was authorized, what actually ran (local/offline vs external/live), and the verifying evidence; secrets stay redacted, never written into the manifest.
 - **Keep scope tight.** Do only the approved work; return to the owner before widening scope.
 - **Be precise and neutral.** Match the project's voice; do not embellish.
 

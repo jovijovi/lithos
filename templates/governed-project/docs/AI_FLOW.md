@@ -73,6 +73,18 @@ Approval authority is never held by an implementation agent.
 
 Clearing one gate never clears a higher gate.
 
+## Environment and sandbox boundaries
+
+These state *where* a run may execute and *what it may touch*. They describe limits; they do not grant capability, and they never authorize live or autonomous execution.
+
+- **Isolation:** [git worktree isolation per task; OS/process sandbox, or `none beyond worktree isolation`]. A worktree does not sandbox a process; a sandbox does not version changes.
+- **Filesystem roots:** writes confined to [the task's working tree and declared scratch only]; reads outside the project ([home directory, system configuration, unrelated repositories]) are [denied or explicitly called out].
+- **Network:** egress is [`none` by default for preparation work, or the named destinations/registries genuinely required]; ingress is [`none`].
+- **Credentials:** [`none`, or the least-privilege, narrowly scoped tokens a task needs, for only as long as it runs]. Secrets are never written into the working tree, logs, or a run manifest; use `[REDACTED]` placeholders.
+- **Escalation:** on meeting a boundary — an unexpected credential prompt, an attempted write outside the declared roots, or any action with an external or live effect — stop and request the higher gate instead of working around it.
+
+Keep these decisions here or in a separate change-controlled environment policy.
+
 ## Per-task lifecycle
 
 1. **Preflight** — read the document hierarchy and state whether the requested work matches current roadmap/status.
@@ -118,6 +130,17 @@ Secret/static safety gates:
 - Run static dangerous-pattern scans for new subprocess, network, config-write, or external-delivery surfaces when relevant.
 - Use `[REDACTED]` placeholders for sensitive examples.
 
+## Run manifest and audit trail
+
+When a collaboration unit is executed by an agent and needs to be auditable, retain an agent run manifest for the run. It records, kept distinct:
+
+- the approval reference (which gate, who granted it, the scope) versus the verification evidence;
+- the claimed scope versus the actual commands and artifacts, each action marked local/offline or external/live/runtime;
+- execution status versus the owner's business verdict;
+- what was redacted, where the manifest is retained, and what was left unverified or skipped.
+
+A manifest records a run; it does not authorize one and never licenses live/runtime execution. Retain manifests alongside dev-log and verification evidence.
+
 ## PR requirements
 
 Every non-trivial PR should include:
@@ -128,6 +151,7 @@ Every non-trivial PR should include:
 - test plan with commands and results;
 - review evidence;
 - secret-safety statement;
+- environment/sandbox boundary statement, and an agent run manifest or audit entry when the unit was agent-executed and needs auditability;
 - boundary statement for explicit non-approvals.
 
 Target `main` unless a roadmap explicitly introduces another integration trunk.

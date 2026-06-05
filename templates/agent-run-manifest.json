@@ -1,0 +1,90 @@
+{
+  "_comment": "Lithos agent run manifest template. Copy per run and replace every [bracketed] value. A manifest records a run; it does not authorize one. Field reference and allowed values: docs/agent-run-manifest.md.",
+  "manifest_version": "1.0",
+  "lithos_version": "1.x",
+  "unit": {
+    "id": "[collaboration-unit-id]",
+    "title": "[short description of the work]",
+    "branch": "[type/short-description]",
+    "repository": "[owner/repo]"
+  },
+  "roles": {
+    "owner": "[owner]",
+    "controller": "[controller-or-operator]",
+    "implementation_agent": "[agent-identifier]",
+    "reviewer": "[reviewer]",
+    "verifier": "[verifier]"
+  },
+  "approval_reference": {
+    "gate": "preparation",
+    "allowed_gates": ["preparation", "implementation", "destructive-external", "live-runtime"],
+    "granted_by": "[owner]",
+    "scope": "[exact scope this approval covers]",
+    "record": "[link or id of the approval record]",
+    "contemporaneous": true
+  },
+  "claimed_scope": {
+    "intent": "[what the unit was asked to do]",
+    "in_scope": ["[included item]"],
+    "out_of_scope": ["[explicit non-goal or non-approval]"]
+  },
+  "execution": {
+    "status": "completed",
+    "allowed_statuses": ["completed", "partial", "failed", "aborted"],
+    "started_at": "[ISO-8601 timestamp]",
+    "ended_at": "[ISO-8601 timestamp]",
+    "commands": [
+      {
+        "action": "[command or action that was run]",
+        "boundary": "local-offline",
+        "allowed_boundaries": ["local-offline", "external-live", "runtime"],
+        "result": "[exit status or outcome]"
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "[path/to/artifact]",
+        "kind": "diff",
+        "allowed_kinds": ["diff", "test-log", "ci-link", "screenshot", "report", "generated-file"],
+        "description": "[what it shows]"
+      }
+    ]
+  },
+  "verification_evidence": {
+    "reproducible": [
+      {
+        "type": "test",
+        "allowed_types": ["test", "ci", "recorded-steps"],
+        "reference": "[command, CI link, or recorded steps]",
+        "result": "pass",
+        "allowed_results": ["pass", "fail"]
+      }
+    ],
+    "independent_review": {
+      "performed": false,
+      "reviewer": "[reviewer]",
+      "outcome": "[pending | pass | block | concerns-resolved]"
+    },
+    "unverified_or_skipped": ["[claim not backed by reproducible evidence, and why]"]
+  },
+  "verdict": {
+    "execution_status": "completed",
+    "business_verdict": "pending",
+    "allowed_verdicts": ["pending", "accepted", "rejected"],
+    "decided_by": "[owner]"
+  },
+  "boundary": {
+    "ran_local_offline_only": true,
+    "external_or_live_actions": [],
+    "environment_policy": "[path/to/environment-policy.md]"
+  },
+  "redaction": {
+    "secrets_redacted": true,
+    "method": "[REDACTED] placeholders; secret-shaped scan before storage",
+    "notes": "[what was redacted, if anything]"
+  },
+  "retention": {
+    "location": "[where this manifest is retained]",
+    "retain_until": "[retention horizon or policy reference]"
+  }
+}

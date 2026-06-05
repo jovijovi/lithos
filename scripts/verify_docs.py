@@ -6,6 +6,7 @@ Pure-stdlib checks used by local development and GitHub Actions.
 
 from __future__ import annotations
 
+import json
 import re
 import subprocess
 import sys
@@ -26,9 +27,11 @@ REQUIRED_FILES = [
     "docs/core-concepts.md",
     "docs/roles.md",
     "docs/approval-semantics.md",
+    "docs/environment-and-sandbox-policy.md",
     "docs/local-adoption.md",
     "docs/governed-project-structure.md",
     "docs/verification-standards.md",
+    "docs/agent-run-manifest.md",
     "docs/versioning-and-governance.md",
     "skills/create-local-ai-flow/SKILL.md",
     "skills/audit-local-ai-flow/SKILL.md",
@@ -59,6 +62,8 @@ REQUIRED_FILES = [
     "templates/governed-project/tools/docs_drift_signal.py",
     "templates/AGENTS.md.snippet",
     "templates/pr-checklist.md",
+    "templates/environment-policy.md",
+    "templates/agent-run-manifest.json",
     "examples/governed-project/README.md",
     "examples/governed-project/ai-collaborative-development-standards.md",
     "examples/governed-project/GOAL.md",
@@ -129,8 +134,14 @@ TEXT_SUFFIXES = {
     ".yml",
     ".yaml",
     ".py",
+    ".json",
     ".gitignore",
 }
+
+# JSON files that must parse as valid JSON.
+JSON_FILES = [
+    "templates/agent-run-manifest.json",
+]
 
 BINARY_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf"}
 
@@ -181,6 +192,8 @@ def check_readme_language_links(errors: list[str]) -> None:
 def check_readme_semantic_sync(errors: list[str]) -> None:
     shared_markers = [
         "docs/governed-project-structure.md",
+        "docs/environment-and-sandbox-policy.md",
+        "docs/agent-run-manifest.md",
         "templates/governed-project/",
         "docs/dev_log/",
         "docs/lessons/",
@@ -266,6 +279,17 @@ def check_forbidden_text(errors: list[str]) -> None:
                 fail(f"{rel}: possible secret/token pattern", errors)
 
 
+def check_json_files(errors: list[str]) -> None:
+    for rel in JSON_FILES:
+        path = ROOT / rel
+        if not path.exists():
+            continue
+        try:
+            json.loads(read_text(path))
+        except json.JSONDecodeError as exc:
+            fail(f"{rel}: invalid JSON: {exc}", errors)
+
+
 def check_license(errors: list[str]) -> None:
     license_path = ROOT / "LICENSE"
     if not license_path.exists():
@@ -286,6 +310,7 @@ def main() -> int:
     check_skill_frontmatter(errors)
     check_markdown_links(errors)
     check_forbidden_text(errors)
+    check_json_files(errors)
     check_license(errors)
 
     if errors:
