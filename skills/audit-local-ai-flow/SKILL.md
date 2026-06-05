@@ -28,12 +28,14 @@ Check each item; record present / partial / missing with a pointer to the releva
 4. **Verification** — "done" requires reproducible evidence, not agreement; honesty obligations are present (`docs/verification-standards.md`).
 5. **Discoverability** — the file is referenced from `README`/`AGENTS.md` and is a single source of truth.
 6. **No placeholders** — no unresolved bracketed decisions remain.
+7. **Governed document spine** — if the project claims formal governance, roadmap phases, release gates, runtime boundaries, or multi-agent development, verify the `GOAL.md -> PRD -> design -> roadmap/features + current-status -> docs/plans -> code` chain from `docs/governed-project-structure.md`, and confirm task-level plans do not live in `docs/roadmap/`.
 
 ## Drift checks (document vs. reality)
 
 - Do recent merged units actually carry the evidence the file requires?
 - Does observed branch/review practice match what the file states?
 - Are destructive/external actions in practice covered by the file's gate-3 rules?
+- Do PRs and plans update the feature tracker/current-status files when they change completion state or evidence?
 
 Flag any place the document describes a process the project does not follow — drift makes the file misleading, which is worse than silence.
 

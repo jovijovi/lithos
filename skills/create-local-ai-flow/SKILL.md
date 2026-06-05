@@ -21,13 +21,13 @@ Produce a conformant **local workflow file** for a repository adopting Lithos. O
 
 ## Steps
 
-1. **Pick the template.** Small/early-stage → `templates/minimal-ai-flow.md`. Formal review, multiple contributors, or compliance needs → `templates/governed-ai-flow.md`.
-2. **Choose the filename with the owner.** Any discoverable name is valid (e.g. `AI_FLOW.md`, `ai-collaborative-development-standards.md`). Place it where the project keeps such docs.
+1. **Pick the template.** Small/early-stage → `templates/minimal-ai-flow.md`. Formal review with only workflow governance → `templates/governed-ai-flow.md`. Mature projects with roadmap/status/design authority, multiple agents, staged phases, release gates, runtime boundaries, or compliance needs → copy the full `templates/governed-project/` spine and use `docs/governed-project-structure.md` as the authority map.
+2. **Choose the filename with the owner.** Any discoverable name is valid (e.g. `AI_FLOW.md`, `docs/AI_FLOW.md`, `ai-collaborative-development-standards.md`). Place it where the project keeps such docs. For governed-project adoption, prefer `docs/AI_FLOW.md` and keep `GOAL.md` as the stable source-of-truth index.
 3. **Assign roles.** Fill in who holds each role from `docs/roles.md`. Note explicitly any roles that are combined.
 4. **Operationalize the four gates.** For each gate in `docs/approval-semantics.md`, write how it is signaled here. State plainly whether the project operates at the live/runtime layer at all; if not, say so.
 5. **State discipline.** Branch naming, isolation expectations, and what the integration branch may contain.
 6. **Define "done."** The verification evidence each unit must carry, per `docs/verification-standards.md`.
-7. **Wire companions.** Add the `templates/AGENTS.md.snippet` contract to `AGENTS.md` and adopt `templates/pr-checklist.md`. Reference the local workflow file from `README` and `AGENTS.md`.
+7. **Wire companions.** Add the `templates/AGENTS.md.snippet` contract or `templates/governed-project/AGENTS.md` to `AGENTS.md` and adopt `templates/pr-checklist.md`. Reference the local workflow file from `README`, `GOAL.md` where present, and `AGENTS.md`.
 8. **Resolve every bracketed decision.** Leave no placeholder behind; an unfilled blank is a conformance gap.
 
 ## Done when

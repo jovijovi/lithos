@@ -1,0 +1,138 @@
+---
+title: "AI-assisted development flow"
+status: active
+---
+# AI-assisted development flow
+
+## Purpose
+
+This repository is developed with humans and AI agents working together. This document defines how to move from product documents to implementation while keeping work auditable, reversible, and aligned with the product goal.
+
+Documentation development and management come before code development: code implements the documents, not the other way around.
+
+## Document hierarchy
+
+The authority chain is:
+
+```text
+GOAL.md -> docs/product/prd.md -> docs/design/architecture.md + docs/design/technical-solution.md -> docs/roadmap/features.md + docs/roadmap/current-status.md -> approved phase implementation plan in docs/plans/ -> code
+```
+
+Concrete task or phase implementation plans live under `docs/plans/`; `docs/roadmap/` owns roadmap, status, and feature tracking, not task-level execution plans. See `docs/plans/README.md`.
+
+Required preflight for roadmap, phase-gate, implementation, PR, CI, review, merge, or next-phase-readiness work:
+
+1. `GOAL.md`
+2. `docs/product/prd.md`
+3. `docs/design/architecture.md`
+4. `docs/design/technical-solution.md`
+5. `docs/roadmap/features.md`
+6. `docs/roadmap/current-status.md`
+7. this file
+
+## Branch model
+
+Use trunk-based development with short-lived per-task branches.
+
+```text
+main                          # integration trunk
+feat/<topic>                  # feature branch
+fix/<topic>                   # bugfix branch
+docs/<topic>                  # documentation/governance branch
+chore/<topic>                 # maintenance branch
+```
+
+Rules:
+
+- `main` is the integration trunk and should stay releasable.
+- One task branch = one task = one PR.
+- Do not commit directly to `main` except explicitly approved trivial metadata changes.
+- Start from a clean `origin/main` worktree.
+
+## Roles
+
+| Role | Held by | Notes |
+|---|---|---|
+| Owner / approver | [human owner or group] | Sole approval authority; human only. |
+| Controller / operator | [person or orchestrating agent] | Sequences sessions; surfaces decisions, does not approve. |
+| Architect | [person or role] | Owns design and acceptance criteria. |
+| Implementation agent | [agents or contributors] | Implements within approved scope. |
+| Reviewer | [independent reviewer] | Reviews correctness, scope, and workflow conformance. |
+| Verifier | [independent verifier] | Produces and reports evidence. |
+
+Approval authority is never held by an implementation agent.
+
+## Approval gates
+
+1. **Preparation / preflight** — reading, planning, drafting, and isolated local changes may proceed under standing authorization. No shared, destructive, external, or live effect.
+2. **Implementation** — merging to `main`, landing a PR, or treating work as accepted requires owner approval for that specific change after verification evidence exists.
+3. **Destructive / external** — force-pushes, history rewrites, deleting branches or data, publishing packages or releases, sending communications, or mutating external services require explicit per-action owner approval.
+4. **Live / runtime execution** — this project [does not operate at this layer / operates only under the separate controls listed here]. Lithos adoption alone never authorizes live or autonomous execution.
+
+Clearing one gate never clears a higher gate.
+
+## Per-task lifecycle
+
+1. **Preflight** — read the document hierarchy and state whether the requested work matches current roadmap/status.
+2. **Scope** — confirm whether the task is documentation, design, implementation, review, cleanup, or release work.
+3. **Plan** — for non-trivial implementation, derive a phase implementation plan from PRD/design/roadmap. The plan must not redefine product goals.
+4. **Implement** — use narrow commits and tests for behavior changes.
+5. **Update authority docs** — update PRD/design/feature tracker/roadmap when product scope, design, completion state, or acceptance evidence changes.
+6. **Verify** — run local gates and safety scans.
+7. **Review** — reviewer findings must be resolved or explicitly accepted by the owner.
+8. **PR and merge** — push branch, open PR, wait for CI, merge only when green, then verify `main` from a clean checkout/worktree.
+
+## Implementation plan rule
+
+A phase implementation plan is an execution artifact created only after PRD/design/roadmap target is clear. It lives under `docs/plans/` and is named `docs/plans/YYYY-MM-DD-<task-slug>.md`. It must include:
+
+- context and exact target from PRD/design/roadmap;
+- checklist of implementation goals;
+- acceptance criteria;
+- files likely to change;
+- verification gates;
+- risks and open questions;
+- rollback strategy.
+
+A plan must not redefine product goals, expand product scope, or imply new live/runtime approvals.
+
+## Verification gates
+
+Run these before PR or merge unless the task clearly explains why a gate is irrelevant:
+
+```bash
+[project test command]
+[project syntax or build command]
+[project documentation verification command]
+git diff --check
+```
+
+Secret/static safety gates:
+
+- Run a secret-shaped scan over added or changed text before commit.
+- Run static dangerous-pattern scans for new subprocess, network, config-write, or external-delivery surfaces when relevant.
+- Use `[REDACTED]` placeholders for sensitive examples.
+
+## PR requirements
+
+Every non-trivial PR should include:
+
+- summary of changes;
+- source-of-truth docs touched;
+- feature tracker and roadmap status impact;
+- test plan with commands and results;
+- review evidence;
+- secret-safety statement;
+- boundary statement for explicit non-approvals.
+
+Target `main` unless a roadmap explicitly introduces another integration trunk.
+
+## Anti-patterns
+
+- Starting code work before PRD/design/roadmap alignment.
+- Treating historical plans, chat logs, or dev notes as authority.
+- Putting task-level implementation plans in `docs/roadmap/` instead of `docs/plans/`.
+- Letting engineering sequence shrink PRD or design scope.
+- Letting dry-run, preview, or local evidence imply live/default-on behavior.
+- Broad `git add -A` without inspecting the diff.
+- Committing runtime outputs, prompt material, raw stderr with secrets, `.env`, or token files.
