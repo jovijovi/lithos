@@ -24,6 +24,9 @@ Lithos: https://github.com/jovijovi/lithos
 ## Verification (evidence, not agreement)
 
 - [ ] Tests added/updated and passing for behavioral changes.
+- [ ] Static safety scan passed; no secret-shaped values, private machine-local paths, or unfinished-work placeholders were introduced.
+- [ ] Scenario regression fixtures were added/updated and run for behavior-bearing claims or examples.
+- [ ] Release-facing changes cite the exact revision, provenance evidence, and explicit owner approval before any publish action.
 - [ ] CI run linked and green (where applicable).
 - [ ] Reproduction steps or recorded command + output included for any behavior change.
 - [ ] Results reported faithfully — failures, skips, and unverified areas are called out.
@@ -35,6 +38,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] `AGENTS.md` updated if the agent contract changed.
 - [ ] Localized docs/READMEs updated to stay semantically aligned (if applicable).
 - [ ] `docs/INDEX.md` and `docs/lessons/_drift_report.md` regenerated or checked when docs/knowledge files changed.
+- [ ] Scenario-regression and release-governance docs updated when behavior or publishing claims changed.
 - [ ] Dev log / lessons / practices updated when the change produced reusable knowledge or phase evidence.
 
 ## Notes for the reviewer

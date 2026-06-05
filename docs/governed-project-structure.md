@@ -29,6 +29,8 @@ Each link has one job:
 | `docs/dev_log/` | Task evidence logs, decisions, review outcomes, verification summaries. | Product requirements or roadmap ownership. |
 | `docs/lessons/` | Reusable lessons learned from concrete work, with drift tracking when useful. | Raw task logs or temporary status. |
 | `docs/practices/` | Reusable practices future contributors should apply. | One-off status updates. |
+| `docs/evaluation/scenario-regression.md` | Scenario fixture policy for behavior-bearing claims and examples. | Product requirements or implementation approval. |
+| `docs/release/release-governance.md` | Release gate, provenance, and supply-chain evidence. | Publishing approval or secret material. |
 | `LESSONS.md` | Root entry point for lessons and practices. | Detailed evidence or generated reports. |
 | `docs/AI_FLOW.md` | Local human-AI development workflow and gate semantics. | Runtime authorization beyond what the project separately approves. |
 | `AGENTS.md` | Short agent-facing contract and preflight order. | Full product truth; it points to the authority chain. |
@@ -66,10 +68,13 @@ Agent pull-request activity follows the [autonomous PR policy](autonomous-pr-pol
 │   ├── dev_log/README.md
 │   ├── lessons/README.md
 │   ├── lessons/_drift_report.md # generated drift report
-│   └── practices/README.md
+│   ├── practices/README.md
+│   ├── evaluation/scenario-regression.md
+│   └── release/release-governance.md
 ├── tools/
 │   ├── build_docs_index.py
-│   └── docs_drift_signal.py
+│   ├── docs_drift_signal.py
+│   └── static_safety_scan.py
 ├── src/ or package code
 ├── tests/
 └── fixtures/ or examples/ when contract evidence matters
@@ -102,7 +107,7 @@ Then state:
 
 Use `docs/dev_log/` for task evidence and decision logs. Use `docs/lessons/` for reusable lessons and `docs/practices/` for reusable practices. Use root `LESSONS.md` as the discoverable entry point.
 
-Generate `docs/INDEX.md` from docs-directory frontmatter and keep it docs-only. Generate `docs/lessons/_drift_report.md` from lesson/practice `applies_to` paths, then commit both generated artifacts when they change.
+Generate `docs/INDEX.md` from docs-directory frontmatter and keep it docs-only. Generate `docs/lessons/_drift_report.md` from lesson/practice `applies_to` paths, then commit both generated artifacts when they change. Run `tools/static_safety_scan.py` with the same verification gate set so secret-shaped values, private machine-local paths, and unfinished-work placeholders cannot enter the evidence chain.
 
 The full lifecycle — born-state, use-driven validation, the immutability of frozen records, evidence retention, and the authority boundary that knowledge records but never governs — is defined in [knowledge governance](knowledge-governance.md).
 
@@ -150,6 +155,8 @@ Copy the governed starter set from [`templates/governed-project/`](../templates/
 - [`docs/dev_log/README.md`](../templates/governed-project/docs/dev_log/README.md)
 - [`docs/lessons/README.md`](../templates/governed-project/docs/lessons/README.md)
 - [`docs/practices/README.md`](../templates/governed-project/docs/practices/README.md)
-- [`tools/build_docs_index.py`](../templates/governed-project/tools/build_docs_index.py) and [`tools/docs_drift_signal.py`](../templates/governed-project/tools/docs_drift_signal.py)
+- [`docs/evaluation/scenario-regression.md`](../templates/governed-project/docs/evaluation/scenario-regression.md)
+- [`docs/release/release-governance.md`](../templates/governed-project/docs/release/release-governance.md)
+- [`tools/build_docs_index.py`](../templates/governed-project/tools/build_docs_index.py), [`tools/docs_drift_signal.py`](../templates/governed-project/tools/docs_drift_signal.py), and [`tools/static_safety_scan.py`](../templates/governed-project/tools/static_safety_scan.py)
 
 A local project may add stricter rules. It must not weaken Lithos's approval gates, human approval authority, isolation discipline, or evidence-before-completion rule.

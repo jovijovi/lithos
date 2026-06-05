@@ -35,6 +35,9 @@ It **should** also list the project's destructive/external actions explicitly, p
 - An agent run manifest for runs that need auditability — start from [`templates/agent-run-manifest.json`](../templates/agent-run-manifest.json).
 - An adoption manifest declaring the Lithos version and depth claimed, the role holders, how the gates operate, and the [autonomous PR policy](autonomous-pr-policy.md) in force — start from [`templates/lithos-adoption-manifest.json`](../templates/lithos-adoption-manifest.json) against [`schemas/lithos-adoption-manifest.schema.json`](../schemas/lithos-adoption-manifest.schema.json). It is a declaration, not an authorization; see [conformance and fixtures](conformance-and-fixtures.md). These artifacts stay vendor-neutral and portable — see [tooling interoperability](tooling-interoperability.md).
 - For governed projects, a root `LESSONS.md`, `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, generated `docs/INDEX.md`, and generated `docs/lessons/_drift_report.md` keep reusable knowledge out of chat history, governed as durable artifacts per [knowledge governance](knowledge-governance.md).
+- A static safety scanner, usually under `tools/static_safety_scan.py`, enforces the [static safety scan](static-safety-scan.md) gate with the other local checks.
+- Behavior-bearing governed projects should add scenario fixtures and a local scenario-regression note following [scenario regression governance](scenario-regression-governance.md).
+- Projects that publish packages, tags, or distributed artifacts should add a release-governance note following [release and supply-chain governance](release-and-supply-chain-governance.md).
 - If localized README files exist, keep them semantically aligned with `README.md` whenever visible project claims change.
 
 ## Choosing a starting template

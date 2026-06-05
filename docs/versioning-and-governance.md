@@ -10,7 +10,7 @@ Lithos uses semantic versioning adapted to a standard:
 - **Minor (x.`Y`.0)** — additive, backward-compatible change: new guidance, new templates, new skills, new examples, clarifications that do not alter existing requirements.
 - **Patch (x.y.`Z`)** — corrections that do not change meaning: typos, formatting, broken links, translation fixes.
 
-Each release **should** carry notes describing what changed and, for major releases, what adopters must do to stay conformant.
+Each release **should** carry notes describing what changed and, for major releases, what adopters must do to stay conformant. A published release also carries the provenance and gate evidence defined in [release and supply-chain governance](release-and-supply-chain-governance.md), including the exact source revision and the verification checks that passed.
 
 ## What is normative
 
@@ -25,6 +25,7 @@ A project may state the Lithos version it conforms to (e.g. "conforms to Lithos 
 - Substantive changes are proposed as pull requests and approved by the human owner, following [`AGENTS.md`](../AGENTS.md).
 - A change that adds, removes, or redefines a requirement **must** be identified as normative and flagged for a major release.
 - Localized READMEs and any affected documents **must** be updated in the same change so the standard stays internally consistent across languages.
+- A release-facing change **must** state whether the [static safety scan](static-safety-scan.md), [scenario regression](scenario-regression-governance.md), and generated drift checks are affected.
 - When in doubt whether a change is normative, treat it as normative.
 
 ## Translations

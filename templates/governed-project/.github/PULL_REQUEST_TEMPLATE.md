@@ -25,6 +25,9 @@ Lithos: https://github.com/jovijovi/lithos
 ## Verification (evidence, not agreement)
 
 - [ ] Tests added/updated and passing for behavioral changes.
+- [ ] `tools/static_safety_scan.py` passed; no secret-shaped values, private machine-local paths, or unfinished-work placeholders were introduced.
+- [ ] Scenario regression fixtures were added/updated and run for behavior-bearing claims or examples.
+- [ ] Release-facing changes cite exact revision, provenance evidence, and explicit owner approval before any publish action.
 - [ ] CI run linked and green (where applicable).
 - [ ] Reproduction steps or recorded command + output included for any behavior change.
 - [ ] Results reported faithfully — failures, skips, and unverified areas are called out.
@@ -37,6 +40,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] `docs/INDEX.md` and `docs/lessons/_drift_report.md` regenerated or checked when docs/knowledge files changed.
 - [ ] Dev log / lessons / practices updated when the change produced reusable knowledge or phase evidence.
 - [ ] Conformance claim (adoption manifest) and portable, vendor-neutral artifacts stay accurate; knowledge records inform but do not override the authority chain.
+- [ ] Scenario-regression and release-governance docs updated when behavior or publishing claims changed.
 
 ## Notes for the reviewer
 

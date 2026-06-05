@@ -46,6 +46,8 @@ Never commit secrets, API keys, tokens, cookies, raw environment values, private
 - Update `docs/lessons/`, `docs/practices/`, and root `LESSONS.md` when the work produces reusable knowledge.
 - Update `README.md` and `README.zh-CN.md` together when user-facing claims change.
 - Run `python tools/build_docs_index.py --check` and `python tools/docs_drift_signal.py --check` before claiming documentation governance is current.
+- Run `python tools/static_safety_scan.py` before claiming a change is safe to commit; it rejects secret-shaped tokens, private machine-local paths, and unfinished-work placeholders as a first-class gate.
+- Treat publishing as a destructive/external action under `docs/release/release-governance.md`: never publish, tag, or release on your own authority, and back behavior-bearing claims with the fixtures required by `docs/evaluation/scenario-regression.md`.
 - Treat knowledge records (`docs/dev_log/`, `docs/lessons/`, `docs/practices/`) as informative: they inform future work but never override the authority chain or clear an approval gate.
 - Keep collaboration artifacts vendor-neutral, plain-text, and portable across tools; never embed vendor or product names or secret values.
 - Declare the project's Lithos conformance — version, depth, role holders, gate operation, and the autonomous PR policy — in an adoption manifest; the manifest is a declaration, not an authorization.

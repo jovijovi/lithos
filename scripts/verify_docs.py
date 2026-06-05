@@ -37,6 +37,9 @@ REQUIRED_FILES = [
     "docs/conformance-and-fixtures.md",
     "docs/tooling-interoperability.md",
     "docs/autonomous-pr-policy.md",
+    "docs/static-safety-scan.md",
+    "docs/scenario-regression-governance.md",
+    "docs/release-and-supply-chain-governance.md",
     "skills/create-local-ai-flow/SKILL.md",
     "skills/audit-local-ai-flow/SKILL.md",
     "skills/adapt-ai-flow-for-governed-project/SKILL.md",
@@ -62,8 +65,11 @@ REQUIRED_FILES = [
     "templates/governed-project/docs/lessons/README.md",
     "templates/governed-project/docs/lessons/_drift_report.md",
     "templates/governed-project/docs/practices/README.md",
+    "templates/governed-project/docs/evaluation/scenario-regression.md",
+    "templates/governed-project/docs/release/release-governance.md",
     "templates/governed-project/tools/build_docs_index.py",
     "templates/governed-project/tools/docs_drift_signal.py",
+    "templates/governed-project/tools/static_safety_scan.py",
     "templates/AGENTS.md.snippet",
     "templates/pr-checklist.md",
     "templates/environment-policy.md",
@@ -97,10 +103,14 @@ REQUIRED_FILES = [
     "examples/governed-project/docs/lessons/_drift_report.md",
     "examples/governed-project/docs/practices/README.md",
     "examples/governed-project/docs/practices/2026-06-05-governed-project-knowledge-spine.md",
+    "examples/governed-project/docs/evaluation/scenario-regression.md",
+    "examples/governed-project/docs/release/release-governance.md",
     "examples/governed-project/tools/build_docs_index.py",
     "examples/governed-project/tools/docs_drift_signal.py",
+    "examples/governed-project/tools/static_safety_scan.py",
     "scripts/verify_docs.py",
     "scripts/verify_conformance_fixtures.py",
+    "scripts/verify_static_safety.py",
     ".github/workflows/verify.yml",
     ".gitignore",
 ]
@@ -219,6 +229,9 @@ def check_readme_semantic_sync(errors: list[str]) -> None:
         "docs/conformance-and-fixtures.md",
         "docs/tooling-interoperability.md",
         "docs/autonomous-pr-policy.md",
+        "docs/static-safety-scan.md",
+        "docs/scenario-regression-governance.md",
+        "docs/release-and-supply-chain-governance.md",
         "schemas/lithos-adoption-manifest.schema.json",
         "templates/lithos-adoption-manifest.json",
         "fixtures/conformance/",
@@ -252,10 +265,15 @@ def check_governed_project_generators(errors: list[str]) -> None:
         cwd = ROOT / rel
         run_subcheck(cwd, [sys.executable, "tools/build_docs_index.py", "--check"], errors)
         run_subcheck(cwd, [sys.executable, "tools/docs_drift_signal.py", "--check"], errors)
+        run_subcheck(cwd, [sys.executable, "tools/static_safety_scan.py"], errors)
 
 
 def check_conformance_fixtures(errors: list[str]) -> None:
     run_subcheck(ROOT, [sys.executable, "scripts/verify_conformance_fixtures.py"], errors)
+
+
+def check_static_safety(errors: list[str]) -> None:
+    run_subcheck(ROOT, [sys.executable, "scripts/verify_static_safety.py"], errors)
 
 
 def check_skill_frontmatter(errors: list[str]) -> None:
@@ -340,6 +358,7 @@ def main() -> int:
     check_readme_semantic_sync(errors)
     check_governed_project_generators(errors)
     check_conformance_fixtures(errors)
+    check_static_safety(errors)
     check_skill_frontmatter(errors)
     check_markdown_links(errors)
     check_forbidden_text(errors)

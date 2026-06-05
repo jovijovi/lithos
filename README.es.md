@@ -37,6 +37,9 @@ Lithos se lee en tres planos:
 - **Columna vertebral de conocimiento** — registros de desarrollo, lecciones, prácticas, índices generados solo para `docs/` e informes de deriva para repositorios gobernados: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` y `tools/`. Cómo vive ese conocimiento, expira por uso y permanece subordinado a la cadena de autoridad se define en [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
 - **Conformidad y manifiesto de adopción** — qué puede afirmar un proyecto, declarado en un manifiesto de adopción legible por máquina ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), rellenado a partir de [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), con [fixtures de conformidad](fixtures/conformance/) que muestran qué pasa y qué debe fallar. Véase [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
 - **Política de PR autónoma** — qué puede hacer un agente con las pull requests por su cuenta, y qué nunca debe auto-aprobar ni auto-fusionar. Véase [`docs/autonomous-pr-policy.md`](docs/autonomous-pr-policy.md).
+- **Escaneo estático de seguridad** — una puerta determinista que rechaza valores con forma de secreto, rutas locales privadas y marcadores de trabajo inacabado antes de la revisión o la publicación. Véase [`docs/static-safety-scan.md`](docs/static-safety-scan.md).
+- **Gobernanza de regresión por escenarios** — fixtures nombradas que fijan afirmaciones y ejemplos con comportamiento para capturar regresiones de forma mecánica. Véase [`docs/scenario-regression-governance.md`](docs/scenario-regression-governance.md).
+- **Gobernanza de lanzamiento y cadena de suministro** — aprobación del propietario, registros de procedencia y límites de publicación para artefactos distribuidos. Véase [`docs/release-and-supply-chain-governance.md`](docs/release-and-supply-chain-governance.md).
 - **Interoperabilidad de herramientas** — los artefactos que portan el estado de colaboración son neutrales respecto al proveedor y portables, de modo que un proyecto puede cambiar de herramientas sin perder su gobernanza. Véase [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Gobernanza de README bilingües** — el README fuente y los README localizados se mantienen semánticamente alineados cuando cambian las afirmaciones visibles.
 - **Habilidades** — procedimientos operativos reutilizables en [`skills/`](skills/) para crear, auditar y adaptar un flujo de IA local.
@@ -80,6 +83,9 @@ Un recorrido completo se encuentra en [`examples/governed-project/`](examples/go
 │   ├── conformance-and-fixtures.md
 │   ├── tooling-interoperability.md
 │   ├── autonomous-pr-policy.md
+│   ├── static-safety-scan.md
+│   ├── scenario-regression-governance.md
+│   ├── release-and-supply-chain-governance.md
 │   └── versioning-and-governance.md
 ├── schemas/                   Esquema de manifiesto de adopción legible por máquina
 ├── skills/                    Procedimientos operativos reutilizables

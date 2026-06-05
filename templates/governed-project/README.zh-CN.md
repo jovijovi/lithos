@@ -35,11 +35,19 @@
 
 `[project-name]` 作为完整受治理项目符合 Lithos `[1.x]`。该声明记录在可选的机器可读采纳清单（`[lithos-adoption-manifest.json]`）中——所声明的版本与深度、角色担任者、门禁运作方式，以及自主 PR 策略。清单是声明而非授权，并保持厂商中立、可移植。
 
+## 发布安全与场景治理
+
+- [`docs/evaluation/scenario-regression.md`](docs/evaluation/scenario-regression.md) 将承载行为的声明固定到具名场景夹具，使回归被机器捕获，而不是被下游消费者发现。
+- [`docs/release/release-governance.md`](docs/release/release-governance.md) 治理发布边界：发布须经 owner 批准、携带溯源记录，绝不由 agent 自行执行。
+- `tools/static_safety_scan.py` 是一等门禁，拒绝形如密钥的令牌、私有的本机绝对路径以及未完成工作的占位符；它在 `scripts/verify_project.py` 与 CI 中运行。
+- [`docs/lessons/_drift_report.md`](docs/lessons/_drift_report.md) 承载知识产物的生成式漂移证据。
+
 ## 本地验证
 
 ```bash
 python tools/build_docs_index.py --check
 python tools/docs_drift_signal.py --check
+python tools/static_safety_scan.py
 python scripts/verify_project.py
 git diff --check
 ```

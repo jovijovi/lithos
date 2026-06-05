@@ -37,6 +37,9 @@ Read Lithos at three layers:
 - **Knowledge spine** — development logs, lessons, practices, generated docs-only indexes, and drift reports for governed repos: `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, and `tools/`. How this knowledge lives, expires by use, and stays subordinate to the authority chain is defined in [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
 - **Conformance & adoption manifest** — what a project may claim, declared in a machine-readable adoption manifest ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), filled from [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), with [conformance fixtures](fixtures/conformance/) showing what passes and what must fail. See [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
 - **Autonomous PR policy** — what an agent may do with pull requests on its own, and what it must never self-approve or self-merge. See [`docs/autonomous-pr-policy.md`](docs/autonomous-pr-policy.md).
+- **Static safety scan** — a deterministic gate that rejects secret-shaped values, private machine-local paths, and unfinished-work placeholders before review or release. See [`docs/static-safety-scan.md`](docs/static-safety-scan.md).
+- **Scenario regression governance** — named fixtures that pin behavior-bearing claims and examples so regressions are caught mechanically. See [`docs/scenario-regression-governance.md`](docs/scenario-regression-governance.md).
+- **Release & supply-chain governance** — owner-approved release gates, provenance records, and supply-chain boundaries for published artifacts. See [`docs/release-and-supply-chain-governance.md`](docs/release-and-supply-chain-governance.md).
 - **Tooling interoperability** — the artifacts that carry collaboration state are vendor-neutral and portable, so a project can change tools without losing its governance. See [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Bilingual README governance** — source and localized README files stay semantically aligned when user-facing claims change.
 - **Skills** — reusable operational procedures in [`skills/`](skills/) for creating, auditing, and adapting a local AI flow.
@@ -80,6 +83,9 @@ A worked walkthrough lives in [`examples/governed-project/`](examples/governed-p
 │   ├── conformance-and-fixtures.md
 │   ├── tooling-interoperability.md
 │   ├── autonomous-pr-policy.md
+│   ├── static-safety-scan.md
+│   ├── scenario-regression-governance.md
+│   ├── release-and-supply-chain-governance.md
 │   └── versioning-and-governance.md
 ├── schemas/                   Machine-readable adoption manifest schema
 ├── skills/                    Reusable operational procedures

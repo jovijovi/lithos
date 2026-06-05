@@ -35,11 +35,19 @@ This knowledge is governed as durable, evidence-bearing artifacts: it records an
 
 `[project-name]` conforms to Lithos `[1.x]` as a full governed project. It declares that claim in an optional machine-readable adoption manifest (`[lithos-adoption-manifest.json]`) — the version and depth claimed, role holders, gate operation, and autonomous PR policy. The manifest is a declaration, not an authorization, and is kept vendor-neutral and portable.
 
+## Release-safety and scenario governance
+
+- [`docs/evaluation/scenario-regression.md`](docs/evaluation/scenario-regression.md) pins behavior-bearing claims to named scenario fixtures so a regression is caught mechanically, not by a downstream consumer.
+- [`docs/release/release-governance.md`](docs/release/release-governance.md) governs the release boundary: publishing is owner-approved, provenance-bearing, and never cut by an agent on its own authority.
+- `tools/static_safety_scan.py` is a first-class gate that rejects secret-shaped tokens, private machine-local paths, and unfinished-work placeholders; it runs in `scripts/verify_project.py` and CI.
+- [`docs/lessons/_drift_report.md`](docs/lessons/_drift_report.md) carries the generated drift evidence for knowledge artifacts.
+
 ## Local verification
 
 ```bash
 python tools/build_docs_index.py --check
 python tools/docs_drift_signal.py --check
+python tools/static_safety_scan.py
 python scripts/verify_project.py
 git diff --check
 ```

@@ -26,7 +26,7 @@ Every non-trivial task **must** produce a development log. A task **should** pro
 
 ## Drift report
 
-`docs/lessons/_drift_report.md` is **generated** from the `applies_to` paths declared in each lesson and practice. It signals knowledge whose covered code or documents have moved since the artifact was last validated. The drift report is an *activity-aware backstop*, not an expiry clock: it surfaces candidates for re-validation; it does not itself deprecate anything.
+`docs/lessons/_drift_report.md` is **generated** from the `applies_to` paths declared in each lesson and practice. It signals knowledge whose covered code or documents have moved since the artifact was last validated. The drift report is an *activity-aware backstop*, not an expiry clock: it surfaces candidates for re-validation; it does not itself deprecate anything. A full governed project runs the drift check with its other verification gates and commits the regenerated report whenever the underlying docs or covered paths change, so drift evidence cannot become an optional stale artifact.
 
 ## Stale-knowledge handling
 
@@ -54,5 +54,6 @@ Treating historical logs, lessons, or chat notes as authority is an anti-pattern
 
 - The spine is part of [governed project structure](governed-project-structure.md); the directory map and preflight order live there.
 - Knowledge artifacts are [evidence](verification-standards.md) and may be referenced from an [agent run manifest](agent-run-manifest.md).
+- Generated indexes and drift reports are governed verification inputs for [scenario regression](scenario-regression-governance.md) and [release governance](release-and-supply-chain-governance.md); they record what knowledge was current, not what is approved.
 - A project declares that it maintains this spine in its [adoption manifest](conformance-and-fixtures.md); the fields are checked for full governed project adoption.
 - The artifacts are vendor-neutral and portable across tools; see [tooling interoperability](tooling-interoperability.md).

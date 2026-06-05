@@ -15,16 +15,20 @@ In rough order of strength:
 3. **Reproducible steps** — a recorded command (or sequence) and its actual output, such that a reviewer can re-run it and see the same result.
 4. **Artifacts** — logs, diffs, screenshots, generated files, or reports attached to the unit.
 5. **Generated governance checks** — for governed documentation changes, generated docs indexes and drift reports that can be regenerated from the repository. Where a project declares conformance, the [conformance fixtures](conformance-and-fixtures.md) and their pure-stdlib checker are reproducible evidence in the same sense: anyone can re-run the checker to confirm the declared claim still holds and that the fixtures pass or reject for the documented reasons.
-6. **Independent review** — a reviewer, separate from the implementer where practical, who has examined the change against its acceptance criteria.
+6. **Static safety scans** — machine-runnable checks that reject secret-shaped values, private machine-local paths, and unfinished-work placeholders before review, merge, or release. See [static safety scan](static-safety-scan.md).
+7. **Scenario regression suites** — named fixtures for behavior-bearing claims and examples, run as reproducible checks so output changes are visible and reviewed. See [scenario regression governance](scenario-regression-governance.md).
+8. **Release provenance records** — evidence that a release was built from a specific revision, passed its gates, and was explicitly approved for publication. See [release and supply-chain governance](release-and-supply-chain-governance.md).
+9. **Independent review** — a reviewer, separate from the implementer where practical, who has examined the change against its acceptance criteria.
 
 ## What each unit must carry
 
 To be accepted, a collaboration unit **must**:
 
 - State what was claimed and which evidence supports each claim.
-- Include at least one form of **reproducible** evidence (test, CI, or recorded steps) for any behavioral change.
+- Include at least one form of **reproducible behavior evidence** (test, CI, scenario regression suite, or recorded steps) for any behavioral change; static safety scans are required safety evidence, but never substitute for behavior proof.
 - Report results **faithfully**: if tests fail, say so with the output; if a step was skipped, say it was skipped; do not round a partial pass up to "passing."
 - Distinguish what was verified from what was merely asserted or assumed.
+- For release candidates, cite the exact revision, static safety scan, scenario regression outcome where relevant, generated drift evidence, and owner approval reference separately.
 
 ## Reproducibility
 
