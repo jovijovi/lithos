@@ -45,6 +45,18 @@ Approval authority is never held by an implementation agent.
 - Parallel work uses isolated worktrees/checkouts so uncommitted changes never cross units.
 - `[main]` contains only reviewed, verified work; protected by [branch protection].
 
+## Environment and sandbox boundaries
+
+This states *where* a run may execute and *what it may touch*. It describes limits; it does not grant capability, and it never authorizes live or autonomous execution.
+
+- **Isolation:** [git worktree isolation per unit; OS/process sandbox, or `none beyond worktree isolation`]. A worktree does not sandbox a process; a sandbox does not version changes.
+- **Filesystem roots:** writes confined to [the unit's working tree and declared scratch only]; reads outside the project ([home directory, system configuration, unrelated repositories]) are [denied].
+- **Network:** egress [`none` by default for preparation work, or the named destinations/registries genuinely required]; ingress [`none`].
+- **Credentials:** [`none`, or the least-privilege, narrowly scoped tokens the task needs, for only as long as it runs]. Secrets are never written into the working tree, logs, or a run manifest; use `[REDACTED]` placeholders.
+- **Escalation:** on meeting a boundary — an unexpected credential prompt, a write outside the declared roots, or any action with an external or live effect — stop and request the higher gate rather than working around it.
+
+Keep these decisions here or in a separate change-controlled environment policy.
+
 ## Verification — definition of done
 
 A unit is accepted only with reproducible evidence:
@@ -59,6 +71,8 @@ A unit is accepted only with reproducible evidence:
 
 Approvals, reviews, and verification evidence are retained in [location] so any merged unit can be reconstructed after the fact.
 
+When a unit is agent-executed and needs auditability, retain an agent run manifest per run: what was authorized, what actually ran (each action marked local/offline or external/live), the verifying evidence, and the boundary that held. A manifest records a run; it does not authorize one and never licenses live/runtime execution.
+
 ## Runtime controls (only if operating at the live/runtime layer)
 
 [Describe explicit human authorization, monitoring, kill switch, and audit. Lithos does not provide these — they are this project's responsibility.]
@@ -71,3 +85,5 @@ Normative changes to this file follow [Lithos governance](https://github.com/jov
 
 - Agent contract: `AGENTS.md`.
 - PR checklist: `[path/to/pr-checklist.md]`.
+- Environment and sandbox policy: this file's boundaries section, or `[path/to/environment-policy.md]`.
+- Agent run manifest (per run, when auditability is needed): `[path/to/agent-run-manifest.json]`.

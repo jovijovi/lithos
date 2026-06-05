@@ -28,8 +28,10 @@ Lithos se lit sur trois plans :
 
 - **Rôles** — un ensemble générique (propriétaire, contrôleur/opérateur, architecte, agent d'implémentation, relecteur, vérificateur) aux frontières d'autorité claires. Voir [`docs/roles.md`](docs/roles.md).
 - **Sémantique d'approbation** — des seuils distincts pour la préparation/le contrôle préalable, l'implémentation, les effets destructifs ou externes, et l'exécution en direct/au runtime. Voir [`docs/approval-semantics.md`](docs/approval-semantics.md).
+- **Politique d'environnement et de bac à sable** — où un run peut s'exécuter et ce qu'il peut toucher (système de fichiers, réseau, identifiants, effets de bord), distincte de l'approbation. Voir [`docs/environment-and-sandbox-policy.md`](docs/environment-and-sandbox-policy.md).
 - **Discipline des arbres de travail et des branches** — l'isolation du travail en cours afin que les changements humains et agentiques restent révisables. Voir [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Normes de vérification** — la preuve avant l'assentiment : tests, CI, relectures, artefacts, reproductibilité. Voir [`docs/verification-standards.md`](docs/verification-standards.md).
+- **Manifeste d'exécution d'agent** — un enregistrement d'audit par run de ce qui a été autorisé, de ce qui s'est réellement exécuté, ainsi que des preuves et de la frontière en jeu ; un enregistrement, non une autorisation. Voir [`docs/agent-run-manifest.md`](docs/agent-run-manifest.md).
 - **Modèles** — des fichiers de flux local prêts à copier dans [`templates/`](templates/), pour une adoption en flux seul ou pleinement gouvernée.
 - **Structure de projet gouverné** — une chaîne d'autorité documentaire plus complète pour les dépôts matures : `GOAL.md`, PRD, conception, feuille de route/statut, suivi des fonctionnalités, plans de phase et `docs/AI_FLOW.md`. Voir [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Colonne vertébrale de connaissance** — journaux de développement, leçons, pratiques, index générés limités à `docs/` et rapports de dérive pour les dépôts gouvernés : `docs/dev_log/`, `docs/lessons/`, `docs/practices/` et `tools/`.
@@ -66,9 +68,11 @@ Une démonstration complète se trouve dans [`examples/governed-project/`](examp
 │   ├── core-concepts.md
 │   ├── roles.md
 │   ├── approval-semantics.md
+│   ├── environment-and-sandbox-policy.md
 │   ├── local-adoption.md
 │   ├── governed-project-structure.md
 │   ├── verification-standards.md
+│   ├── agent-run-manifest.md
 │   └── versioning-and-governance.md
 ├── skills/                    Procédures opérationnelles réutilisables
 │   ├── create-local-ai-flow/

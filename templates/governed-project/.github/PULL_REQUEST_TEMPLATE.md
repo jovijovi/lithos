@@ -18,6 +18,8 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] Worked on a feature branch / isolated worktree, not directly on the integration branch.
 - [ ] The applicable approval gate is satisfied (implementation; and per-action approval for any destructive/external effect).
 - [ ] No live/runtime execution was performed unless separately authorized.
+- [ ] Environment, sandbox, and credential scope stayed within the documented policy (no broadened network/filesystem access or secret exposure).
+- [ ] An agent run manifest and audit evidence are attached or linked when the change was agent-executed or touched external/runtime boundaries.
 
 ## Verification (evidence, not agreement)
 

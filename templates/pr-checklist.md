@@ -18,6 +18,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] Worked on a feature branch / isolated worktree, not directly on the integration branch.
 - [ ] The applicable approval gate is satisfied (implementation; and per-action approval for any destructive/external effect).
 - [ ] No live/runtime execution was performed unless separately authorized.
+- [ ] Stayed within the declared environment/sandbox boundaries — filesystem roots, network egress, and credential scope; no out-of-scope reads, network access, or secret use.
 
 ## Verification (evidence, not agreement)
 
@@ -25,6 +26,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] CI run linked and green (where applicable).
 - [ ] Reproduction steps or recorded command + output included for any behavior change.
 - [ ] Results reported faithfully — failures, skips, and unverified areas are called out.
+- [ ] An agent run manifest / audit entry is recorded when the run needs auditability — what was authorized, what ran (local/offline vs external/live), and the boundary that held.
 
 ## Documents that change together
 

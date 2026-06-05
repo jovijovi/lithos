@@ -23,13 +23,16 @@ To conform to Lithos, the local workflow file **must**:
 2. **Operationalize the four approval gates.** For each gate in [approval semantics](approval-semantics.md), say how it is signaled in this project — and state plainly whether the project operates at the live/runtime layer at all.
 3. **State the worktree/branch discipline.** Branch naming, isolation expectations, and what the integration branch is allowed to contain (see [core concepts](core-concepts.md)).
 4. **Define "done."** The [verification](verification-standards.md) evidence a unit must carry before it is accepted.
+5. **Declare the environment and sandbox boundaries.** State where a run may execute and what it may touch — filesystem roots, network egress, credentials, and external side effects — following the [environment and sandbox policy](environment-and-sandbox-policy.md). A lighter governed workflow may keep these decisions as a section of this file; a full governed project should maintain them as a first-class, change-controlled document.
 
-It **should** also list the project's destructive/external actions explicitly, and point to its PR checklist.
+It **should** also list the project's destructive/external actions explicitly, point to its PR checklist, and — when agent-executed collaboration units need auditability — retain an [agent run manifest](agent-run-manifest.md) for each run so a reviewer can reconstruct what was authorized and what actually happened.
 
 ## Recommended companion files
 
 - An `AGENTS.md` (or equivalent) carrying the agent-facing contract — start from [`templates/AGENTS.md.snippet`](../templates/AGENTS.md.snippet).
 - A PR checklist — start from [`templates/pr-checklist.md`](../templates/pr-checklist.md).
+- An environment and sandbox policy declaring run boundaries — start from [`templates/environment-policy.md`](../templates/environment-policy.md). A lighter governed workflow may instead fold these decisions into the local workflow file.
+- An agent run manifest for runs that need auditability — start from [`templates/agent-run-manifest.json`](../templates/agent-run-manifest.json).
 - For governed projects, a root `LESSONS.md`, `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, generated `docs/INDEX.md`, and generated `docs/lessons/_drift_report.md` keep reusable knowledge out of chat history.
 - If localized README files exist, keep them semantically aligned with `README.md` whenever visible project claims change.
 
