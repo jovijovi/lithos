@@ -31,6 +31,7 @@ Read Lithos at three layers:
 - **Worktree & branch discipline** — isolation of in-progress work so human and agent changes stay reviewable. See [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Verification standards** — evidence over agreement: tests, CI, reviews, artifacts, reproducibility. See [`docs/verification-standards.md`](docs/verification-standards.md).
 - **Templates** — ready-to-copy local workflow files in [`templates/`](templates/), minimal and governed.
+- **Governed project structure** — a fuller document authority chain for mature repos: `GOAL.md`, PRD, design, roadmap/status, feature tracker, phase plans, and `docs/AI_FLOW.md`. See [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Skills** — reusable operational procedures in [`skills/`](skills/) for creating, auditing, and adapting a local AI flow.
 - **Examples** — worked adoptions in [`examples/`](examples/), from a single contributor to a governed project.
 
@@ -44,7 +45,7 @@ Adopting Lithos does **not** authorize autonomous or live AI execution. Its appr
 
 1. Read [`docs/philosophy.md`](docs/philosophy.md) and [`docs/core-concepts.md`](docs/core-concepts.md).
 2. Choose where your collaboration rules will live — pick your own local workflow filename (e.g. `AI_FLOW.md`, `ai-collaborative-development-standards.md`, or a name that fits your repo). See [`docs/local-adoption.md`](docs/local-adoption.md).
-3. Copy a starting point: [`templates/minimal-ai-flow.md`](templates/minimal-ai-flow.md) for a small project, or [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) for one with formal review.
+3. Copy a starting point: [`templates/minimal-ai-flow.md`](templates/minimal-ai-flow.md) for a small project, [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) for workflow-only formal review, or the full [`templates/governed-project/`](templates/governed-project/) spine for a mature governed repo.
 4. Add the [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) contract to your `AGENTS.md`.
 5. Adopt [`templates/pr-checklist.md`](templates/pr-checklist.md) and the [verification standards](docs/verification-standards.md).
 
@@ -64,13 +65,14 @@ A worked walkthrough lives in [`examples/minimal-project/`](examples/minimal-pro
 │   ├── roles.md
 │   ├── approval-semantics.md
 │   ├── local-adoption.md
+│   ├── governed-project-structure.md
 │   ├── verification-standards.md
 │   └── versioning-and-governance.md
 ├── skills/                    Reusable operational procedures
 │   ├── create-local-ai-flow/
 │   ├── audit-local-ai-flow/
 │   └── adapt-ai-flow-for-governed-project/
-├── templates/                 Copy-ready local adoption files
+├── templates/                 Copy-ready local adoption files and governed project spine
 ├── examples/                  Worked adoptions
 └── scripts/                   Repository verification (stdlib Python)
 ```

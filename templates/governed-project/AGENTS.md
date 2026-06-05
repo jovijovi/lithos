@@ -1,0 +1,42 @@
+# AGENTS.md
+
+Project-local instructions for AI agents working in this repository.
+
+## Project identity
+
+- Project: `[Project Name]`
+- GitHub repo: `[owner/repo]`
+- Visibility: `[private/public]`
+- Integration branch: `main`
+
+## Product and documentation preflight
+
+Documentation precedes implementation. For roadmap, design, implementation, PR, CI, review, merge, or next-phase-readiness work, read in order:
+
+1. `GOAL.md`
+2. `docs/product/prd.md`
+3. `docs/design/architecture.md`
+4. `docs/design/technical-solution.md`
+5. `docs/roadmap/features.md`
+6. `docs/roadmap/current-status.md`
+7. `docs/AI_FLOW.md`
+
+Before changing files, state the current product position, target feature or phase, open tails, explicit non-approvals, and whether the requested task is allowed by the roadmap.
+
+## Development workflow
+
+Use short-lived task branches and isolated worktrees for AI-assisted work. Derive implementation plans from PRD, design, roadmap, and current status. A plan must not redefine product goals.
+
+## Product boundaries
+
+Do not infer live/default-on behavior, external delivery, publishing, production configuration changes, destructive actions, or autonomous operation from ordinary development approval. These require explicit higher-gate approval in `docs/AI_FLOW.md`.
+
+## Secrets and credentials
+
+Never commit secrets, API keys, tokens, cookies, raw environment values, private platform identifiers, or signed URLs. Use `[REDACTED]` in docs and examples when referring to sensitive values.
+
+## Tooling expectations
+
+- Run the verification commands listed in `docs/AI_FLOW.md` before claiming completion.
+- Update `docs/roadmap/features.md` and `docs/roadmap/current-status.md` when feature status, acceptance evidence, or open tails change.
+- Keep `docs/INDEX.md` aligned with documentation changes.

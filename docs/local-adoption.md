@@ -36,7 +36,8 @@ It **should** also list the project's destructive/external actions explicitly, a
 | If your project… | Start from |
 | --- | --- |
 | is small, single-maintainer, or early-stage | [`templates/minimal-ai-flow.md`](../templates/minimal-ai-flow.md) |
-| has formal review, multiple contributors, or compliance needs | [`templates/governed-ai-flow.md`](../templates/governed-ai-flow.md) |
+| needs a stricter local workflow file, but not a full document spine | [`templates/governed-ai-flow.md`](../templates/governed-ai-flow.md) |
+| has formal roadmap governance, multiple agents, staged phases, release gates, runtime boundaries, or compliance needs | [`templates/governed-project/`](../templates/governed-project/) plus [`governed-project-structure.md`](governed-project-structure.md) |
 
 Copy the template into your repository under the filename you chose, then fill in the bracketed decisions. The [`examples/`](../examples/) directory shows both filled in.
 
@@ -48,7 +49,7 @@ Lithos is portable because it is generic. Adapt freely:
 - Add gates or sub-gates if your domain needs them; you **must not** remove the layering of the four defined gates.
 - Tighten any rule. You **may** make the standard stricter locally; you **should not** loosen a requirement and still claim conformance.
 
-When you have adapted a template for a project with formal governance, the [`adapt-ai-flow-for-governed-project`](../skills/adapt-ai-flow-for-governed-project/SKILL.md) skill walks through the additions that governance typically requires.
+When you have adapted a template for a project with formal governance, the [`adapt-ai-flow-for-governed-project`](../skills/adapt-ai-flow-for-governed-project/SKILL.md) skill walks through the additions that governance typically requires, including the full source-of-truth chain when workflow-only adoption is too thin.
 
 ## Keeping it honest
 
