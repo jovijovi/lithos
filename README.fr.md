@@ -30,12 +30,12 @@ Lithos se lit sur trois plans :
 - **Sémantique d'approbation** — des seuils distincts pour la préparation/le contrôle préalable, l'implémentation, les effets destructifs ou externes, et l'exécution en direct/au runtime. Voir [`docs/approval-semantics.md`](docs/approval-semantics.md).
 - **Discipline des arbres de travail et des branches** — l'isolation du travail en cours afin que les changements humains et agentiques restent révisables. Voir [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Normes de vérification** — la preuve avant l'assentiment : tests, CI, relectures, artefacts, reproductibilité. Voir [`docs/verification-standards.md`](docs/verification-standards.md).
-- **Modèles** — des fichiers de flux local prêts à copier dans [`templates/`](templates/), minimal et gouverné.
+- **Modèles** — des fichiers de flux local prêts à copier dans [`templates/`](templates/), pour une adoption en flux seul ou pleinement gouvernée.
 - **Structure de projet gouverné** — une chaîne d'autorité documentaire plus complète pour les dépôts matures : `GOAL.md`, PRD, conception, feuille de route/statut, suivi des fonctionnalités, plans de phase et `docs/AI_FLOW.md`. Voir [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Colonne vertébrale de connaissance** — journaux de développement, leçons, pratiques, index générés limités à `docs/` et rapports de dérive pour les dépôts gouvernés : `docs/dev_log/`, `docs/lessons/`, `docs/practices/` et `tools/`.
 - **Gouvernance des README bilingues** — le README source et les README localisés restent sémantiquement alignés lorsque les affirmations visibles changent.
 - **Compétences** — des procédures opérationnelles réutilisables dans [`skills/`](skills/) pour créer, auditer et adapter un flux IA local.
-- **Exemples** — des adoptions concrètes dans [`examples/`](examples/), du contributeur unique au projet gouverné.
+- **Exemples** — une adoption gouvernée concrète dans [`examples/`](examples/).
 
 ## Portée — ce que Lithos n'est pas
 
@@ -47,11 +47,11 @@ Adopter Lithos **n'autorise pas** l'exécution autonome ou en direct d'une IA. S
 
 1. Lire [`docs/philosophy.md`](docs/philosophy.md) et [`docs/core-concepts.md`](docs/core-concepts.md).
 2. Choisir où vivront vos règles de collaboration — sélectionnez votre propre nom de fichier de flux local (par ex. `AI_FLOW.md`, `ai-collaborative-development-standards.md`, ou un nom adapté à votre dépôt). Voir [`docs/local-adoption.md`](docs/local-adoption.md).
-3. Copier un point de départ : [`templates/minimal-ai-flow.md`](templates/minimal-ai-flow.md) pour un petit projet, [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) pour un projet à relecture formelle, ou la structure complète [`templates/governed-project/`](templates/governed-project/) pour un dépôt gouverné mature avec journaux de développement, leçons, pratiques, index généré, rapport de dérive et règles de README bilingues.
+3. Copier un point de départ : [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) pour une relecture formelle en flux seul, ou la structure complète [`templates/governed-project/`](templates/governed-project/) pour un dépôt gouverné mature avec journaux de développement, leçons, pratiques, index généré, rapport de dérive et règles de README bilingues.
 4. Ajouter le contrat [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) à votre `AGENTS.md`.
 5. Adopter [`templates/pr-checklist.md`](templates/pr-checklist.md) et les [normes de vérification](docs/verification-standards.md).
 
-Une démonstration complète se trouve dans [`examples/minimal-project/`](examples/minimal-project/) et [`examples/governed-project/`](examples/governed-project/).
+Une démonstration complète se trouve dans [`examples/governed-project/`](examples/governed-project/).
 
 ## Carte du dépôt
 

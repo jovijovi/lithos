@@ -37,4 +37,4 @@
 4. 让 `docs/INDEX.md` 由工具生成，且只索引 `docs/` 目录。
 5. 同步 `AGENTS.md`、PR 清单、README 双语入口与验证命令。
 
-对比 [minimal example](../minimal-project/README.md) 可以看到为什么 workflow-only 采纳刻意更轻。
+对比仅工作流模板 [`templates/governed-ai-flow.md`](../../templates/governed-ai-flow.md) 可以看到为什么更轻的受治理工作流刻意比完整受治理骨架更薄。

@@ -1,15 +1,15 @@
 ---
 name: adapt-ai-flow-for-governed-project
-description: Use when a project with formal review, multiple contributors, or compliance obligations needs to upgrade a minimal Lithos local workflow file into a governed one — adds the stricter roles, approval records, and audit trail governance requires without loosening any requirement.
+description: Use when a project with formal review, multiple contributors, or compliance obligations needs to upgrade a workflow-only Lithos local workflow file into a full governed-project one — adds the stricter roles, approval records, and audit trail governance requires without loosening any requirement.
 ---
 
 # Adapt an AI Flow for a Governed Project
 
-Upgrade an existing local workflow file (often a minimal one) into a **governed** shape suited to formal review, multiple contributors, or compliance obligations. You add and tighten; you never loosen a Lithos requirement.
+Upgrade an existing local workflow file (often a workflow-only one) into a **governed** shape suited to formal review, multiple contributors, or compliance obligations. You add and tighten; you never loosen a Lithos requirement.
 
 ## When to use
 
-- A project has outgrown a solo/minimal flow and now has formal review or compliance needs.
+- A project has outgrown a lighter workflow-only flow and now has formal review or compliance needs.
 - An audit (`audit-local-ai-flow`) recommended governance additions.
 
 ## What governance adds

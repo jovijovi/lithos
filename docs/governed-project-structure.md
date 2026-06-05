@@ -1,11 +1,11 @@
 # Governed Project Structure
 
-Lithos can be adopted at two depths:
+Lithos can be adopted at two governed depths:
 
-1. **Workflow-only adoption** — a local workflow file, an agent contract, and a PR checklist.
-2. **Governed project adoption** — a full documentation authority chain plus a knowledge spine that keeps product intent, design, roadmap, implementation plans, verification, lessons, practices, and agent behavior aligned.
+1. **Lighter governed workflow adoption** — a local workflow file, an agent contract, and a PR checklist. This is thinner than a full project spine, but it still preserves roles, approval gates, isolation discipline, and evidence.
+2. **Full governed project adoption** — a full documentation authority chain plus a knowledge spine that keeps product intent, design, roadmap, implementation plans, verification, lessons, practices, and agent behavior aligned.
 
-Small projects may start with workflow-only adoption. Projects with formal review, multi-agent work, staged roadmaps, release gates, compliance needs, or product/runtime boundaries should use the governed project structure.
+Small projects may start with the lighter governed workflow. Projects with formal review, multi-agent work, staged roadmaps, release gates, compliance needs, or product/runtime boundaries should use the full governed project structure.
 
 ## Authority chain
 
