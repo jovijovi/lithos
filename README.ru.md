@@ -30,12 +30,12 @@ Lithos читается на трёх уровнях:
 - **Семантика одобрения** — отдельные рубежи для подготовки/предварительной проверки, реализации, разрушительных или внешних побочных эффектов и исполнения вживую/в среде выполнения. См. [`docs/approval-semantics.md`](docs/approval-semantics.md).
 - **Дисциплина рабочих деревьев и веток** — изоляция текущей работы, чтобы изменения людей и агентов оставались проверяемыми. См. [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Стандарты проверки** — доказательства важнее согласия: тесты, CI, ревью, артефакты, воспроизводимость. См. [`docs/verification-standards.md`](docs/verification-standards.md).
-- **Шаблоны** — готовые к копированию файлы локального процесса в [`templates/`](templates/): минимальный и управляемый.
+- **Шаблоны** — готовые к копированию файлы локального процесса в [`templates/`](templates/): для адаптации только рабочего процесса и для полного управления.
 - **Структура управляемого проекта** — более полная цепочка документальной власти для зрелых репозиториев: `GOAL.md`, PRD, дизайн, roadmap/status, трекер функций, фазовые планы и `docs/AI_FLOW.md`. См. [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Позвоночник знаний** — журналы разработки, уроки, практики, генерируемые индексы только для `docs/` и отчёты о дрейфе для управляемых репозиториев: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` и `tools/`.
 - **Управление многоязычными README** — исходный README и локализованные README остаются семантически согласованными при изменении пользовательских утверждений.
 - **Навыки** — переиспользуемые операционные процедуры в [`skills/`](skills/) для создания, аудита и адаптации локального потока ИИ.
-- **Примеры** — проработанные внедрения в [`examples/`](examples/), от единственного участника до управляемого проекта.
+- **Примеры** — проработанное внедрение управляемого проекта в [`examples/`](examples/).
 
 ## Область применения — чем Lithos не является
 
@@ -47,11 +47,11 @@ Lithos — это **стандарт и набор инструментов дл
 
 1. Прочитайте [`docs/philosophy.md`](docs/philosophy.md) и [`docs/core-concepts.md`](docs/core-concepts.md).
 2. Решите, где будут жить ваши правила сотрудничества — выберите собственное имя файла локального процесса (например, `AI_FLOW.md`, `ai-collaborative-development-standards.md` или имя, подходящее вашему репозиторию). См. [`docs/local-adoption.md`](docs/local-adoption.md).
-3. Скопируйте отправную точку: [`templates/minimal-ai-flow.md`](templates/minimal-ai-flow.md) для небольшого проекта, [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) для проекта с формальным ревью или полный каркас [`templates/governed-project/`](templates/governed-project/) для зрелого управляемого репозитория с журналами разработки, уроками, практиками, генерируемым индексом, отчётом о дрейфе и правилами многоязычных README.
+3. Скопируйте отправную точку: [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) для формального ревью только на уровне рабочего процесса или полный каркас [`templates/governed-project/`](templates/governed-project/) для зрелого управляемого репозитория с журналами разработки, уроками, практиками, генерируемым индексом, отчётом о дрейфе и правилами многоязычных README.
 4. Добавьте договор [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) в свой `AGENTS.md`.
 5. Примите [`templates/pr-checklist.md`](templates/pr-checklist.md) и [стандарты проверки](docs/verification-standards.md).
 
-Полный разбор находится в [`examples/minimal-project/`](examples/minimal-project/) и [`examples/governed-project/`](examples/governed-project/).
+Полный разбор находится в [`examples/governed-project/`](examples/governed-project/).
 
 ## Карта репозитория
 

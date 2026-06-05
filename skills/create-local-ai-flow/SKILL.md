@@ -21,7 +21,7 @@ Produce a conformant **local workflow file** for a repository adopting Lithos. O
 
 ## Steps
 
-1. **Pick the template.** Small/early-stage → `templates/minimal-ai-flow.md`. Formal review with only workflow governance → `templates/governed-ai-flow.md`. Mature projects with roadmap/status/design authority, multiple agents, staged phases, release gates, runtime boundaries, or compliance needs → copy the full `templates/governed-project/` spine and use `docs/governed-project-structure.md` as the authority map.
+1. **Pick the template.** Lithos defines two governed adoption paths and no minimal profile. Small/early-stage projects, or formal review with only workflow governance → `templates/governed-ai-flow.md` (a lighter governed workflow that still keeps roles, approval gates, discipline, and evidence). Mature projects with roadmap/status/design authority, multiple agents, staged phases, release gates, runtime boundaries, or compliance needs → copy the full `templates/governed-project/` spine and use `docs/governed-project-structure.md` as the authority map.
 2. **Choose the filename with the owner.** Any discoverable name is valid (e.g. `AI_FLOW.md`, `docs/AI_FLOW.md`, `ai-collaborative-development-standards.md`). Place it where the project keeps such docs. For governed-project adoption, prefer `docs/AI_FLOW.md` and keep `GOAL.md` as the stable source-of-truth index.
 3. **Assign roles.** Fill in who holds each role from `docs/roles.md`. Note explicitly any roles that are combined.
 4. **Operationalize the four gates.** For each gate in `docs/approval-semantics.md`, write how it is signaled here. State plainly whether the project operates at the live/runtime layer at all; if not, say so.

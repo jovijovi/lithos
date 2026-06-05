@@ -36,4 +36,4 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 4. Added the dev-log/lesson/practice knowledge spine and generated docs index/drift tooling.
 5. Updated `AGENTS.md`, bilingual READMEs, and the PR checklist to match the stricter flow.
 
-Compare with the [minimal example](../minimal-project/README.md) to see why workflow-only adoption is intentionally lighter.
+Compare with the workflow-only [`templates/governed-ai-flow.md`](../../templates/governed-ai-flow.md) template to see why a lighter governed workflow is intentionally thinner than the full governed spine.

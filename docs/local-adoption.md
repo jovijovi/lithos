@@ -35,13 +35,14 @@ It **should** also list the project's destructive/external actions explicitly, a
 
 ## Choosing a starting template
 
+Lithos defines **two governed adoption paths**. It does **not** define a minimal conformance profile. Lithos can be lightweight, but it is never minimalized: a small project may adopt a *lighter governed workflow*, yet it must still preserve roles, approval gates, working discipline, and evidence. Dropping any of those is not a smaller adoption of Lithos — it is no longer Lithos.
+
 | If your project… | Start from |
 | --- | --- |
-| is small, single-maintainer, or early-stage | [`templates/minimal-ai-flow.md`](../templates/minimal-ai-flow.md) |
-| needs a stricter local workflow file, but not a full document spine | [`templates/governed-ai-flow.md`](../templates/governed-ai-flow.md) |
+| needs a governed workflow file but not a full document spine — including small, single-maintainer, or early-stage projects | [`templates/governed-ai-flow.md`](../templates/governed-ai-flow.md) |
 | has formal roadmap governance, multiple agents, staged phases, release gates, runtime boundaries, or compliance needs | [`templates/governed-project/`](../templates/governed-project/) plus [`governed-project-structure.md`](governed-project-structure.md) |
 
-Copy the template into your repository under the filename you chose, then fill in the bracketed decisions. The [`examples/`](../examples/) directory shows both filled in.
+Copy the template into your repository under the filename you chose, then fill in the bracketed decisions. The [`examples/`](../examples/) directory shows the governed adoption filled in end to end.
 
 ## Adapting, not just copying
 

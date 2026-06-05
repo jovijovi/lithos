@@ -30,12 +30,12 @@ Read Lithos at three layers:
 - **Approval semantics** — distinct gates for preflight/preparation, implementation, destructive or external side effects, and live/runtime execution. See [`docs/approval-semantics.md`](docs/approval-semantics.md).
 - **Worktree & branch discipline** — isolation of in-progress work so human and agent changes stay reviewable. See [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Verification standards** — evidence over agreement: tests, CI, reviews, artifacts, reproducibility. See [`docs/verification-standards.md`](docs/verification-standards.md).
-- **Templates** — ready-to-copy local workflow files in [`templates/`](templates/), minimal and governed.
+- **Templates** — ready-to-copy local workflow files in [`templates/`](templates/), for workflow-only and full governed adoption.
 - **Governed project structure** — a fuller document authority chain for mature repos: `GOAL.md`, PRD, design, roadmap/status, feature tracker, phase plans, and `docs/AI_FLOW.md`. See [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Knowledge spine** — development logs, lessons, practices, generated docs-only indexes, and drift reports for governed repos: `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, and `tools/`.
 - **Bilingual README governance** — source and localized README files stay semantically aligned when user-facing claims change.
 - **Skills** — reusable operational procedures in [`skills/`](skills/) for creating, auditing, and adapting a local AI flow.
-- **Examples** — worked adoptions in [`examples/`](examples/), from a single contributor to a governed project.
+- **Examples** — a worked governed adoption in [`examples/`](examples/).
 
 ## Scope — what Lithos is not
 
@@ -47,11 +47,11 @@ Adopting Lithos does **not** authorize autonomous or live AI execution. Its appr
 
 1. Read [`docs/philosophy.md`](docs/philosophy.md) and [`docs/core-concepts.md`](docs/core-concepts.md).
 2. Choose where your collaboration rules will live — pick your own local workflow filename (e.g. `AI_FLOW.md`, `ai-collaborative-development-standards.md`, or a name that fits your repo). See [`docs/local-adoption.md`](docs/local-adoption.md).
-3. Copy a starting point: [`templates/minimal-ai-flow.md`](templates/minimal-ai-flow.md) for a small project, [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) for workflow-only formal review, or the full [`templates/governed-project/`](templates/governed-project/) spine for a mature governed repo with dev logs, lessons, practices, generated docs index, drift report, and bilingual README rules.
+3. Copy a starting point: [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) for workflow-only formal review, or the full [`templates/governed-project/`](templates/governed-project/) spine for a mature governed repo with dev logs, lessons, practices, generated docs index, drift report, and bilingual README rules.
 4. Add the [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) contract to your `AGENTS.md`.
 5. Adopt [`templates/pr-checklist.md`](templates/pr-checklist.md) and the [verification standards](docs/verification-standards.md).
 
-A worked walkthrough lives in [`examples/minimal-project/`](examples/minimal-project/) and [`examples/governed-project/`](examples/governed-project/).
+A worked walkthrough lives in [`examples/governed-project/`](examples/governed-project/).
 
 ## Repository map
 
