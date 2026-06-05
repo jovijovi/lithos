@@ -33,6 +33,10 @@ REQUIRED_FILES = [
     "docs/verification-standards.md",
     "docs/agent-run-manifest.md",
     "docs/versioning-and-governance.md",
+    "docs/knowledge-governance.md",
+    "docs/conformance-and-fixtures.md",
+    "docs/tooling-interoperability.md",
+    "docs/autonomous-pr-policy.md",
     "skills/create-local-ai-flow/SKILL.md",
     "skills/audit-local-ai-flow/SKILL.md",
     "skills/adapt-ai-flow-for-governed-project/SKILL.md",
@@ -64,6 +68,14 @@ REQUIRED_FILES = [
     "templates/pr-checklist.md",
     "templates/environment-policy.md",
     "templates/agent-run-manifest.json",
+    "schemas/lithos-adoption-manifest.schema.json",
+    "templates/lithos-adoption-manifest.json",
+    "fixtures/conformance/valid-full-governed-project.json",
+    "fixtures/conformance/valid-lighter-governed-workflow.json",
+    "fixtures/conformance/invalid-autonomous-self-merge.json",
+    "fixtures/conformance/invalid-autonomous-self-approval.json",
+    "fixtures/conformance/invalid-live-runtime-without-controls.json",
+    "fixtures/conformance/invalid-live-runtime-non-object.json",
     "examples/governed-project/README.md",
     "examples/governed-project/ai-collaborative-development-standards.md",
     "examples/governed-project/GOAL.md",
@@ -88,6 +100,7 @@ REQUIRED_FILES = [
     "examples/governed-project/tools/build_docs_index.py",
     "examples/governed-project/tools/docs_drift_signal.py",
     "scripts/verify_docs.py",
+    "scripts/verify_conformance_fixtures.py",
     ".github/workflows/verify.yml",
     ".gitignore",
 ]
@@ -141,6 +154,14 @@ TEXT_SUFFIXES = {
 # JSON files that must parse as valid JSON.
 JSON_FILES = [
     "templates/agent-run-manifest.json",
+    "schemas/lithos-adoption-manifest.schema.json",
+    "templates/lithos-adoption-manifest.json",
+    "fixtures/conformance/valid-full-governed-project.json",
+    "fixtures/conformance/valid-lighter-governed-workflow.json",
+    "fixtures/conformance/invalid-autonomous-self-merge.json",
+    "fixtures/conformance/invalid-autonomous-self-approval.json",
+    "fixtures/conformance/invalid-live-runtime-without-controls.json",
+    "fixtures/conformance/invalid-live-runtime-non-object.json",
 ]
 
 BINARY_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf"}
@@ -194,6 +215,13 @@ def check_readme_semantic_sync(errors: list[str]) -> None:
         "docs/governed-project-structure.md",
         "docs/environment-and-sandbox-policy.md",
         "docs/agent-run-manifest.md",
+        "docs/knowledge-governance.md",
+        "docs/conformance-and-fixtures.md",
+        "docs/tooling-interoperability.md",
+        "docs/autonomous-pr-policy.md",
+        "schemas/lithos-adoption-manifest.schema.json",
+        "templates/lithos-adoption-manifest.json",
+        "fixtures/conformance/",
         "templates/governed-project/",
         "docs/dev_log/",
         "docs/lessons/",
@@ -224,6 +252,10 @@ def check_governed_project_generators(errors: list[str]) -> None:
         cwd = ROOT / rel
         run_subcheck(cwd, [sys.executable, "tools/build_docs_index.py", "--check"], errors)
         run_subcheck(cwd, [sys.executable, "tools/docs_drift_signal.py", "--check"], errors)
+
+
+def check_conformance_fixtures(errors: list[str]) -> None:
+    run_subcheck(ROOT, [sys.executable, "scripts/verify_conformance_fixtures.py"], errors)
 
 
 def check_skill_frontmatter(errors: list[str]) -> None:
@@ -307,6 +339,7 @@ def main() -> int:
     check_readme_language_links(errors)
     check_readme_semantic_sync(errors)
     check_governed_project_generators(errors)
+    check_conformance_fixtures(errors)
     check_skill_frontmatter(errors)
     check_markdown_links(errors)
     check_forbidden_text(errors)

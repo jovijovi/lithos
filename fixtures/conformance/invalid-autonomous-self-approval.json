@@ -1,0 +1,61 @@
+{
+  "_comment": "Intentionally non-conforming fixture. It must be rejected because autonomous_pr_policy.agent_self_approval is true: Lithos adoption never authorizes an agent to approve its own pull request, or to record an approving review that stands in for the owner's decision. Every other field is well-formed so the checker fails for this reason alone.",
+  "manifest_version": "1.0",
+  "lithos_version": "1.x",
+  "adoption_profile": "full-governed-project",
+  "conformance_claim": {
+    "claims_conformance": true,
+    "statement": "claims to conform to Lithos 1.x while permitting agent self-approval"
+  },
+  "local_workflow_file": "docs/AI_FLOW.md",
+  "roles": {
+    "owner": { "assigned_to": "the project maintainers", "human": true },
+    "controller": { "assigned_to": "an orchestrating agent under maintainer instruction" },
+    "architect": { "assigned_to": "the assigned maintainer for the change" },
+    "implementation_agent": { "assigned_to": "an AI agent" },
+    "reviewer": { "assigned_to": "a maintainer not involved in the implementation" },
+    "verifier": { "assigned_to": "the continuous integration system and an assigned maintainer" }
+  },
+  "approval_gates": {
+    "preparation": { "owner_approval_required": false, "standing_authorization": true },
+    "implementation": { "owner_approval_required": true, "granted_by": "owner" },
+    "destructive_external": { "owner_approval_required": true, "granted_by": "owner", "per_action": true },
+    "live_runtime": { "in_scope": false, "owner_approval_required": true, "separate_controls_required": true }
+  },
+  "approval_authority": {
+    "holder": "owner",
+    "delegable_to_agent": false,
+    "separate_from_verification_evidence": true,
+    "separate_from_run_records": true
+  },
+  "verification": {
+    "evidence_required": true,
+    "independent_of_implementation": true
+  },
+  "autonomous_pr_policy": {
+    "agent_may_open_pr": true,
+    "agent_may_update_pr": true,
+    "agent_self_approval": true,
+    "agent_self_merge": false,
+    "ownerless_auto_merge": false,
+    "ownerless_branch_deletion": false,
+    "ownerless_release_or_publish": false,
+    "live_or_runtime_default_on": false,
+    "owner_approval_required_for": [
+      "merge",
+      "branch-deletion",
+      "release-or-publish",
+      "live-runtime",
+      "external-destructive"
+    ]
+  },
+  "knowledge_governance": {
+    "dev_log": "docs/dev_log/",
+    "lessons": "docs/lessons/",
+    "practices": "docs/practices/",
+    "generated_index": "docs/INDEX.md",
+    "drift_report": "docs/lessons/_drift_report.md",
+    "evidence_retention": "development logs and run manifests retained under docs/dev_log/",
+    "stale_knowledge_handling": "use-driven validation; archived, superseded, and deprecated records are immutable"
+  }
+}

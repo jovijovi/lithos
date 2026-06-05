@@ -34,7 +34,10 @@ Read Lithos at three layers:
 - **Agent run manifest** — a per-run audit record of what was authorized, what actually ran, and the evidence and boundary involved; a record, not an authorization. See [`docs/agent-run-manifest.md`](docs/agent-run-manifest.md).
 - **Templates** — ready-to-copy local workflow files in [`templates/`](templates/), for workflow-only and full governed adoption.
 - **Governed project structure** — a fuller document authority chain for mature repos: `GOAL.md`, PRD, design, roadmap/status, feature tracker, phase plans, and `docs/AI_FLOW.md`. See [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
-- **Knowledge spine** — development logs, lessons, practices, generated docs-only indexes, and drift reports for governed repos: `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, and `tools/`.
+- **Knowledge spine** — development logs, lessons, practices, generated docs-only indexes, and drift reports for governed repos: `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, and `tools/`. How this knowledge lives, expires by use, and stays subordinate to the authority chain is defined in [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
+- **Conformance & adoption manifest** — what a project may claim, declared in a machine-readable adoption manifest ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), filled from [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), with [conformance fixtures](fixtures/conformance/) showing what passes and what must fail. See [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
+- **Autonomous PR policy** — what an agent may do with pull requests on its own, and what it must never self-approve or self-merge. See [`docs/autonomous-pr-policy.md`](docs/autonomous-pr-policy.md).
+- **Tooling interoperability** — the artifacts that carry collaboration state are vendor-neutral and portable, so a project can change tools without losing its governance. See [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Bilingual README governance** — source and localized README files stay semantically aligned when user-facing claims change.
 - **Skills** — reusable operational procedures in [`skills/`](skills/) for creating, auditing, and adapting a local AI flow.
 - **Examples** — a worked governed adoption in [`examples/`](examples/).
@@ -51,7 +54,7 @@ Adopting Lithos does **not** authorize autonomous or live AI execution. Its appr
 2. Choose where your collaboration rules will live — pick your own local workflow filename (e.g. `AI_FLOW.md`, `ai-collaborative-development-standards.md`, or a name that fits your repo). See [`docs/local-adoption.md`](docs/local-adoption.md).
 3. Copy a starting point: [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) for workflow-only formal review, or the full [`templates/governed-project/`](templates/governed-project/) spine for a mature governed repo with dev logs, lessons, practices, generated docs index, drift report, and bilingual README rules.
 4. Add the [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) contract to your `AGENTS.md`.
-5. Adopt [`templates/pr-checklist.md`](templates/pr-checklist.md) and the [verification standards](docs/verification-standards.md).
+5. Adopt [`templates/pr-checklist.md`](templates/pr-checklist.md) and the [verification standards](docs/verification-standards.md), and declare what you conform to in an [adoption manifest](templates/lithos-adoption-manifest.json).
 
 A worked walkthrough lives in [`examples/governed-project/`](examples/governed-project/).
 
@@ -73,12 +76,18 @@ A worked walkthrough lives in [`examples/governed-project/`](examples/governed-p
 │   ├── governed-project-structure.md
 │   ├── verification-standards.md
 │   ├── agent-run-manifest.md
+│   ├── knowledge-governance.md
+│   ├── conformance-and-fixtures.md
+│   ├── tooling-interoperability.md
+│   ├── autonomous-pr-policy.md
 │   └── versioning-and-governance.md
+├── schemas/                   Machine-readable adoption manifest schema
 ├── skills/                    Reusable operational procedures
 │   ├── create-local-ai-flow/
 │   ├── audit-local-ai-flow/
 │   └── adapt-ai-flow-for-governed-project/
 ├── templates/                 Copy-ready local adoption files and governed project spine
+├── fixtures/                  Conformance fixtures (passing and rejecting)
 ├── examples/                  Worked adoptions
 └── scripts/                   Repository verification (stdlib Python)
 ```

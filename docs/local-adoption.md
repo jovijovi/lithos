@@ -33,7 +33,8 @@ It **should** also list the project's destructive/external actions explicitly, p
 - A PR checklist — start from [`templates/pr-checklist.md`](../templates/pr-checklist.md).
 - An environment and sandbox policy declaring run boundaries — start from [`templates/environment-policy.md`](../templates/environment-policy.md). A lighter governed workflow may instead fold these decisions into the local workflow file.
 - An agent run manifest for runs that need auditability — start from [`templates/agent-run-manifest.json`](../templates/agent-run-manifest.json).
-- For governed projects, a root `LESSONS.md`, `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, generated `docs/INDEX.md`, and generated `docs/lessons/_drift_report.md` keep reusable knowledge out of chat history.
+- An adoption manifest declaring the Lithos version and depth claimed, the role holders, how the gates operate, and the [autonomous PR policy](autonomous-pr-policy.md) in force — start from [`templates/lithos-adoption-manifest.json`](../templates/lithos-adoption-manifest.json) against [`schemas/lithos-adoption-manifest.schema.json`](../schemas/lithos-adoption-manifest.schema.json). It is a declaration, not an authorization; see [conformance and fixtures](conformance-and-fixtures.md). These artifacts stay vendor-neutral and portable — see [tooling interoperability](tooling-interoperability.md).
+- For governed projects, a root `LESSONS.md`, `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, generated `docs/INDEX.md`, and generated `docs/lessons/_drift_report.md` keep reusable knowledge out of chat history, governed as durable artifacts per [knowledge governance](knowledge-governance.md).
 - If localized README files exist, keep them semantically aligned with `README.md` whenever visible project claims change.
 
 ## Choosing a starting template
@@ -59,4 +60,4 @@ When you have adapted a template for a project with formal governance, the [`ada
 
 ## Keeping it honest
 
-A local workflow file that no longer matches how the project actually works is worse than none, because it misleads. Review it when the team, tooling, or risk profile changes, and verify it with the [`audit-local-ai-flow`](../skills/audit-local-ai-flow/SKILL.md) skill.
+A local workflow file that no longer matches how the project actually works is worse than none, because it misleads. Review it when the team, tooling, or risk profile changes, and verify it with the [`audit-local-ai-flow`](../skills/audit-local-ai-flow/SKILL.md) skill. If the project also publishes an adoption manifest, keep it honest the same way: the manifest must keep describing how the project actually operates, and a claim that drops a requirement is not a smaller Lithos adoption — see [conformance and fixtures](conformance-and-fixtures.md).

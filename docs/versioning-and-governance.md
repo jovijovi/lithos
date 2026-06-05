@@ -14,7 +14,7 @@ Each release **should** carry notes describing what changed and, for major relea
 
 ## What is normative
 
-The **normative** content is the requirement language (**must** / **should** / **may**) in the [`docs/`](.) standard documents. Templates, skills, and examples are **informative**: they help adoption but do not themselves define conformance. A change to informative material is at most a minor release; a change to a requirement is major.
+The **normative** content is the requirement language (**must** / **should** / **may**) in the [`docs/`](.) standard documents. Templates, skills, examples, and the conformance aids — the [adoption manifest schema, fixtures, and checker](conformance-and-fixtures.md) — are **informative**: they help adoption and demonstrate the requirements but do not themselves define conformance. A change to informative material is at most a minor release; a change to a requirement is major. Adding or tightening a fixture or checker invariant stays informative unless it also changes a prose requirement, in which case it is normative and follows this process.
 
 ## Conformance and claims
 

@@ -30,6 +30,8 @@ Use short-lived task branches and isolated worktrees for AI-assisted work. Deriv
 
 Do not infer live settlement, payment-network calls, release publication, destructive branch actions, or external delivery from ordinary implementation approval. These require explicit higher-gate approval in `docs/AI_FLOW.md`.
 
+Agents may open and update their own pull requests as preparation, but must never self-approve, self-merge, enable ownerless auto-merge, delete branches, publish, or perform live/external/destructive actions without explicit owner approval. Adopting Lithos is not authorization for any of these.
+
 ## Secrets and credentials
 
 Never commit secrets, API keys, tokens, cookies, raw environment values, private platform identifiers, or signed URLs. Use `[REDACTED]` in docs and examples when referring to sensitive values.
@@ -43,3 +45,6 @@ Never commit secrets, API keys, tokens, cookies, raw environment values, private
 - Update `docs/lessons/`, `docs/practices/`, and root `LESSONS.md` when the work produces reusable knowledge.
 - Update `README.md` and `README.zh-CN.md` together when user-facing claims change.
 - Run `python tools/build_docs_index.py --check` and `python tools/docs_drift_signal.py --check` before claiming documentation governance is current.
+- Treat knowledge records (`docs/dev_log/`, `docs/lessons/`, `docs/practices/`) as informative: they inform future work but never override the authority chain or clear an approval gate.
+- Keep collaboration artifacts vendor-neutral, plain-text, and portable across tools; never embed vendor or product names or secret values.
+- Declare Granite's Lithos conformance — version, depth, role holders, gate operation, and the autonomous PR policy — in an adoption manifest; the manifest is a declaration, not an authorization.

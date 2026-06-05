@@ -34,7 +34,10 @@ Lithos читается на трёх уровнях:
 - **Манифест запуска агента** — аудиторская запись по каждому запуску: что было разрешено, что фактически выполнялось, а также свидетельства и граница; это запись, а не разрешение. См. [`docs/agent-run-manifest.md`](docs/agent-run-manifest.md).
 - **Шаблоны** — готовые к копированию файлы локального процесса в [`templates/`](templates/): для адаптации только рабочего процесса и для полного управления.
 - **Структура управляемого проекта** — более полная цепочка документальной власти для зрелых репозиториев: `GOAL.md`, PRD, дизайн, roadmap/status, трекер функций, фазовые планы и `docs/AI_FLOW.md`. См. [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
-- **Позвоночник знаний** — журналы разработки, уроки, практики, генерируемые индексы только для `docs/` и отчёты о дрейфе для управляемых репозиториев: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` и `tools/`.
+- **Позвоночник знаний** — журналы разработки, уроки, практики, генерируемые индексы только для `docs/` и отчёты о дрейфе для управляемых репозиториев: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` и `tools/`. Как это знание живёт, устаревает по использованию и остаётся подчинённым цепочке власти, определяется в [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
+- **Соответствие и манифест внедрения** — что проект может заявить, объявляется в машиночитаемом манифесте внедрения ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), заполняется из [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), с [фикстурами соответствия](fixtures/conformance/), показывающими, что проходит и что обязано не пройти. См. [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
+- **Политика автономных PR** — что агент может делать с pull request самостоятельно и что он никогда не должен самостоятельно одобрять или сливать. См. [`docs/autonomous-pr-policy.md`](docs/autonomous-pr-policy.md).
+- **Совместимость инструментов** — артефакты, несущие состояние сотрудничества, нейтральны к поставщику и переносимы, поэтому проект может сменить инструменты, не теряя управление. См. [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Управление многоязычными README** — исходный README и локализованные README остаются семантически согласованными при изменении пользовательских утверждений.
 - **Навыки** — переиспользуемые операционные процедуры в [`skills/`](skills/) для создания, аудита и адаптации локального потока ИИ.
 - **Примеры** — проработанное внедрение управляемого проекта в [`examples/`](examples/).
@@ -51,7 +54,7 @@ Lithos — это **стандарт и набор инструментов дл
 2. Решите, где будут жить ваши правила сотрудничества — выберите собственное имя файла локального процесса (например, `AI_FLOW.md`, `ai-collaborative-development-standards.md` или имя, подходящее вашему репозиторию). См. [`docs/local-adoption.md`](docs/local-adoption.md).
 3. Скопируйте отправную точку: [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) для формального ревью только на уровне рабочего процесса или полный каркас [`templates/governed-project/`](templates/governed-project/) для зрелого управляемого репозитория с журналами разработки, уроками, практиками, генерируемым индексом, отчётом о дрейфе и правилами многоязычных README.
 4. Добавьте договор [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) в свой `AGENTS.md`.
-5. Примите [`templates/pr-checklist.md`](templates/pr-checklist.md) и [стандарты проверки](docs/verification-standards.md).
+5. Примите [`templates/pr-checklist.md`](templates/pr-checklist.md) и [стандарты проверки](docs/verification-standards.md), и объявите, чему вы соответствуете, в [манифесте внедрения](templates/lithos-adoption-manifest.json).
 
 Полный разбор находится в [`examples/governed-project/`](examples/governed-project/).
 
@@ -73,12 +76,18 @@ Lithos — это **стандарт и набор инструментов дл
 │   ├── governed-project-structure.md
 │   ├── verification-standards.md
 │   ├── agent-run-manifest.md
+│   ├── knowledge-governance.md
+│   ├── conformance-and-fixtures.md
+│   ├── tooling-interoperability.md
+│   ├── autonomous-pr-policy.md
 │   └── versioning-and-governance.md
+├── schemas/                   Машиночитаемая схема манифеста внедрения
 ├── skills/                    Переиспользуемые операционные процедуры
 │   ├── create-local-ai-flow/
 │   ├── audit-local-ai-flow/
 │   └── adapt-ai-flow-for-governed-project/
 ├── templates/                 Готовые файлы локального внедрения и каркас управляемого проекта
+├── fixtures/                  Фикстуры соответствия (проходящие и отклоняющие)
 ├── examples/                  Проработанные внедрения
 └── scripts/                   Проверка репозитория (стандартная библиотека Python)
 ```

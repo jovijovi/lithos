@@ -71,6 +71,10 @@ Approval authority is never held by an implementation agent.
 
 Clearing one gate never clears a higher gate.
 
+## Autonomous PR policy
+
+Opening and updating a pull request is preparation: an agent may open its own PR, push updates in response to review or CI, attach evidence, and request review. An agent must never self-approve, self-merge, enable ownerless auto-merge, delete branches, publish a release, connect to payment networks, or perform other live/external/destructive actions without explicit per-action owner approval. A pull request is a proposal; adopting Lithos is not authorization to land it.
+
 ## Environment and sandbox boundaries
 
 These state where a run may execute and what it may touch. They describe limits; they do not grant capability, and they never authorize live settlement or autonomous operation.
@@ -127,6 +131,10 @@ When a collaboration unit is executed by an agent and needs to be auditable, ret
 - what was redacted, where the manifest is retained, and what was left unverified or skipped.
 
 A manifest records a run; it does not authorize one and never licenses live settlement or autonomous operation. Retain manifests alongside dev-log and verification evidence under `docs/dev_log/`.
+
+## Conformance and portable artifacts
+
+Granite declares its Lithos conformance — version, depth, role holders, gate operation, and the autonomous PR policy above — in a machine-readable adoption manifest. The manifest is a declaration, not an authorization: writing one grants no permission and clears no gate. Keep it and every committed collaboration artifact vendor-neutral, plain-text, and portable across tools, with no vendor or product names and no secret values. Knowledge artifacts (dev logs, lessons, practices) are part of this portable set: they record and inform, but never override the authority chain or grant approval.
 
 ## PR requirements
 
