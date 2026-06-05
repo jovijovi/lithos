@@ -1,6 +1,7 @@
 ---
 title: "Feature and Capability Tracker"
 status: active
+created_at: 2026-06-05
 ---
 # Feature and Capability Tracker
 

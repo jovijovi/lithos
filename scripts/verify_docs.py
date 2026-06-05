@@ -7,6 +7,7 @@ Pure-stdlib checks used by local development and GitHub Actions.
 from __future__ import annotations
 
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -45,6 +46,18 @@ REQUIRED_FILES = [
     "templates/governed-project/docs/roadmap/features.md",
     "templates/governed-project/docs/roadmap/current-status.md",
     "templates/governed-project/docs/plans/README.md",
+    "templates/governed-project/README.md",
+    "templates/governed-project/README.zh-CN.md",
+    "templates/governed-project/LESSONS.md",
+    "templates/governed-project/.github/PULL_REQUEST_TEMPLATE.md",
+    "templates/governed-project/.github/workflows/verify.yml",
+    "templates/governed-project/scripts/verify_project.py",
+    "templates/governed-project/docs/dev_log/README.md",
+    "templates/governed-project/docs/lessons/README.md",
+    "templates/governed-project/docs/lessons/_drift_report.md",
+    "templates/governed-project/docs/practices/README.md",
+    "templates/governed-project/tools/build_docs_index.py",
+    "templates/governed-project/tools/docs_drift_signal.py",
     "templates/AGENTS.md.snippet",
     "templates/pr-checklist.md",
     "examples/minimal-project/README.md",
@@ -63,6 +76,15 @@ REQUIRED_FILES = [
     "examples/governed-project/docs/roadmap/features.md",
     "examples/governed-project/docs/roadmap/current-status.md",
     "examples/governed-project/docs/plans/README.md",
+    "examples/governed-project/README.zh-CN.md",
+    "examples/governed-project/LESSONS.md",
+    "examples/governed-project/docs/dev_log/2026-06-05-governance-spine-adoption.md",
+    "examples/governed-project/docs/lessons/2026-06-05-docs-index-boundary.md",
+    "examples/governed-project/docs/lessons/_drift_report.md",
+    "examples/governed-project/docs/practices/README.md",
+    "examples/governed-project/docs/practices/2026-06-05-governed-project-knowledge-spine.md",
+    "examples/governed-project/tools/build_docs_index.py",
+    "examples/governed-project/tools/docs_drift_signal.py",
     "scripts/verify_docs.py",
     ".github/workflows/verify.yml",
     ".gitignore",
@@ -158,6 +180,42 @@ def check_readme_language_links(errors: list[str]) -> None:
                 fail(f"{rel}: language link target missing: {target}", errors)
 
 
+
+def check_readme_semantic_sync(errors: list[str]) -> None:
+    shared_markers = [
+        "docs/governed-project-structure.md",
+        "templates/governed-project/",
+        "docs/dev_log/",
+        "docs/lessons/",
+        "docs/practices/",
+        "tools/",
+    ]
+    for rel in README_FILES:
+        path = ROOT / rel
+        if not path.exists():
+            continue
+        content = read_text(path)
+        for marker in shared_markers:
+            if marker not in content:
+                fail(f"{rel}: missing synchronized README marker: {marker}", errors)
+
+
+def run_subcheck(cwd: Path, args: list[str], errors: list[str]) -> None:
+    result = subprocess.run(args, cwd=cwd, text=True, capture_output=True)
+    if result.returncode != 0:
+        detail = (result.stdout + result.stderr).strip().splitlines()
+        suffix = f": {detail[-1]}" if detail else ""
+        fail(f"{cwd.relative_to(ROOT)}: subcheck failed: {' '.join(args)}{suffix}", errors)
+
+
+def check_governed_project_generators(errors: list[str]) -> None:
+    run_subcheck(ROOT / "templates/governed-project", [sys.executable, "scripts/verify_project.py"], errors)
+    for rel in ("examples/governed-project",):
+        cwd = ROOT / rel
+        run_subcheck(cwd, [sys.executable, "tools/build_docs_index.py", "--check"], errors)
+        run_subcheck(cwd, [sys.executable, "tools/docs_drift_signal.py", "--check"], errors)
+
+
 def check_skill_frontmatter(errors: list[str]) -> None:
     for path in sorted((ROOT / "skills").glob("*/SKILL.md")):
         content = read_text(path)
@@ -226,6 +284,8 @@ def main() -> int:
     errors: list[str] = []
     check_required_files(errors)
     check_readme_language_links(errors)
+    check_readme_semantic_sync(errors)
+    check_governed_project_generators(errors)
     check_skill_frontmatter(errors)
     check_markdown_links(errors)
     check_forbidden_text(errors)

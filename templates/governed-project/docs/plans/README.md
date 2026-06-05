@@ -1,6 +1,7 @@
 ---
 title: "Implementation plans directory"
 status: active
+created_at: 2026-06-05
 ---
 # Implementation plans directory
 

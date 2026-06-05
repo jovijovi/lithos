@@ -29,6 +29,8 @@ Check each item; record present / partial / missing with a pointer to the releva
 5. **Discoverability** — the file is referenced from `README`/`AGENTS.md` and is a single source of truth.
 6. **No placeholders** — no unresolved bracketed decisions remain.
 7. **Governed document spine** — if the project claims formal governance, roadmap phases, release gates, runtime boundaries, or multi-agent development, verify the `GOAL.md -> PRD -> design -> roadmap/features + current-status -> docs/plans -> code` chain from `docs/governed-project-structure.md`, and confirm task-level plans do not live in `docs/roadmap/`.
+8. **Knowledge spine** — for mature governed projects, verify `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, root `LESSONS.md`, generated `docs/INDEX.md`, and `docs/lessons/_drift_report.md` exist or are explicitly out of scope.
+9. **Localized README sync** — if localized README files exist, verify they stay semantically aligned with `README.md` when visible claims change.
 
 ## Drift checks (document vs. reality)
 

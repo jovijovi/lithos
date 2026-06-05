@@ -1,6 +1,7 @@
 ---
-title: "[Project Name] Technical Solution"
+title: "Project Technical Solution"
 status: active
+created_at: 2026-06-05
 ---
 # [Project Name] Technical Solution
 

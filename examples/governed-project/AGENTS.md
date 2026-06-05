@@ -39,3 +39,7 @@ Never commit secrets, API keys, tokens, cookies, raw environment values, private
 - Run the verification commands listed in `docs/AI_FLOW.md` before claiming completion.
 - Update `docs/roadmap/features.md` and `docs/roadmap/current-status.md` when feature status, acceptance evidence, or open tails change.
 - Keep `docs/INDEX.md` aligned with documentation changes.
+- Record task evidence in `docs/dev_log/` when work is non-trivial.
+- Update `docs/lessons/`, `docs/practices/`, and root `LESSONS.md` when the work produces reusable knowledge.
+- Update `README.md` and `README.zh-CN.md` together when user-facing claims change.
+- Run `python tools/build_docs_index.py --check` and `python tools/docs_drift_signal.py --check` before claiming documentation governance is current.

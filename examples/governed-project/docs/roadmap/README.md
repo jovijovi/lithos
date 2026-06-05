@@ -1,3 +1,8 @@
+---
+title: "Roadmap directory"
+status: active
+created_at: 2026-06-05
+---
 # Roadmap Directory
 
 `docs/roadmap/` owns roadmap, phase status, and feature tracking.

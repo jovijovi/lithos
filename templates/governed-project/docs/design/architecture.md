@@ -1,6 +1,7 @@
 ---
-title: "[Project Name] System Architecture"
+title: "Project System Architecture"
 status: active
+created_at: 2026-06-05
 ---
 # [Project Name] System Architecture
 

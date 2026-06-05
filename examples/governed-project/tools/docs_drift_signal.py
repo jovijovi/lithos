@@ -1,0 +1,206 @@
+#!/usr/bin/env python3
+"""Activity-aware drift signal for lessons and practices.
+
+For each lesson or practice that declares ``applies_to`` paths in frontmatter,
+check whether any of those paths changed in git history since the doc's
+``last_validated_at`` date. Output a summary to
+``docs/lessons/_drift_report.md`` so future contributors know which knowledge
+artifacts may need re-validation.
+"""
+from __future__ import annotations
+
+import argparse
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DOCS_ROOT = PROJECT_ROOT / "docs"
+REPORT_PATH = DOCS_ROOT / "lessons" / "_drift_report.md"
+
+
+def _parse_frontmatter(text: str) -> dict | None:
+    if not text.startswith("---\n"):
+        return None
+    end = text.find("\n---\n", 4)
+    if end < 0:
+        return None
+    block = text[4:end].splitlines()
+    data: dict = {}
+    current_list_key: str | None = None
+    for line in block:
+        if not line.strip():
+            current_list_key = None
+            continue
+        if line.startswith("  - ") and current_list_key is not None:
+            data[current_list_key].append(line[4:].strip().strip('"').strip("'"))
+            continue
+        match = re.match(r"^([\w_]+):\s*(.*)$", line)
+        if not match:
+            current_list_key = None
+            continue
+        key, value = match.group(1), match.group(2).strip()
+        if not value:
+            data[key] = []
+            current_list_key = key
+            continue
+        data[key] = value.strip('"').strip("'")
+        current_list_key = None
+    return data
+
+
+def _is_git_working_tree() -> bool:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--is-inside-work-tree"],
+            cwd=PROJECT_ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+    return result.stdout.strip() == "true"
+
+
+def _commit_touches_path(commit: str, path: str) -> bool:
+    try:
+        result = subprocess.run(
+            ["git", "diff-tree", "--root", "--no-commit-id", "--name-only", "-r", commit, "--", path],
+            cwd=PROJECT_ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+    return any(line.strip() == path for line in result.stdout.splitlines())
+
+
+def _git_log_changes(path: str, since: str, validation_doc: str) -> list[str]:
+    """Return commits touching ``path`` since ``since`` without validating ``validation_doc``."""
+    try:
+        result = subprocess.run(
+            ["git", "log", f"--since={since}", "--format=%H%x00%h %s", "--no-merges", "--", path],
+            cwd=PROJECT_ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return []
+    changes: list[str] = []
+    for line in result.stdout.splitlines():
+        if not line.strip() or "\0" not in line:
+            continue
+        commit, summary = line.split("\0", 1)
+        if _commit_touches_path(commit, validation_doc):
+            continue
+        changes.append(summary)
+    return changes
+
+
+def _scan_knowledge_docs() -> list[tuple[str, dict]]:
+    found: list[tuple[str, dict]] = []
+    for subdir in ("lessons", "practices"):
+        base = DOCS_ROOT / subdir
+        if not base.is_dir():
+            continue
+        for path in sorted(base.rglob("*.md")):
+            if path.name.startswith("_") or path.name == "README.md":
+                continue
+            fm = _parse_frontmatter(path.read_text(encoding="utf-8"))
+            if fm is not None:
+                found.append((path.relative_to(DOCS_ROOT).as_posix(), fm))
+    return found
+
+
+def _build_report() -> str:
+    docs = _scan_knowledge_docs()
+    drifts: list[dict] = []
+    skipped_no_applies = 0
+    skipped_no_validation_date = 0
+    for rel, fm in docs:
+        applies_to = fm.get("applies_to") or []
+        if not applies_to:
+            skipped_no_applies += 1
+            continue
+        last_validated = str(fm.get("last_validated_at") or "").strip()
+        if not last_validated:
+            skipped_no_validation_date += 1
+            continue
+        per_path: dict[str, list[str]] = {}
+        validation_doc = f"docs/{rel}"
+        for code_path in applies_to:
+            commits = _git_log_changes(code_path, last_validated, validation_doc)
+            if commits:
+                per_path[code_path] = commits[:5]
+        if per_path:
+            drifts.append({
+                "doc": rel,
+                "title": str(fm.get("title", rel)).strip(),
+                "last_validated_at": last_validated,
+                "drifts": per_path,
+            })
+    out: list[str] = [
+        "<!-- AUTO-GENERATED by tools/docs_drift_signal.py — do not hand-edit -->",
+        "",
+        "# Lesson / practice drift report",
+        "",
+        f"Knowledge docs scanned: {len(docs)}",
+        f"With drift candidates: **{len(drifts)}**",
+        f"Skipped (no `applies_to`): {skipped_no_applies}",
+        f"Skipped (no `last_validated_at`): {skipped_no_validation_date}",
+        "",
+    ]
+    if not drifts:
+        out.append("No drift candidates. All knowledge docs are in sync with their `applies_to` paths since their `last_validated_at`.")
+        out.append("")
+    else:
+        out.append("## Candidates")
+        out.append("")
+        out.append("Commits that also update the validating knowledge doc are treated as re-validation changes and excluded from this report.")
+        out.append("")
+        for item in drifts:
+            doc_rel = item["doc"]
+            href = doc_rel[len("lessons/"):] if doc_rel.startswith("lessons/") else "../" + doc_rel
+            out.append(f"### [{item['title']}]({href})")
+            out.append("")
+            out.append(f"- Doc: `{item['doc']}`")
+            out.append(f"- Last validated: {item['last_validated_at']}")
+            out.append("- Recent commits touching `applies_to` paths:")
+            for code_path, commits in item["drifts"].items():
+                out.append(f"  - `{code_path}`:")
+                for commit in commits:
+                    out.append(f"    - {commit}")
+            out.append("")
+    return "\n".join(out).rstrip() + "\n"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--write", action="store_true")
+    parser.add_argument("--check", action="store_true")
+    args = parser.parse_args()
+    if not args.write and not args.check:
+        args.write = True
+    if not _is_git_working_tree():
+        print("ERROR: docs_drift_signal.py must run inside a git working tree.", file=sys.stderr)
+        return 2
+    rendered = _build_report()
+    if args.check:
+        existing = REPORT_PATH.read_text(encoding="utf-8") if REPORT_PATH.exists() else ""
+        if existing != rendered:
+            print("ERROR: docs/lessons/_drift_report.md is stale. Run `python tools/docs_drift_signal.py --write` and commit.", file=sys.stderr)
+            return 1
+        print("OK: drift report up to date")
+        return 0
+    REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    REPORT_PATH.write_text(rendered, encoding="utf-8")
+    print(f"wrote {REPORT_PATH}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
