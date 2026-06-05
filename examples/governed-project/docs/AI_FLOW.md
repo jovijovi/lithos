@@ -1,6 +1,7 @@
 ---
 title: "AI-assisted development flow"
 status: active
+created_at: 2026-06-05
 ---
 # AI-assisted development flow
 
@@ -15,7 +16,7 @@ Documentation development and management come before code development: code impl
 The authority chain is:
 
 ```text
-GOAL.md -> docs/product/prd.md -> docs/design/architecture.md + docs/design/technical-solution.md -> docs/roadmap/features.md + docs/roadmap/current-status.md -> approved phase implementation plan in docs/plans/ -> code
+GOAL.md -> docs/product/prd.md -> docs/design/architecture.md + docs/design/technical-solution.md -> docs/roadmap/features.md + docs/roadmap/current-status.md -> approved phase implementation plan in docs/plans/ -> code and knowledge artifacts
 ```
 
 Required preflight for roadmap, phase-gate, implementation, PR, CI, review, merge, or next-phase-readiness work:
@@ -27,6 +28,7 @@ Required preflight for roadmap, phase-gate, implementation, PR, CI, review, merg
 5. `docs/roadmap/features.md`
 6. `docs/roadmap/current-status.md`
 7. this file
+8. `LESSONS.md` and `docs/lessons/_drift_report.md` when knowledge artifacts or README-visible claims change
 
 ## Branch model
 
@@ -76,9 +78,10 @@ Clearing one gate never clears a higher gate.
 3. **Plan** — for non-trivial implementation, derive a phase implementation plan from PRD/design/roadmap.
 4. **Implement** — use narrow commits and tests for behavior changes.
 5. **Update authority docs** — update PRD/design/feature tracker/roadmap when product scope, design, completion state, or acceptance evidence changes.
-6. **Verify** — run local gates and safety scans.
-7. **Review** — reviewer findings must be resolved or explicitly accepted by the owner.
-8. **PR and merge** — push branch, open PR, wait for CI, merge only when green, then verify `main` from a clean checkout/worktree.
+6. **Update knowledge docs** — add dev logs, lessons, or practices when the work produces reusable knowledge or phase evidence; keep localized READMEs aligned when visible claims change.
+7. **Verify** — run local gates and safety scans.
+8. **Review** — reviewer findings must be resolved or explicitly accepted by the owner.
+9. **PR and merge** — push branch, open PR, wait for CI, merge only when green, then verify `main` from a clean checkout/worktree.
 
 ## Implementation plan rule
 
@@ -92,6 +95,8 @@ Run these before PR or merge unless the task explains why a gate is irrelevant:
 
 ```bash
 python -m unittest discover -s tests
+python tools/build_docs_index.py --check
+python tools/docs_drift_signal.py --check
 python scripts/verify_docs.py
 git diff --check
 ```

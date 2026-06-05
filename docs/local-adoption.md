@@ -30,6 +30,8 @@ It **should** also list the project's destructive/external actions explicitly, a
 
 - An `AGENTS.md` (or equivalent) carrying the agent-facing contract — start from [`templates/AGENTS.md.snippet`](../templates/AGENTS.md.snippet).
 - A PR checklist — start from [`templates/pr-checklist.md`](../templates/pr-checklist.md).
+- For governed projects, a root `LESSONS.md`, `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, generated `docs/INDEX.md`, and generated `docs/lessons/_drift_report.md` keep reusable knowledge out of chat history.
+- If localized README files exist, keep them semantically aligned with `README.md` whenever visible project claims change.
 
 ## Choosing a starting template
 

@@ -31,6 +31,9 @@ Lithos se lee en tres planos:
 - **Disciplina de árboles de trabajo y ramas** — el aislamiento del trabajo en curso para que los cambios humanos y de los agentes sigan siendo revisables. Véase [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Normas de verificación** — la evidencia por encima del acuerdo: pruebas, CI, revisiones, artefactos, reproducibilidad. Véase [`docs/verification-standards.md`](docs/verification-standards.md).
 - **Plantillas** — archivos de flujo local listos para copiar en [`templates/`](templates/), mínimo y gobernado.
+- **Estructura de proyecto gobernado** — una cadena de autoridad documental más completa para repositorios maduros: `GOAL.md`, PRD, diseño, hoja de ruta/estado, seguimiento de funciones, planes de fase y `docs/AI_FLOW.md`. Véase [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
+- **Columna vertebral de conocimiento** — registros de desarrollo, lecciones, prácticas, índices generados solo para `docs/` e informes de deriva para repositorios gobernados: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` y `tools/`.
+- **Gobernanza de README bilingües** — el README fuente y los README localizados se mantienen semánticamente alineados cuando cambian las afirmaciones visibles.
 - **Habilidades** — procedimientos operativos reutilizables en [`skills/`](skills/) para crear, auditar y adaptar un flujo de IA local.
 - **Ejemplos** — adopciones trabajadas en [`examples/`](examples/), desde un único colaborador hasta un proyecto gobernado.
 
@@ -44,7 +47,7 @@ Adoptar Lithos **no** autoriza la ejecución autónoma ni en vivo de la IA. Su s
 
 1. Lea [`docs/philosophy.md`](docs/philosophy.md) y [`docs/core-concepts.md`](docs/core-concepts.md).
 2. Decida dónde vivirán sus reglas de colaboración: elija su propio nombre de archivo de flujo local (p. ej. `AI_FLOW.md`, `ai-collaborative-development-standards.md`, o un nombre que encaje en su repositorio). Véase [`docs/local-adoption.md`](docs/local-adoption.md).
-3. Copie un punto de partida: [`templates/minimal-ai-flow.md`](templates/minimal-ai-flow.md) para un proyecto pequeño, o [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) para uno con revisión formal.
+3. Copie un punto de partida: [`templates/minimal-ai-flow.md`](templates/minimal-ai-flow.md) para un proyecto pequeño, [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) para uno con revisión formal, o la estructura completa [`templates/governed-project/`](templates/governed-project/) para un repositorio gobernado maduro con registros de desarrollo, lecciones, prácticas, índice generado, informe de deriva y reglas de README bilingües.
 4. Añada el contrato [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) a su `AGENTS.md`.
 5. Adopte [`templates/pr-checklist.md`](templates/pr-checklist.md) y las [normas de verificación](docs/verification-standards.md).
 
@@ -64,13 +67,14 @@ Un recorrido completo se encuentra en [`examples/minimal-project/`](examples/min
 │   ├── roles.md
 │   ├── approval-semantics.md
 │   ├── local-adoption.md
+│   ├── governed-project-structure.md
 │   ├── verification-standards.md
 │   └── versioning-and-governance.md
 ├── skills/                    Procedimientos operativos reutilizables
 │   ├── create-local-ai-flow/
 │   ├── audit-local-ai-flow/
 │   └── adapt-ai-flow-for-governed-project/
-├── templates/                 Archivos de adopción local listos para copiar
+├── templates/                 Archivos de adopción local y estructura de proyecto gobernado listos para copiar
 ├── examples/                  Adopciones trabajadas
 └── scripts/                   Verificación del repositorio (biblioteca estándar de Python)
 ```

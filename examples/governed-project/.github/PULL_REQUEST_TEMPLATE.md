@@ -12,6 +12,8 @@
 - [ ] One coherent intent; scope did not widen without owner approval.
 - [ ] Work happened on a branch or isolated worktree, not directly on `main`.
 - [ ] Feature tracker and current-status updates are included if completion state changed.
+- [ ] `docs/INDEX.md`, `docs/lessons/_drift_report.md`, dev log, lessons, and practices are updated or checked when relevant.
+- [ ] `README.md` and `README.zh-CN.md` are semantically aligned if user-facing claims changed.
 - [ ] No live settlement, payment-network call, release publication, or external delivery occurred without explicit higher-gate approval.
 
 ## Verification

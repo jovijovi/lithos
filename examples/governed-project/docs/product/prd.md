@@ -1,6 +1,7 @@
 ---
 title: "Granite PRD"
 status: active
+created_at: 2026-06-05
 ---
 # Granite PRD
 
@@ -39,6 +40,11 @@ Granite gives downstream services a deterministic local library for fee and sett
 
 The library must validate the requested policy version before producing a decision.
 
+Checklist:
+
+- [x] Requirement states validation happens before decisions are returned.
+- [x] Evidence expectations include valid and invalid policy versions.
+
 Acceptance:
 
 - Invalid policy versions fail before a decision is returned.
@@ -47,6 +53,11 @@ Acceptance:
 ### FR-2 Fee rule evaluation
 
 The library must calculate fee decisions from local inputs and versioned rules.
+
+Checklist:
+
+- [x] Requirement states decisions come from local inputs and versioned rules.
+- [x] Evidence expectations include representative fee classes and decision metadata.
 
 Acceptance:
 
@@ -57,9 +68,28 @@ Acceptance:
 
 The library must classify settlement windows from local facts.
 
+Checklist:
+
+- [x] Requirement states settlement windows are classified from local facts.
+- [x] Evidence expectations include supported and unsupported windows.
+
 Acceptance:
 
 - Unit tests cover same-day, delayed, and unsupported windows.
+
+### FR-4 Governed knowledge spine
+
+The project must preserve dev logs, lessons, practices, generated docs index, drift report, and bilingual README alignment when governance claims change.
+
+Checklist:
+
+- [x] `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, and `LESSONS.md` exist.
+- [x] Generated docs index and drift report are checked by local verification.
+- [x] `README.md` and `README.zh-CN.md` describe the same project claims.
+
+Acceptance:
+
+- The parent Lithos verifier checks the governed knowledge spine and README markers.
 
 ## 5. Non-goals
 

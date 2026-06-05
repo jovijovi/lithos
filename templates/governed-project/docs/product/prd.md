@@ -1,6 +1,7 @@
 ---
-title: "[Project Name] PRD"
+title: "Project PRD"
 status: active
+created_at: 2026-06-05
 ---
 # [Project Name] PRD
 
@@ -72,4 +73,5 @@ A release or phase is accepted only when:
 - requirements touched by the change have evidence in `docs/roadmap/features.md`;
 - phase status and tails are updated in `docs/roadmap/current-status.md`;
 - local verification commands in `docs/AI_FLOW.md` pass or skipped gates are named honestly;
-- review concerns are resolved or explicitly accepted by the owner.
+- review concerns are resolved or explicitly accepted by the owner;
+- docs index, drift report, dev log, lessons, practices, and localized READMEs are updated or explicitly not affected.

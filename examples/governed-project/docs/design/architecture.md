@@ -1,6 +1,7 @@
 ---
 title: "Granite System Architecture"
 status: active
+created_at: 2026-06-05
 ---
 # Granite System Architecture
 

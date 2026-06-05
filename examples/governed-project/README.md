@@ -13,14 +13,19 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 - Feature/status governance split across `docs/roadmap/features.md` and `docs/roadmap/current-status.md`.
 - Task-level implementation plan rules in `docs/plans/README.md`.
 - The local Lithos workflow at `docs/AI_FLOW.md`.
+- Knowledge capture through `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, root `LESSONS.md`, and generated drift reports.
+- Bilingual README governance through `README.md` and `README.zh-CN.md`.
 
 ## Files
 
+- [`README.md`](README.md) — English example entry point.
+- [`README.zh-CN.md`](README.zh-CN.md) — Chinese example entry point.
 - [`GOAL.md`](GOAL.md) — stable product goal and source-of-truth index.
 - [`docs/AI_FLOW.md`](docs/AI_FLOW.md) — local AI-assisted development workflow.
 - [`AGENTS.md`](AGENTS.md) — agent-facing contract.
 - [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md) — PR evidence checklist.
-- [`docs/INDEX.md`](docs/INDEX.md) — documentation map.
+- [`docs/INDEX.md`](docs/INDEX.md) — generated docs-directory index.
+- [`LESSONS.md`](LESSONS.md) — root entry point for lessons and practices.
 - [`ai-collaborative-development-standards.md`](ai-collaborative-development-standards.md) — compatibility pointer to `docs/AI_FLOW.md`.
 
 ## How it was adopted
@@ -28,6 +33,7 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 1. Started from [`templates/governed-project/`](../../templates/governed-project/).
 2. Kept `docs/AI_FLOW.md` as the operational local workflow file.
 3. Added the product/design/roadmap/plans spine so development tasks trace from goal to evidence.
-4. Updated `AGENTS.md` and the PR checklist to match the stricter flow.
+4. Added the dev-log/lesson/practice knowledge spine and generated docs index/drift tooling.
+5. Updated `AGENTS.md`, bilingual READMEs, and the PR checklist to match the stricter flow.
 
 Compare with the [minimal example](../minimal-project/README.md) to see why workflow-only adoption is intentionally lighter.
