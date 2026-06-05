@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jovijovi/lithos/schemas/lithos-adoption-manifest.schema.json",
+  "title": "Lithos Adoption Manifest",
+  "description": "Machine-readable declaration of a project's Lithos conformance. A declaration, not an authorization: it grants no permission and clears no approval gate. Field reference: docs/conformance-and-fixtures.md.",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "lithos_version",
+    "adoption_profile",
+    "conformance_claim",
+    "local_workflow_file",
+    "roles",
+    "approval_gates",
+    "approval_authority",
+    "verification",
+    "autonomous_pr_policy"
+  ],
+  "properties": {
+    "manifest_version": {
+      "type": "string",
+      "description": "Version of this manifest format."
+    },
+    "lithos_version": {
+      "type": "string",
+      "description": "The Lithos version the project claims to conform to, e.g. \"1.x\"."
+    },
+    "adoption_profile": {
+      "type": "string",
+      "description": "The governed adoption depth. Lithos defines no minimal profile.",
+      "enum": ["lighter-governed-workflow", "full-governed-project"]
+    },
+    "conformance_claim": {
+      "type": "object",
+      "required": ["claims_conformance", "statement"],
+      "properties": {
+        "claims_conformance": { "type": "boolean" },
+        "statement": { "type": "string" }
+      }
+    },
+    "local_workflow_file": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Path to the single local workflow file. Singular: one source of truth, not a list."
+    },
+    "roles": {
+      "type": "object",
+      "description": "Every responsibility has a named holder. Approval authority is never an implementation agent.",
+      "required": [
+        "owner",
+        "controller",
+        "architect",
+        "implementation_agent",
+        "reviewer",
+        "verifier"
+      ],
+      "properties": {
+        "owner": {
+          "type": "object",
+          "required": ["assigned_to", "human"],
+          "properties": {
+            "assigned_to": { "type": "string", "minLength": 1 },
+            "human": { "const": true }
+          }
+        },
+        "controller": { "$ref": "#/$defs/role" },
+        "architect": { "$ref": "#/$defs/role" },
+        "implementation_agent": { "$ref": "#/$defs/role" },
+        "reviewer": { "$ref": "#/$defs/role" },
+        "verifier": { "$ref": "#/$defs/role" }
+      }
+    },
+    "approval_gates": {
+      "type": "object",
+      "description": "The four layered gates. Clearing one never clears a higher one.",
+      "required": [
+        "preparation",
+        "implementation",
+        "destructive_external",
+        "live_runtime"
+      ],
+      "properties": {
+        "preparation": {
+          "type": "object",
+          "properties": {
+            "owner_approval_required": { "type": "boolean" },
+            "standing_authorization": { "type": "boolean" }
+          }
+        },
+        "implementation": {
+          "type": "object",
+          "required": ["owner_approval_required"],
+          "properties": {
+            "owner_approval_required": { "const": true },
+            "granted_by": { "type": "string" }
+          }
+        },
+        "destructive_external": {
+          "type": "object",
+          "required": ["owner_approval_required"],
+          "properties": {
+            "owner_approval_required": { "const": true },
+            "granted_by": { "type": "string" },
+            "per_action": { "type": "boolean" }
+          }
+        },
+        "live_runtime": {
+          "type": "object",
+          "description": "Live/runtime is never weakened: even when not in scope, owner approval and separate controls remain mandatory.",
+          "required": [
+            "in_scope",
+            "owner_approval_required",
+            "separate_controls_required"
+          ],
+          "properties": {
+            "in_scope": { "type": "boolean" },
+            "owner_approval_required": { "const": true },
+            "separate_controls_required": { "const": true }
+          }
+        }
+      }
+    },
+    "approval_authority": {
+      "type": "object",
+      "description": "Owner approval is human and is kept distinct from evidence and run records.",
+      "required": [
+        "holder",
+        "delegable_to_agent",
+        "separate_from_verification_evidence",
+        "separate_from_run_records"
+      ],
+      "properties": {
+        "holder": { "const": "owner" },
+        "delegable_to_agent": { "const": false },
+        "separate_from_verification_evidence": { "const": true },
+        "separate_from_run_records": { "const": true }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "required": ["evidence_required"],
+      "properties": {
+        "evidence_required": { "const": true },
+        "independent_of_implementation": { "type": "boolean" }
+      }
+    },
+    "autonomous_pr_policy": {
+      "type": "object",
+      "description": "What an agent may do with pull requests. The forbidden actions below are never licensed by Lithos adoption.",
+      "required": [
+        "agent_may_open_pr",
+        "agent_may_update_pr",
+        "agent_self_approval",
+        "agent_self_merge",
+        "ownerless_auto_merge",
+        "ownerless_branch_deletion",
+        "ownerless_release_or_publish",
+        "live_or_runtime_default_on"
+      ],
+      "properties": {
+        "agent_may_open_pr": { "type": "boolean" },
+        "agent_may_update_pr": { "type": "boolean" },
+        "agent_self_approval": { "const": false },
+        "agent_self_merge": { "const": false },
+        "ownerless_auto_merge": { "const": false },
+        "ownerless_branch_deletion": { "const": false },
+        "ownerless_release_or_publish": { "const": false },
+        "live_or_runtime_default_on": { "const": false },
+        "owner_approval_required_for": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "knowledge_governance": {
+      "type": "object",
+      "description": "Required for full-governed-project adoption; see the conditional below.",
+      "required": [
+        "dev_log",
+        "lessons",
+        "practices",
+        "generated_index",
+        "drift_report",
+        "evidence_retention",
+        "stale_knowledge_handling"
+      ],
+      "properties": {
+        "dev_log": { "type": "string", "minLength": 1 },
+        "lessons": { "type": "string", "minLength": 1 },
+        "practices": { "type": "string", "minLength": 1 },
+        "generated_index": { "type": "string", "minLength": 1 },
+        "drift_report": { "type": "string", "minLength": 1 },
+        "evidence_retention": { "type": "string", "minLength": 1 },
+        "stale_knowledge_handling": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "adoption_profile": { "const": "full-governed-project" } }
+      },
+      "then": {
+        "required": ["knowledge_governance"]
+      }
+    }
+  ],
+  "$defs": {
+    "role": {
+      "type": "object",
+      "required": ["assigned_to"],
+      "properties": {
+        "assigned_to": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

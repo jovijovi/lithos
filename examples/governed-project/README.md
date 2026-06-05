@@ -13,7 +13,9 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 - Feature/status governance split across `docs/roadmap/features.md` and `docs/roadmap/current-status.md`.
 - Task-level implementation plan rules in `docs/plans/README.md`.
 - The local Lithos workflow at `docs/AI_FLOW.md`.
-- Knowledge capture through `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, root `LESSONS.md`, and generated drift reports.
+- Knowledge capture through `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, root `LESSONS.md`, and generated drift reports — records that inform future work but never override the authority chain or clear an approval gate.
+- A Lithos conformance claim (version and depth) suitable for a machine-readable adoption manifest, kept vendor-neutral and portable across tools.
+- An autonomous PR policy: agents may open and update pull requests, but never self-approve, self-merge, enable ownerless auto-merge, delete branches, publish, or perform live/external actions without explicit owner approval.
 - Bilingual README governance through `README.md` and `README.zh-CN.md`.
 
 ## Files

@@ -34,7 +34,10 @@ Lithos se lit sur trois plans :
 - **Manifeste d'exécution d'agent** — un enregistrement d'audit par run de ce qui a été autorisé, de ce qui s'est réellement exécuté, ainsi que des preuves et de la frontière en jeu ; un enregistrement, non une autorisation. Voir [`docs/agent-run-manifest.md`](docs/agent-run-manifest.md).
 - **Modèles** — des fichiers de flux local prêts à copier dans [`templates/`](templates/), pour une adoption en flux seul ou pleinement gouvernée.
 - **Structure de projet gouverné** — une chaîne d'autorité documentaire plus complète pour les dépôts matures : `GOAL.md`, PRD, conception, feuille de route/statut, suivi des fonctionnalités, plans de phase et `docs/AI_FLOW.md`. Voir [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
-- **Colonne vertébrale de connaissance** — journaux de développement, leçons, pratiques, index générés limités à `docs/` et rapports de dérive pour les dépôts gouvernés : `docs/dev_log/`, `docs/lessons/`, `docs/practices/` et `tools/`.
+- **Colonne vertébrale de connaissance** — journaux de développement, leçons, pratiques, index générés limités à `docs/` et rapports de dérive pour les dépôts gouvernés : `docs/dev_log/`, `docs/lessons/`, `docs/practices/` et `tools/`. La manière dont cette connaissance vit, expire par l'usage et reste subordonnée à la chaîne d'autorité est définie dans [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
+- **Conformité et manifeste d'adoption** — ce qu'un projet peut revendiquer, déclaré dans un manifeste d'adoption lisible par machine ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), rempli à partir de [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), avec des [fixtures de conformité](fixtures/conformance/) montrant ce qui passe et ce qui doit échouer. Voir [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
+- **Politique de PR autonome** — ce qu'un agent peut faire seul avec les pull requests, et ce qu'il ne doit jamais auto-approuver ni auto-fusionner. Voir [`docs/autonomous-pr-policy.md`](docs/autonomous-pr-policy.md).
+- **Interopérabilité des outils** — les artefacts qui portent l'état de collaboration sont neutres vis-à-vis des fournisseurs et portables, de sorte qu'un projet peut changer d'outils sans perdre sa gouvernance. Voir [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Gouvernance des README bilingues** — le README source et les README localisés restent sémantiquement alignés lorsque les affirmations visibles changent.
 - **Compétences** — des procédures opérationnelles réutilisables dans [`skills/`](skills/) pour créer, auditer et adapter un flux IA local.
 - **Exemples** — une adoption gouvernée concrète dans [`examples/`](examples/).
@@ -51,7 +54,7 @@ Adopter Lithos **n'autorise pas** l'exécution autonome ou en direct d'une IA. S
 2. Choisir où vivront vos règles de collaboration — sélectionnez votre propre nom de fichier de flux local (par ex. `AI_FLOW.md`, `ai-collaborative-development-standards.md`, ou un nom adapté à votre dépôt). Voir [`docs/local-adoption.md`](docs/local-adoption.md).
 3. Copier un point de départ : [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) pour une relecture formelle en flux seul, ou la structure complète [`templates/governed-project/`](templates/governed-project/) pour un dépôt gouverné mature avec journaux de développement, leçons, pratiques, index généré, rapport de dérive et règles de README bilingues.
 4. Ajouter le contrat [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) à votre `AGENTS.md`.
-5. Adopter [`templates/pr-checklist.md`](templates/pr-checklist.md) et les [normes de vérification](docs/verification-standards.md).
+5. Adopter [`templates/pr-checklist.md`](templates/pr-checklist.md) et les [normes de vérification](docs/verification-standards.md), et déclarer ce à quoi vous vous conformez dans un [manifeste d'adoption](templates/lithos-adoption-manifest.json).
 
 Une démonstration complète se trouve dans [`examples/governed-project/`](examples/governed-project/).
 
@@ -73,12 +76,18 @@ Une démonstration complète se trouve dans [`examples/governed-project/`](examp
 │   ├── governed-project-structure.md
 │   ├── verification-standards.md
 │   ├── agent-run-manifest.md
+│   ├── knowledge-governance.md
+│   ├── conformance-and-fixtures.md
+│   ├── tooling-interoperability.md
+│   ├── autonomous-pr-policy.md
 │   └── versioning-and-governance.md
+├── schemas/                   Schéma de manifeste d'adoption lisible par machine
 ├── skills/                    Procédures opérationnelles réutilisables
 │   ├── create-local-ai-flow/
 │   ├── audit-local-ai-flow/
 │   └── adapt-ai-flow-for-governed-project/
 ├── templates/                 Fichiers d'adoption locale et structure de projet gouverné prêts à copier
+├── fixtures/                  Fixtures de conformité (passantes et rejetantes)
 ├── examples/                  Adoptions concrètes
 └── scripts/                   Vérification du dépôt (Python, bibliothèque standard)
 ```

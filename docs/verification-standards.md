@@ -14,7 +14,7 @@ In rough order of strength:
 2. **Continuous integration** — a CI run on the proposed change, linked and inspectable, not just a green badge from an unrelated run.
 3. **Reproducible steps** — a recorded command (or sequence) and its actual output, such that a reviewer can re-run it and see the same result.
 4. **Artifacts** — logs, diffs, screenshots, generated files, or reports attached to the unit.
-5. **Generated governance checks** — for governed documentation changes, generated docs indexes and drift reports that can be regenerated from the repository.
+5. **Generated governance checks** — for governed documentation changes, generated docs indexes and drift reports that can be regenerated from the repository. Where a project declares conformance, the [conformance fixtures](conformance-and-fixtures.md) and their pure-stdlib checker are reproducible evidence in the same sense: anyone can re-run the checker to confirm the declared claim still holds and that the fixtures pass or reject for the documented reasons.
 6. **Independent review** — a reviewer, separate from the implementer where practical, who has examined the change against its acceptance criteria.
 
 ## What each unit must carry

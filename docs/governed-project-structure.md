@@ -38,6 +38,8 @@ Each link has one job:
 
 The environment policy and run manifests are boundary and evidence records: one describes limits, the other documents runs. Neither carries product authority, clears a [gate](approval-semantics.md), or authorizes live/runtime execution. See [environment and sandbox policy](environment-and-sandbox-policy.md) and [agent run manifest](agent-run-manifest.md).
 
+Agent pull-request activity follows the [autonomous PR policy](autonomous-pr-policy.md): an agent may open and update its own pull requests, but must never self-approve, self-merge, or land work without the owner's implementation-gate approval.
+
 ## Recommended directory map
 
 ```text
@@ -47,6 +49,7 @@ The environment policy and run manifests are boundary and evidence records: one 
 ├── README.zh-CN.md              # optional but recommended for bilingual projects
 ├── LESSONS.md
 ├── AGENTS.md
+├── lithos-adoption-manifest.json # optional machine-readable conformance declaration
 ├── .github/PULL_REQUEST_TEMPLATE.md
 ├── .github/workflows/verify.yml
 ├── docs/
@@ -72,7 +75,7 @@ The environment policy and run manifests are boundary and evidence records: one 
 └── fixtures/ or examples/ when contract evidence matters
 ```
 
-The exact code layout is local choice. The governed document spine and knowledge spine above are the portable parts. `docs/INDEX.md` should index only files under `docs/`; root entry points such as `README.md`, `GOAL.md`, and `LESSONS.md` stay outside that generated corpus.
+The exact code layout is local choice. The governed document spine and knowledge spine above are the portable parts; their artifact boundaries and vendor-neutrality rules are defined in [tooling interoperability](tooling-interoperability.md). `docs/INDEX.md` should index only files under `docs/`; root entry points such as `README.md`, `GOAL.md`, and `LESSONS.md` stay outside that generated corpus. A project may also publish a machine-readable [adoption manifest](conformance-and-fixtures.md) (for example `lithos-adoption-manifest.json`) declaring its conformance; the manifest is a declaration, not part of the authority chain, and clears no gate.
 
 ## Preflight rule for governed work
 
@@ -100,6 +103,8 @@ Then state:
 Use `docs/dev_log/` for task evidence and decision logs. Use `docs/lessons/` for reusable lessons and `docs/practices/` for reusable practices. Use root `LESSONS.md` as the discoverable entry point.
 
 Generate `docs/INDEX.md` from docs-directory frontmatter and keep it docs-only. Generate `docs/lessons/_drift_report.md` from lesson/practice `applies_to` paths, then commit both generated artifacts when they change.
+
+The full lifecycle — born-state, use-driven validation, the immutability of frozen records, evidence retention, and the authority boundary that knowledge records but never governs — is defined in [knowledge governance](knowledge-governance.md).
 
 If a project has localized README files, update them together with `README.md` whenever user-facing claims change. Semantic alignment matters more than literal translation.
 

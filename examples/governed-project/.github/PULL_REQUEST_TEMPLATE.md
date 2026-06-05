@@ -14,9 +14,11 @@
 - [ ] Feature tracker and current-status updates are included if completion state changed.
 - [ ] `docs/INDEX.md`, `docs/lessons/_drift_report.md`, dev log, lessons, and practices are updated or checked when relevant.
 - [ ] `README.md` and `README.zh-CN.md` are semantically aligned if user-facing claims changed.
+- [ ] No agent self-approval, self-merge, ownerless auto-merge, branch deletion, or publishing occurred without explicit owner approval.
 - [ ] No live settlement, payment-network call, release publication, or external delivery occurred without explicit higher-gate approval.
 - [ ] Environment, sandbox, and credential scope stayed within the documented policy (no broadened network/filesystem access or secret exposure).
 - [ ] An agent run manifest and audit evidence are attached or linked when the change was agent-executed or touched external/runtime boundaries.
+- [ ] Conformance claim (adoption manifest) and portable, vendor-neutral artifacts stay accurate; knowledge records inform but do not override the authority chain.
 
 ## Verification
 

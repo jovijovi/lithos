@@ -10,6 +10,7 @@ Lithos: https://github.com/jovijovi/lithos
 This project follows [Lithos](https://github.com/jovijovi/lithos). Read `[path/to/local-workflow-file]` for the full rules. The essentials:
 
 - **You propose; the owner approves.** Never self-approve, and never assign approval authority to an agent.
+- **Open PRs, don't land them.** You may open and update your own pull request, but never self-approve, self-merge, enable ownerless auto-merge, delete branches, or publish — those need explicit owner approval.
 - **Respect the four approval gates.** Preparation is the default. Merging needs implementation approval. Destructive or external actions ([force-push, history rewrite, publishing, deleting data, external calls]) need explicit, per-action owner approval. This project [does NOT / does] operate at the live/runtime layer.
 - **Stay isolated.** One intent per branch off `[main]`, named `[type/short-description]`. Do not commit to `[main]` directly.
 - **Respect the declared environment.** Stay within the project's environment/sandbox boundaries — filesystem roots, network egress, and credential scope. Do not reach the network, read secrets, or write outside the declared roots without explicit higher-gate approval.

@@ -13,8 +13,10 @@
 - `docs/roadmap/features.md` 与 `docs/roadmap/current-status.md` 中的功能状态治理。
 - `docs/plans/README.md` 中的任务级计划规则。
 - `docs/AI_FLOW.md` 中的本地 Lithos 工作流。
-- `docs/dev_log/`、`docs/lessons/`、`docs/practices/` 中的知识脊柱。
+- `docs/dev_log/`、`docs/lessons/`、`docs/practices/` 中的知识脊柱——记录并启发后续工作，但绝不凌驾于权威链之上，也不清除审批门禁。
 - `tools/build_docs_index.py` 与 `tools/docs_drift_signal.py` 中的可重复文档生成门禁。
+- 适合写入机器可读采纳清单的 Lithos 一致性声明（版本与深度），保持厂商中立、跨工具可移植。
+- 自主 PR 策略：agent 可以开启并更新 Pull Request，但未经 owner 明确批准，绝不自我批准、自我合并、启用无人把关的自动合并、删除分支、发布或执行实时/外部动作。
 - 与英文 README 保持语义同步的双语入口。
 
 ## 文件

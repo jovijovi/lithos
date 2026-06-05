@@ -17,6 +17,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] One coherent intent; scope did not widen without owner approval.
 - [ ] Worked on a feature branch / isolated worktree, not directly on the integration branch.
 - [ ] The applicable approval gate is satisfied (implementation; and per-action approval for any destructive/external effect).
+- [ ] No agent self-approval, self-merge, ownerless auto-merge, branch deletion, or publishing occurred without explicit owner approval.
 - [ ] No live/runtime execution was performed unless separately authorized.
 - [ ] Environment, sandbox, and credential scope stayed within the documented policy (no broadened network/filesystem access or secret exposure).
 - [ ] An agent run manifest and audit evidence are attached or linked when the change was agent-executed or touched external/runtime boundaries.
@@ -35,6 +36,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] Localized docs/READMEs updated to stay semantically aligned (if applicable).
 - [ ] `docs/INDEX.md` and `docs/lessons/_drift_report.md` regenerated or checked when docs/knowledge files changed.
 - [ ] Dev log / lessons / practices updated when the change produced reusable knowledge or phase evidence.
+- [ ] Conformance claim (adoption manifest) and portable, vendor-neutral artifacts stay accurate; knowledge records inform but do not override the authority chain.
 
 ## Notes for the reviewer
 

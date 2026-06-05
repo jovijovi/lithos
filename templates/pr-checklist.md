@@ -17,6 +17,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] One coherent intent; scope did not widen without owner approval.
 - [ ] Worked on a feature branch / isolated worktree, not directly on the integration branch.
 - [ ] The applicable approval gate is satisfied (implementation; and per-action approval for any destructive/external effect).
+- [ ] No agent self-approval, self-merge, ownerless auto-merge, branch deletion, or publishing occurred without explicit owner approval.
 - [ ] No live/runtime execution was performed unless separately authorized.
 - [ ] Stayed within the declared environment/sandbox boundaries — filesystem roots, network egress, and credential scope; no out-of-scope reads, network access, or secret use.
 

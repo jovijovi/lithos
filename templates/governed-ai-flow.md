@@ -31,7 +31,7 @@ Approval authority is never held by an implementation agent.
 ## Approval gates and how they are recorded
 
 1. **Preparation / preflight** — isolated, reversible work; standing authorization. No shared/external effect.
-2. **Implementation** — merge to `[main]` requires [N approving reviews + owner sign-off], recorded in [the PR]. Scoped to the reviewed change only.
+2. **Implementation** — merge to `[main]` requires [N approving reviews + owner sign-off], recorded in [the PR]. Scoped to the reviewed change only. An agent may open and update its own pull request, but must never self-approve, self-merge, or enable ownerless auto-merge; merging is the owner's decision.
 3. **Destructive / external** — explicit, per-action owner approval, recorded in [location]. Inventory of such actions:
    - [force-push / history rewrite]
    - [publishing a release or package]
@@ -87,3 +87,4 @@ Normative changes to this file follow [Lithos governance](https://github.com/jov
 - PR checklist: `[path/to/pr-checklist.md]`.
 - Environment and sandbox policy: this file's boundaries section, or `[path/to/environment-policy.md]`.
 - Agent run manifest (per run, when auditability is needed): `[path/to/agent-run-manifest.json]`.
+- Adoption manifest (optional, declaring the conformance claim): `[path/to/lithos-adoption-manifest.json]`. It is a declaration, not an authorization, and is kept vendor-neutral and portable.
