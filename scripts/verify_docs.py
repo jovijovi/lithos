@@ -176,6 +176,42 @@ JSON_FILES = [
 
 BINARY_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf"}
 
+# First-class governance concepts that must stay operationally present in the
+# adoption skills. Markers are lowercased substrings, matched case-insensitively.
+# These guard the create/audit/adapt skills against a standard concept silently
+# disappearing as the docs evolve — frontmatter checks alone cannot catch that.
+SKILL_SEMANTIC_SHARED_MARKERS = [
+    "agent run manifest",
+    "not authorization",
+    "environment and sandbox",
+    "credential scope",
+    "adoption manifest",
+    "schema",
+    "conformance fixtures",
+    "invalid",
+    "self-approval",
+    "self-merge",
+    "auto-merge",
+    "ownerless auto-merge",
+    "knowledge spine",
+    "static safety scan",
+    "safety evidence",
+    "scenario regression",
+    "release and supply-chain",
+    "not behavior proof",
+]
+
+# Per-skill marker lists: the shared concepts plus markers that fit each skill's
+# distinct role (producing, auditing, or upgrading a local workflow file).
+SKILL_SEMANTIC_MARKERS = {
+    "skills/create-local-ai-flow/SKILL.md": SKILL_SEMANTIC_SHARED_MARKERS
+    + ["machine-readable", "least privilege"],
+    "skills/audit-local-ai-flow/SKILL.md": SKILL_SEMANTIC_SHARED_MARKERS
+    + ["provenance", "single source of truth"],
+    "skills/adapt-ai-flow-for-governed-project/SKILL.md": SKILL_SEMANTIC_SHARED_MARKERS
+    + ["provenance", "audit trail"],
+}
+
 
 def fail(message: str, errors: list[str]) -> None:
     errors.append(message)
@@ -292,6 +328,20 @@ def check_skill_frontmatter(errors: list[str]) -> None:
                 fail(f"{path.relative_to(ROOT)}: frontmatter missing {field}", errors)
 
 
+def check_skill_semantic_sync(errors: list[str]) -> None:
+    """Require each adoption skill to keep markers for the standard's first-class
+    concepts, so create/audit/adapt cannot drift behind the docs."""
+    for rel, markers in SKILL_SEMANTIC_MARKERS.items():
+        path = ROOT / rel
+        if not path.exists():
+            fail(f"missing required file: {rel}", errors)
+            continue
+        lowered = read_text(path).lower()
+        for marker in markers:
+            if marker.lower() not in lowered:
+                fail(f"{rel}: missing first-class concept marker: {marker}", errors)
+
+
 def check_markdown_links(errors: list[str]) -> None:
     link_re = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
     for path in iter_text_files():
@@ -360,6 +410,7 @@ def main() -> int:
     check_conformance_fixtures(errors)
     check_static_safety(errors)
     check_skill_frontmatter(errors)
+    check_skill_semantic_sync(errors)
     check_markdown_links(errors)
     check_forbidden_text(errors)
     check_json_files(errors)
