@@ -2,18 +2,20 @@
 
 # Documentation Index
 
-Total: 12 documents tracked across 2 statuses.
+Total: 14 documents tracked across 2 statuses.
 
-## Active (11)
+## Active (13)
 
 - [AI-assisted development flow](AI_FLOW.md) — created 2026-06-05
 - [Granite System Architecture](design/architecture.md) — created 2026-06-05
 - [Granite Technical Solution](design/technical-solution.md) — created 2026-06-05
+- [Granite Scenario Regression Governance](evaluation/scenario-regression.md) — created 2026-06-05
 - [Keep the generated docs index inside docs](lessons/2026-06-05-docs-index-boundary.md) — created 2026-06-05
 - [Implementation plans directory](plans/README.md) — created 2026-06-05
 - [Governed project knowledge spine](practices/2026-06-05-governed-project-knowledge-spine.md) — created 2026-06-05
 - [Engineering practices](practices/README.md) — created 2026-06-05
 - [Granite PRD](product/prd.md) — created 2026-06-05
+- [Granite Release and Supply-Chain Governance](release/release-governance.md) — created 2026-06-05
 - [Roadmap directory](roadmap/README.md) — created 2026-06-05
 - [Granite Roadmap Current Status](roadmap/current-status.md) — created 2026-06-05
 - [Feature and Capability Tracker](roadmap/features.md) — created 2026-06-05

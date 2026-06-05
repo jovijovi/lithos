@@ -37,6 +37,9 @@ Lithos читается на трёх уровнях:
 - **Позвоночник знаний** — журналы разработки, уроки, практики, генерируемые индексы только для `docs/` и отчёты о дрейфе для управляемых репозиториев: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` и `tools/`. Как это знание живёт, устаревает по использованию и остаётся подчинённым цепочке власти, определяется в [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
 - **Соответствие и манифест внедрения** — что проект может заявить, объявляется в машиночитаемом манифесте внедрения ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), заполняется из [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), с [фикстурами соответствия](fixtures/conformance/), показывающими, что проходит и что обязано не пройти. См. [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
 - **Политика автономных PR** — что агент может делать с pull request самостоятельно и что он никогда не должен самостоятельно одобрять или сливать. См. [`docs/autonomous-pr-policy.md`](docs/autonomous-pr-policy.md).
+- **Статическое сканирование безопасности** — детерминированный рубеж, отклоняющий значения, похожие на секреты, частные локальные пути и маркеры незавершённой работы до ревью или релиза. См. [`docs/static-safety-scan.md`](docs/static-safety-scan.md).
+- **Управление сценарными регрессиями** — именованные фикстуры, закрепляющие поведенческие утверждения и примеры, чтобы регрессии ловились механически. См. [`docs/scenario-regression-governance.md`](docs/scenario-regression-governance.md).
+- **Управление релизами и цепочкой поставки** — одобрение владельца, записи происхождения и границы публикации для распространяемых артефактов. См. [`docs/release-and-supply-chain-governance.md`](docs/release-and-supply-chain-governance.md).
 - **Совместимость инструментов** — артефакты, несущие состояние сотрудничества, нейтральны к поставщику и переносимы, поэтому проект может сменить инструменты, не теряя управление. См. [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Управление многоязычными README** — исходный README и локализованные README остаются семантически согласованными при изменении пользовательских утверждений.
 - **Навыки** — переиспользуемые операционные процедуры в [`skills/`](skills/) для создания, аудита и адаптации локального потока ИИ.
@@ -80,6 +83,9 @@ Lithos — это **стандарт и набор инструментов дл
 │   ├── conformance-and-fixtures.md
 │   ├── tooling-interoperability.md
 │   ├── autonomous-pr-policy.md
+│   ├── static-safety-scan.md
+│   ├── scenario-regression-governance.md
+│   ├── release-and-supply-chain-governance.md
 │   └── versioning-and-governance.md
 ├── schemas/                   Машиночитаемая схема манифеста внедрения
 ├── skills/                    Переиспользуемые операционные процедуры

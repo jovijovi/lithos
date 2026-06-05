@@ -34,7 +34,7 @@ The following are not preparation. Each requires the owner's explicit, contempor
 | Merging / landing a pull request | Implementation |
 | Deleting a branch (including after merge) | Destructive / external |
 | Force-push, history rewrite | Destructive / external |
-| Publishing a release or package | Destructive / external |
+| Publishing a release, package, tag, or distributed artifact | Destructive / external; see [release and supply-chain governance](release-and-supply-chain-governance.md) |
 | Sending external communications, mutating external services | Destructive / external |
 | Acting against live or production systems, or operating without a human in the loop | Live / runtime |
 
@@ -46,7 +46,7 @@ This is the load-bearing statement of this document. **Adopting Lithos does not 
 
 - self-merge or auto-merge of any pull request;
 - deletion of branches;
-- releasing or publishing packages, artifacts, or communications;
+- releasing or publishing packages, tags, artifacts, or communications;
 - live, runtime, default-on, or autonomous behavior against real systems;
 - any external or destructive side effect.
 

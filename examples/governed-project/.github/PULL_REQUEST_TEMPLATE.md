@@ -19,10 +19,14 @@
 - [ ] Environment, sandbox, and credential scope stayed within the documented policy (no broadened network/filesystem access or secret exposure).
 - [ ] An agent run manifest and audit evidence are attached or linked when the change was agent-executed or touched external/runtime boundaries.
 - [ ] Conformance claim (adoption manifest) and portable, vendor-neutral artifacts stay accurate; knowledge records inform but do not override the authority chain.
+- [ ] Scenario-regression and release-governance docs updated when behavior or publishing claims changed.
 
 ## Verification
 
 - [ ] Tests or recorded commands prove behavior.
+- [ ] `tools/static_safety_scan.py` passed.
+- [ ] Scenario regression fixtures were added/updated and run for behavior-bearing decision claims.
+- [ ] Release-facing changes cite exact revision, provenance evidence, and explicit owner approval before any publish action.
 - [ ] Documentation verification passed.
 - [ ] CI is linked and green where applicable.
 - [ ] Failures, skips, and unverified areas are called out honestly.

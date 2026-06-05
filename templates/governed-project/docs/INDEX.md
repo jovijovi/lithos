@@ -2,18 +2,20 @@
 
 # Documentation Index
 
-Total: 11 documents tracked across 1 statuses.
+Total: 13 documents tracked across 1 statuses.
 
-## Active (11)
+## Active (13)
 
 - [AI-assisted development flow](AI_FLOW.md) — created 2026-06-05
 - [Project System Architecture](design/architecture.md) — created 2026-06-05
 - [Project Technical Solution](design/technical-solution.md) — created 2026-06-05
 - [Development log directory](dev_log/README.md) — created 2026-06-05
+- [Scenario regression governance](evaluation/scenario-regression.md) — created 2026-06-05
 - [Lessons directory](lessons/README.md) — created 2026-06-05
 - [Implementation plans directory](plans/README.md) — created 2026-06-05
 - [Engineering practices](practices/README.md) — created 2026-06-05
 - [Project PRD](product/prd.md) — created 2026-06-05
+- [Release and supply-chain governance](release/release-governance.md) — created 2026-06-05
 - [Roadmap directory](roadmap/README.md) — created 2026-06-05
 - [Project Roadmap Current Status](roadmap/current-status.md) — created 2026-06-05
 - [Feature and Capability Tracker](roadmap/features.md) — created 2026-06-05

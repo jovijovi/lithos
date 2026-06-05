@@ -18,6 +18,9 @@ Each artifact has one boundary. Together they let agents and tools exchange role
 | [Agent run manifest](agent-run-manifest.md) | What one run was authorized to do and did. | Approval reference, claimed vs actual, evidence, boundary, redaction, retention. | Approval itself; product authority. |
 | [PR checklist](local-adoption.md) | The per-unit review and evidence gate. | Review items, evidence capture, documents that change together. | Long-form design or roadmap content. |
 | [Knowledge artifacts](knowledge-governance.md) | Durable reasoning and reusable insight. | Development logs, lessons, practices, generated index and drift report. | Product authority or approval. |
+| [Static safety scan](static-safety-scan.md) | Machine-runnable safety evidence. | Secret/path/placeholder scanning rules and pass/fail output. | Approval grants or release authority. |
+| [Scenario fixtures](scenario-regression-governance.md) | Behavior-regression evidence. | Inputs, expected outcomes, and reproduction commands for behavior-bearing claims. | Product requirements or behavior approval. |
+| [Release provenance](release-and-supply-chain-governance.md) | Release evidence. | Source revision, version, passed gates, approval reference, and published artifacts. | Publishing permission or secret material. |
 
 ## Neutrality rules
 
@@ -26,7 +29,7 @@ These rules are normative for any artifact a project commits as part of its Lith
 - **No vendor, product, or private-system names.** Refer to roles and capabilities generically — "the implementation agent," "the CI system," "the reviewer" — not by the brand of the tool that fills the role. A committed artifact **must not** name a specific vendor, product, private profile, or internal system.
 - **Self-describing values.** Where a field has a closed set of allowed values, the artifact **should** carry that set with the data (for example, an `allowed_*` list beside the chosen value), so a different tool can validate the record without the originating tool's documentation.
 - **Plain, parseable formats.** Portable artifacts are plain text — JSON or Markdown — parseable with a standard library and no third-party dependency. A consuming tool **must not** need a vendor SDK to read them.
-- **No secrets in artifacts.** Secrets, tokens, credentials, and private identifiers are never written into a portable artifact; they are redacted with placeholders. Interoperability **must not** become a channel for leaking sensitive values.
+- **No secrets in artifacts.** Secrets, tokens, credentials, and private identifiers are never written into a portable artifact; they are redacted with placeholders. Interoperability **must not** become a channel for leaking sensitive values, and a [static safety scan](static-safety-scan.md) should mechanically check the committed artifact set.
 - **Records, not authorizations.** A portable artifact records or declares; it never grants. Exchanging an artifact between tools transfers information, not permission: it clears no [gate](approval-semantics.md) and authorizes no live, destructive, or external action.
 
 ## Exchanging roles across tools

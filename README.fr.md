@@ -37,6 +37,9 @@ Lithos se lit sur trois plans :
 - **Colonne vertébrale de connaissance** — journaux de développement, leçons, pratiques, index générés limités à `docs/` et rapports de dérive pour les dépôts gouvernés : `docs/dev_log/`, `docs/lessons/`, `docs/practices/` et `tools/`. La manière dont cette connaissance vit, expire par l'usage et reste subordonnée à la chaîne d'autorité est définie dans [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
 - **Conformité et manifeste d'adoption** — ce qu'un projet peut revendiquer, déclaré dans un manifeste d'adoption lisible par machine ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), rempli à partir de [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), avec des [fixtures de conformité](fixtures/conformance/) montrant ce qui passe et ce qui doit échouer. Voir [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
 - **Politique de PR autonome** — ce qu'un agent peut faire seul avec les pull requests, et ce qu'il ne doit jamais auto-approuver ni auto-fusionner. Voir [`docs/autonomous-pr-policy.md`](docs/autonomous-pr-policy.md).
+- **Analyse statique de sécurité** — un seuil déterministe qui rejette les valeurs ressemblant à des secrets, les chemins locaux privés et les marqueurs de travail inachevé avant revue ou publication. Voir [`docs/static-safety-scan.md`](docs/static-safety-scan.md).
+- **Gouvernance de régression par scénarios** — des fixtures nommées qui ancrent les affirmations et exemples comportementaux pour capturer les régressions mécaniquement. Voir [`docs/scenario-regression-governance.md`](docs/scenario-regression-governance.md).
+- **Gouvernance des releases et de la chaîne d'approvisionnement** — approbation propriétaire, provenance et limites de publication pour les artefacts distribués. Voir [`docs/release-and-supply-chain-governance.md`](docs/release-and-supply-chain-governance.md).
 - **Interopérabilité des outils** — les artefacts qui portent l'état de collaboration sont neutres vis-à-vis des fournisseurs et portables, de sorte qu'un projet peut changer d'outils sans perdre sa gouvernance. Voir [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Gouvernance des README bilingues** — le README source et les README localisés restent sémantiquement alignés lorsque les affirmations visibles changent.
 - **Compétences** — des procédures opérationnelles réutilisables dans [`skills/`](skills/) pour créer, auditer et adapter un flux IA local.
@@ -80,6 +83,9 @@ Une démonstration complète se trouve dans [`examples/governed-project/`](examp
 │   ├── conformance-and-fixtures.md
 │   ├── tooling-interoperability.md
 │   ├── autonomous-pr-policy.md
+│   ├── static-safety-scan.md
+│   ├── scenario-regression-governance.md
+│   ├── release-and-supply-chain-governance.md
 │   └── versioning-and-governance.md
 ├── schemas/                   Schéma de manifeste d'adoption lisible par machine
 ├── skills/                    Procédures opérationnelles réutilisables

@@ -124,14 +124,16 @@ Run these before PR or merge unless the task clearly explains why a gate is irre
 [project syntax or build command]
 python tools/build_docs_index.py --check
 python tools/docs_drift_signal.py --check
+python tools/static_safety_scan.py
 [project documentation verification command]
 git diff --check
 ```
 
 Secret/static safety gates:
 
-- Run a secret-shaped scan over added or changed text before commit.
+- Run `python tools/static_safety_scan.py` — a first-class gate that rejects secret-shaped tokens, private machine-local paths, and unfinished-work placeholders. See `docs/release/release-governance.md` for how it gates a release.
 - Run static dangerous-pattern scans for new subprocess, network, config-write, or external-delivery surfaces when relevant.
+- For behavior-bearing work, run the scenario regression suite defined in `docs/evaluation/scenario-regression.md`; a changed expected outcome is a behavior change that needs approval.
 - Use `[REDACTED]` placeholders for sensitive examples.
 
 ## Run manifest and audit trail
