@@ -108,12 +108,16 @@ A plan must not redefine product goals, expand product scope, or imply new live/
 Run these before PR or merge unless the task explains why a gate is irrelevant:
 
 ```bash
-python -m unittest discover -s tests
+python scripts/verify_project.py
 python tools/build_docs_index.py --check
 python tools/docs_drift_signal.py --check
-python scripts/verify_docs.py
+python tools/static_safety_scan.py
 git diff --check
 ```
+
+`scripts/verify_project.py` is the bundled local verifier: it checks the governed document spine, the README/AGENTS/AI_FLOW gate vocabulary, and the docs-index boundary, then runs the docs index check, the drift self-test and check, and the static safety scan. Running it alone clears the documentation gates; the individual commands are listed so a single failing gate can be re-run in isolation.
+
+Granite is at R0, a documentation authority baseline, so it has no product test suite yet. Behavior tests and scenario fixtures (see `docs/evaluation/scenario-regression.md`) become required once product implementation starts, and publishing remains governed by `docs/release/release-governance.md`; a verification block must not claim a behavior or release gate that does not yet exist.
 
 Secret/static safety gates:
 

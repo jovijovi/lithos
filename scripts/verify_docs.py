@@ -105,6 +105,7 @@ REQUIRED_FILES = [
     "examples/governed-project/docs/practices/2026-06-05-governed-project-knowledge-spine.md",
     "examples/governed-project/docs/evaluation/scenario-regression.md",
     "examples/governed-project/docs/release/release-governance.md",
+    "examples/governed-project/scripts/verify_project.py",
     "examples/governed-project/tools/build_docs_index.py",
     "examples/governed-project/tools/docs_drift_signal.py",
     "examples/governed-project/tools/static_safety_scan.py",
@@ -296,16 +297,47 @@ def run_subcheck(cwd: Path, args: list[str], errors: list[str]) -> None:
 
 
 def check_governed_project_generators(errors: list[str]) -> None:
-    # The template's verify_project.py runs the drift self-test itself, so the
-    # template's boundary logic is covered there. The example has no such
-    # wrapper, so run its drift self-test explicitly here.
-    run_subcheck(ROOT / "templates/governed-project", [sys.executable, "scripts/verify_project.py"], errors)
-    for rel in ("examples/governed-project",):
-        cwd = ROOT / rel
-        run_subcheck(cwd, [sys.executable, "tools/build_docs_index.py", "--check"], errors)
-        run_subcheck(cwd, [sys.executable, "tools/docs_drift_signal.py", "--self-test"], errors)
-        run_subcheck(cwd, [sys.executable, "tools/docs_drift_signal.py", "--check"], errors)
-        run_subcheck(cwd, [sys.executable, "tools/static_safety_scan.py"], errors)
+    # Both the template and the example ship their own scripts/verify_project.py
+    # wrapper. Each wrapper runs the docs index check, the drift self-test and
+    # check, and the static safety scan, so running the wrapper exercises that
+    # surface's full generator/boundary logic as a single entry point.
+    for rel in ("templates/governed-project", "examples/governed-project"):
+        run_subcheck(ROOT / rel, [sys.executable, "scripts/verify_project.py"], errors)
+
+
+def check_example_verification_truthfulness(errors: list[str]) -> None:
+    """Keep the worked example's self-declared gates runnable and truthful.
+
+    The example ships no ``tests/`` directory and no ``scripts/verify_docs.py``,
+    so a verification block listing those commands is a broken gate that fails
+    the moment a contributor runs it. Forbid those two commands in the example's
+    ``docs/AI_FLOW.md`` and require the runnable local verifier and static safety
+    scan across the example's verifier surface (AI_FLOW plus AGENTS). This is a
+    narrow truthfulness guard, not a general command parser.
+    """
+    ai_flow_rel = "examples/governed-project/docs/AI_FLOW.md"
+    agents_rel = "examples/governed-project/AGENTS.md"
+    ai_flow_path = ROOT / ai_flow_rel
+    if not ai_flow_path.exists():
+        fail(f"missing required file: {ai_flow_rel}", errors)
+        return
+    ai_flow = read_text(ai_flow_path)
+    broken_commands = (
+        "python -m unittest discover -s tests",
+        "python3 -m unittest discover -s tests",
+        "python scripts/verify_docs.py",
+        "python3 scripts/verify_docs.py",
+    )
+    for command in broken_commands:
+        if command in ai_flow:
+            fail(f"{ai_flow_rel}: lists a command that cannot run in the example: {command}", errors)
+    surface = ai_flow
+    agents_path = ROOT / agents_rel
+    if agents_path.exists():
+        surface += "\n" + read_text(agents_path)
+    for command in ("python scripts/verify_project.py", "python tools/static_safety_scan.py"):
+        if command not in surface:
+            fail(f"example verification surface missing runnable gate: {command}", errors)
 
 
 def check_conformance_fixtures(errors: list[str]) -> None:
@@ -411,6 +443,7 @@ def main() -> int:
     check_readme_language_links(errors)
     check_readme_semantic_sync(errors)
     check_governed_project_generators(errors)
+    check_example_verification_truthfulness(errors)
     check_conformance_fixtures(errors)
     check_static_safety(errors)
     check_skill_frontmatter(errors)

@@ -38,13 +38,15 @@ Never commit secrets, API keys, tokens, cookies, raw environment values, private
 
 ## Tooling expectations
 
-- Run the verification commands listed in `docs/AI_FLOW.md` before claiming completion.
+- Run `python scripts/verify_project.py` (the bundled local verifier) before claiming completion; it checks the document spine and gate vocabulary, then runs the docs index check, the drift self-test and check, and the static safety scan. Re-run any individual gate from `docs/AI_FLOW.md` in isolation when one fails, and finish with `git diff --check`.
 - Update `docs/roadmap/features.md` and `docs/roadmap/current-status.md` when feature status, acceptance evidence, or open tails change.
 - Keep `docs/INDEX.md` aligned with documentation changes.
 - Record task evidence in `docs/dev_log/` when work is non-trivial.
 - Update `docs/lessons/`, `docs/practices/`, and root `LESSONS.md` when the work produces reusable knowledge.
 - Update `README.md` and `README.zh-CN.md` together when user-facing claims change.
 - Run `python tools/build_docs_index.py --check` and `python tools/docs_drift_signal.py --check` before claiming documentation governance is current.
+- Run `python tools/static_safety_scan.py` before claiming a change is safe to commit; it rejects secret-shaped tokens, private machine-local paths, and unfinished-work placeholders as a first-class gate, and also runs inside `scripts/verify_project.py`.
+- Treat publishing as a destructive/external action under `docs/release/release-governance.md`: never publish, tag, or release on your own authority, and back behavior-bearing claims with the fixtures required by `docs/evaluation/scenario-regression.md`. Granite is at R0 and has no product test suite yet; that gate becomes required once product implementation starts.
 - Treat knowledge records (`docs/dev_log/`, `docs/lessons/`, `docs/practices/`) as informative: they inform future work but never override the authority chain or clear an approval gate.
 - Keep collaboration artifacts vendor-neutral, plain-text, and portable across tools; never embed vendor or product names or secret values.
 - Declare Granite's Lithos conformance — version, depth, role holders, gate operation, and the autonomous PR policy — in an adoption manifest; the manifest is a declaration, not an authorization.
