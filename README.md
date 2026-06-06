@@ -42,7 +42,7 @@ Read Lithos at three layers:
 - **Release & supply-chain governance** — owner-approved release gates, provenance records, and supply-chain boundaries for published artifacts. See [`docs/release-and-supply-chain-governance.md`](docs/release-and-supply-chain-governance.md).
 - **Tooling interoperability** — the artifacts that carry collaboration state are vendor-neutral and portable, so a project can change tools without losing its governance. See [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Bilingual README governance** — source and localized README files stay semantically aligned when user-facing claims change.
-- **Skills** — reusable operational procedures in [`skills/`](skills/): the [`lithos`](skills/lithos/SKILL.md) umbrella skill routes an agent to adopt, audit, upgrade, review, or release-gate a project, alongside the focused skills for creating, auditing, and adapting a local AI flow.
+- **Skills** — reusable operational procedures in [`skills/`](skills/): the single [`lithos`](skills/lithos/SKILL.md) umbrella skill routes an agent to adopt, audit, upgrade, review, or release-gate a project, with one procedure per intent under [`skills/lithos/references/`](skills/lithos/references/).
 - **Examples** — a worked governed adoption in [`examples/`](examples/).
 
 ## Scope — what Lithos is not
@@ -89,10 +89,8 @@ A worked walkthrough lives in [`examples/governed-project/`](examples/governed-p
 │   └── versioning-and-governance.md
 ├── schemas/                   Machine-readable adoption manifest schema
 ├── skills/                    Reusable operational procedures
-│   ├── lithos/                Umbrella skill: routes adopt / audit / upgrade / review / release
-│   ├── create-local-ai-flow/
-│   ├── audit-local-ai-flow/
-│   └── adapt-ai-flow-for-governed-project/
+│   └── lithos/                Single umbrella skill: routes adopt / audit / upgrade / review / release
+│       └── references/        One procedure per intent: adopt, audit, governed-upgrade, version-upgrade, pr-review, release-gate
 ├── templates/                 Copy-ready local adoption files and governed project spine
 ├── fixtures/                  Conformance fixtures (passing and rejecting)
 ├── examples/                  Worked adoptions

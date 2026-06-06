@@ -40,9 +40,6 @@ REQUIRED_FILES = [
     "docs/static-safety-scan.md",
     "docs/scenario-regression-governance.md",
     "docs/release-and-supply-chain-governance.md",
-    "skills/create-local-ai-flow/SKILL.md",
-    "skills/audit-local-ai-flow/SKILL.md",
-    "skills/adapt-ai-flow-for-governed-project/SKILL.md",
     "skills/lithos/SKILL.md",
     "skills/lithos/references/adopt-project.md",
     "skills/lithos/references/audit-project.md",
@@ -190,51 +187,29 @@ JSON_FILES = [
 
 BINARY_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf"}
 
-# First-class governance concepts that must stay operationally present in the
-# adoption skills. Markers are lowercased substrings, matched case-insensitively.
-# These guard the create/audit/adapt skills against a standard concept silently
-# disappearing as the docs evolve — frontmatter checks alone cannot catch that.
-SKILL_SEMANTIC_SHARED_MARKERS = [
-    "agent run manifest",
-    "not authorization",
-    "environment and sandbox",
-    "credential scope",
-    "adoption manifest",
-    "schema",
-    "conformance fixtures",
-    "invalid",
-    "self-approval",
-    "self-merge",
-    "auto-merge",
-    "ownerless auto-merge",
-    "knowledge spine",
-    "static safety scan",
-    "safety evidence",
-    "scenario regression",
-    "release and supply-chain",
-    "not behavior proof",
+# Plan B single-entry-point invariant: `skills/lithos` is the only first-class
+# top-level Lithos skill. The three older focused skills were retired and their
+# capability absorbed into `skills/lithos/references/`. These directory names
+# must not reappear as independent peer skills, and README/local-adoption prose
+# must not present them as four peer top-level skills. The umbrella skill and its
+# references carry the standard's load-bearing concepts under
+# LITHOS_UMBRELLA_MARKERS below, so a concept cannot silently disappear.
+RETIRED_PEER_SKILLS = [
+    "create-local-ai-flow",
+    "audit-local-ai-flow",
+    "adapt-ai-flow-for-governed-project",
 ]
-
-# Per-skill marker lists: the shared concepts plus markers that fit each skill's
-# distinct role (producing, auditing, or upgrading a local workflow file).
-SKILL_SEMANTIC_MARKERS = {
-    "skills/create-local-ai-flow/SKILL.md": SKILL_SEMANTIC_SHARED_MARKERS
-    + ["machine-readable", "least privilege"],
-    "skills/audit-local-ai-flow/SKILL.md": SKILL_SEMANTIC_SHARED_MARKERS
-    + ["provenance", "single source of truth"],
-    "skills/adapt-ai-flow-for-governed-project/SKILL.md": SKILL_SEMANTIC_SHARED_MARKERS
-    + ["provenance", "audit trail"],
-}
 
 # The umbrella `lithos` skill is the agent-facing operational entry point an
 # installed agent uses to apply Lithos to a real project, plus one reference per
 # intent it routes. These markers are exact, vendor-neutral invariants — the
-# references it links, the docs that remain the authority, and the load-bearing
-# boundaries (no self-approval/self-merge/ownerless auto-merge, no agent
-# self-release, the static safety scan is not behavior proof, the manifest is
-# not authorization) — so the capability pack cannot quietly drift behind the
-# standard or drop a boundary. Markers are lowercased substrings, matched
-# case-insensitively, exactly as the adoption-skill markers above.
+# references it links, the absorbed create/audit/upgrade procedures now inlined
+# in those references (proven without linking to the retired peer skills), the
+# docs that remain the authority, and the load-bearing boundaries (no
+# self-approval/self-merge/ownerless auto-merge, no agent self-release, the
+# static safety scan is not behavior proof, the manifest is not authorization) —
+# so the capability pack cannot quietly drift behind the standard or drop a
+# boundary. Markers are lowercased substrings, matched case-insensitively.
 LITHOS_UMBRELLA_MARKERS = {
     "skills/lithos/SKILL.md": [
         "references/adopt-project.md",
@@ -251,7 +226,7 @@ LITHOS_UMBRELLA_MARKERS = {
         "not authorization",
     ],
     "skills/lithos/references/adopt-project.md": [
-        "../../create-local-ai-flow/SKILL.md",
+        "write the local workflow file",
         "lighter governed workflow",
         "full governed project",
         "no minimal profile",
@@ -259,7 +234,7 @@ LITHOS_UMBRELLA_MARKERS = {
         "not authorization",
     ],
     "skills/lithos/references/audit-project.md": [
-        "../../audit-local-ai-flow/SKILL.md",
+        "walk the conformance checklist",
         "no minimal profile",
         "adoption manifest",
         "conformance fixtures",
@@ -268,7 +243,7 @@ LITHOS_UMBRELLA_MARKERS = {
         "scenario regression",
     ],
     "skills/lithos/references/governed-upgrade.md": [
-        "../../adapt-ai-flow-for-governed-project/SKILL.md",
+        "what the upgrade adds",
         "lighter governed workflow",
         "full governed project",
         "never loosen",
@@ -479,18 +454,41 @@ def check_skill_frontmatter(errors: list[str]) -> None:
                 fail(f"{path.relative_to(ROOT)}: frontmatter missing {field}", errors)
 
 
-def check_skill_semantic_sync(errors: list[str]) -> None:
-    """Require each adoption skill to keep markers for the standard's first-class
-    concepts, so create/audit/adapt cannot drift behind the docs."""
-    for rel, markers in SKILL_SEMANTIC_MARKERS.items():
+def check_retired_peer_skills_absent(errors: list[str]) -> None:
+    """Plan B single-entry-point invariant: the three retired focused skills must
+    not reappear as independent peer skills. Fail if any retired peer skill ships
+    its own ``skills/<old-name>/SKILL.md`` or its old peer directory comes back."""
+    for name in RETIRED_PEER_SKILLS:
+        skill_dir = ROOT / "skills" / name
+        skill_file = skill_dir / "SKILL.md"
+        if skill_file.exists():
+            fail(f"retired peer skill reappeared as a first-class skill: skills/{name}/SKILL.md", errors)
+        elif skill_dir.exists():
+            fail(f"retired peer skill directory reappeared: skills/{name}/", errors)
+
+
+def check_public_surface_retired_skills_absent(errors: list[str]) -> None:
+    """Plan B single-entry-point invariant on public adoption prose: the README
+    localizations and ``docs/local-adoption.md`` must not present the three
+    retired focused skills as peer top-level skills. Fail if any retired peer
+    skill name appears in those surfaces, whether as a bare name
+    (``create-local-ai-flow``) or as a peer-skill path
+    (``skills/create-local-ai-flow/``); matching the bare name catches both
+    because the path embeds it. This scans only the public surfaces below, never
+    this verifier, so listing the retired names in ``RETIRED_PEER_SKILLS`` does
+    not self-fail."""
+    public_surfaces = list(README_FILES) + ["docs/local-adoption.md"]
+    for rel in public_surfaces:
         path = ROOT / rel
         if not path.exists():
-            fail(f"missing required file: {rel}", errors)
             continue
-        lowered = read_text(path).lower()
-        for marker in markers:
-            if marker.lower() not in lowered:
-                fail(f"{rel}: missing first-class concept marker: {marker}", errors)
+        content = read_text(path)
+        for name in RETIRED_PEER_SKILLS:
+            if name in content:
+                fail(
+                    f"{rel}: retired peer skill presented as a peer top-level skill: {name}",
+                    errors,
+                )
 
 
 def check_lithos_umbrella_sync(errors: list[str]) -> None:
@@ -577,7 +575,8 @@ def main() -> int:
     check_conformance_fixtures(errors)
     check_static_safety(errors)
     check_skill_frontmatter(errors)
-    check_skill_semantic_sync(errors)
+    check_retired_peer_skills_absent(errors)
+    check_public_surface_retired_skills_absent(errors)
     check_lithos_umbrella_sync(errors)
     check_markdown_links(errors)
     check_forbidden_text(errors)

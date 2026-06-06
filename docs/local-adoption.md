@@ -61,8 +61,8 @@ Lithos is portable because it is generic. Adapt freely:
 - Add gates or sub-gates if your domain needs them; you **must not** remove the layering of the four defined gates.
 - Tighten any rule. You **may** make the standard stricter locally; you **should not** loosen a requirement and still claim conformance.
 
-When you have adapted a template for a project with formal governance, the [`adapt-ai-flow-for-governed-project`](../skills/adapt-ai-flow-for-governed-project/SKILL.md) skill walks through the additions that governance typically requires, including the full source-of-truth chain when workflow-only adoption is too thin.
+When you have adapted a template for a project with formal governance, the [`lithos`](../skills/lithos/SKILL.md) skill's [governed-upgrade](../skills/lithos/references/governed-upgrade.md) procedure walks through the additions that governance typically requires, including the full source-of-truth chain when workflow-only adoption is too thin.
 
 ## Keeping it honest
 
-A local workflow file that no longer matches how the project actually works is worse than none, because it misleads. Review it when the team, tooling, or risk profile changes, and verify it with the [`audit-local-ai-flow`](../skills/audit-local-ai-flow/SKILL.md) skill. If the project also publishes an adoption manifest, keep it honest the same way: the manifest must keep describing how the project actually operates, and a claim that drops a requirement is not a smaller Lithos adoption — see [conformance and fixtures](conformance-and-fixtures.md).
+A local workflow file that no longer matches how the project actually works is worse than none, because it misleads. Review it when the team, tooling, or risk profile changes, and verify it with the [`lithos`](../skills/lithos/SKILL.md) skill's [audit-project](../skills/lithos/references/audit-project.md) procedure. If the project also publishes an adoption manifest, keep it honest the same way: the manifest must keep describing how the project actually operates, and a claim that drops a requirement is not a smaller Lithos adoption — see [conformance and fixtures](conformance-and-fixtures.md).
