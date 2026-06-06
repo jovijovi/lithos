@@ -131,7 +131,7 @@ INVALID_REASON_MARKERS = {
 SECRET_PATTERNS = [
     re.compile("gh" + "p_[A-Za-z0-9]{20,}"),
     re.compile("github" + "_pat_[A-Za-z0-9_]{20,}"),
-    re.compile("sk-" + r"[A-Za-z0-9]{20,}"),
+    re.compile(r"(?<![A-Za-z0-9])" + "sk-" + r"[A-Za-z0-9-]{20,}"),
     re.compile("AK" + "IA[A-Z0-9]{16}"),
     re.compile("xox" + r"[abprs]-[A-Za-z0-9-]{10,}"),
     re.compile("-----BEGIN" + r"[A-Z ]*PRIVATE KEY-----"),
@@ -141,13 +141,29 @@ SECRET_PATTERNS = [
     ),
 ]
 
+# A private path token ends at a boundary: end-of-text, a path separator,
+# whitespace, or common surrounding/terminating punctuation (a quote, a
+# backtick, a closing bracket, a comma, colon, semicolon, or period).
+# Asserting this boundary -- rather than requiring the path to terminate the
+# whole string -- lets the scan catch a private path embedded anywhere in a
+# string field: mid-sentence, quoted, in backticks, or before a newline.
+PRIVATE_PATH_BOUNDARY = r"""(?=$|[/\s`'")\]},:;.])"""
+
+# The root account's home directory is a bare machine-local path with no
+# username segment, so the literal itself is a private value. Assemble it from
+# fragments so this file never stores the raw literal (mirrors the secret
+# needles and scripts/verify_static_safety.py).
+_ROOT_HOME = "/" + "root"
+
 # Private, machine-local absolute paths leak the originating environment into a
-# portable manifest. Covered shapes: Unix and macOS per-user and root home
-# directories (matching a trailing leaf such as a dotfile, not just nested
-# directories) and Windows per-user home directories on any drive letter and
-# either separator.
+# portable manifest. Covered shapes: Unix and macOS per-user home directories
+# whether the path ends at the username leaf or continues deeper, the root
+# account's home directory whether bare or with a subpath, and Windows per-user
+# home directories on any drive letter and either separator. Each may appear
+# anywhere in a string field via the shared boundary above.
 PRIVATE_PATH_PATTERNS = [
-    re.compile(r"/(?:home|Users|root)/[A-Za-z0-9._-]+(?:/|$)"),
+    re.compile(r"/(?:home|Users)/[A-Za-z0-9._-]+" + PRIVATE_PATH_BOUNDARY),
+    re.compile(_ROOT_HOME + PRIVATE_PATH_BOUNDARY),
     re.compile(r"(?i)[A-Za-z]:[\\/]Users[\\/][^\\/\s]+"),
 ]
 
@@ -463,24 +479,40 @@ def run_self_tests() -> list[str]:
 
     # Probes built from fragments so this file never stores a sensitive literal.
     secret_probe = "gh" + "p_" + "S" * 32
+    # Hyphenated body (e.g. sk-<word>-<long-body>) must also be flagged (B2 fix).
+    hyphenated_secret_probe = "sk-" + "proj-" + "T" * 28
     home_probe = "/" + "home/" + "examplecontributor/" + "project/AI_FLOW.md"
     root_probe = "/" + "root/" + ".bash" + "rc"
+    root_leaf_probe = "/" + "root"
     windows_home_probe = (
         "C:" + "\\" + "Users" + "\\" + "alice" + "\\" + ".ssh" + "\\" + "id_rsa"
     )
+    # Private paths embedded mid-sentence in an arbitrary string field, not just
+    # terminating it (B1). docs/conformance-and-fixtures.md claims any string
+    # field is scanned recursively, so a path in prose must be rejected too.
+    home_in_prose_probe = "see " + "/" + "home/" + "examplecontributor" + " for details"
+    root_in_prose_probe = "see " + "/" + "root" + " for details"
 
     # (description, key path into the manifest, replacement value, required marker)
     cases = [
         ("secret in roles.owner.assigned_to",
          ["roles", "owner", "assigned_to"], secret_probe, "secret-shaped"),
+        ("hyphenated secret-shaped value in roles.owner.assigned_to",
+         ["roles", "owner", "assigned_to"], hyphenated_secret_probe, "secret-shaped"),
         ("secret in local_workflow_file",
          ["local_workflow_file"], secret_probe, "secret-shaped"),
         ("private home path in local_workflow_file",
          ["local_workflow_file"], home_probe, "private machine-local absolute path"),
         ("root home path in roles.reviewer.assigned_to",
          ["roles", "reviewer", "assigned_to"], root_probe, "private machine-local"),
+        ("root leaf path in roles.reviewer.assigned_to",
+         ["roles", "reviewer", "assigned_to"], root_leaf_probe, "private machine-local"),
         ("windows home path in roles.reviewer.assigned_to",
          ["roles", "reviewer", "assigned_to"], windows_home_probe, "private machine-local"),
+        ("home path embedded in a prose string field",
+         ["roles", "architect", "assigned_to"], home_in_prose_probe, "private machine-local"),
+        ("root home path embedded in a prose string field",
+         ["roles", "verifier", "assigned_to"], root_in_prose_probe, "private machine-local"),
         ("absolute local_workflow_file",
          ["local_workflow_file"], "/etc/lithos/AI_FLOW.md", "absolute"),
         ("url-like local_workflow_file",
@@ -504,6 +536,18 @@ def run_self_tests() -> list[str]:
                 f"self-test: mutation '{description}' did not fail for '{marker}'; "
                 f"reasons were: {reasons}"
             )
+
+    # A hyphenated token that merely embeds the substring 'sk-' (e.g. 'task-...')
+    # is an ordinary identifier, not a secret; the secret pattern's left
+    # boundary must not misflag it (B2). Built from fragments at runtime.
+    benign_token = "task-" + "1" * 30
+    benign = copy.deepcopy(base)
+    benign["roles"]["owner"]["assigned_to"] = benign_token
+    if any("secret-shaped" in reason for reason in validate_manifest(benign)):
+        failures.append(
+            "self-test: a benign hyphenated token ('task-...') was misflagged as "
+            "secret-shaped"
+        )
     return failures
 
 
