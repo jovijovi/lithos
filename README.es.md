@@ -42,7 +42,7 @@ Lithos se lee en tres planos:
 - **Gobernanza de lanzamiento y cadena de suministro** — aprobación del propietario, registros de procedencia y límites de publicación para artefactos distribuidos. Véase [`docs/release-and-supply-chain-governance.md`](docs/release-and-supply-chain-governance.md).
 - **Interoperabilidad de herramientas** — los artefactos que portan el estado de colaboración son neutrales respecto al proveedor y portables, de modo que un proyecto puede cambiar de herramientas sin perder su gobernanza. Véase [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Gobernanza de README bilingües** — el README fuente y los README localizados se mantienen semánticamente alineados cuando cambian las afirmaciones visibles.
-- **Habilidades** — procedimientos operativos reutilizables en [`skills/`](skills/) para crear, auditar y adaptar un flujo de IA local.
+- **Habilidades** — procedimientos operativos reutilizables en [`skills/`](skills/): la habilidad paraguas [`lithos`](skills/lithos/SKILL.md) dirige a un agente para adoptar, auditar, actualizar, revisar o aplicar el control de publicación de un proyecto, junto con las habilidades específicas para crear, auditar y adaptar un flujo de IA local.
 - **Ejemplos** — una adopción gobernada trabajada en [`examples/`](examples/).
 
 ## Alcance — qué no es Lithos
@@ -89,6 +89,7 @@ Un recorrido completo se encuentra en [`examples/governed-project/`](examples/go
 │   └── versioning-and-governance.md
 ├── schemas/                   Esquema de manifiesto de adopción legible por máquina
 ├── skills/                    Procedimientos operativos reutilizables
+│   ├── lithos/                Habilidad paraguas: enruta adoptar / auditar / actualizar / revisar / publicar
 │   ├── create-local-ai-flow/
 │   ├── audit-local-ai-flow/
 │   └── adapt-ai-flow-for-governed-project/

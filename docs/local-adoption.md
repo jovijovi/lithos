@@ -51,6 +51,8 @@ Lithos defines **two governed adoption paths**. It does **not** define a minimal
 
 Copy the template into your repository under the filename you chose, then fill in the bracketed decisions. The [`examples/`](../examples/) directory shows the governed adoption filled in end to end.
 
+If an installed agent is doing the adoption work, start from the [`lithos`](../skills/lithos/SKILL.md) umbrella skill. It is the operational entry point that routes the agent to the focused create, audit, governed-upgrade, version-upgrade, PR-review, and release-gate procedures while keeping this document and the rest of `docs/` authoritative.
+
 ## Adapting, not just copying
 
 Lithos is portable because it is generic. Adapt freely:
