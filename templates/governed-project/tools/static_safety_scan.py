@@ -54,7 +54,7 @@ TEXT_SUFFIXES = {
 SECRET_PATTERNS = [
     re.compile("gh" + "p_[A-Za-z0-9]{20,}"),
     re.compile("github" + "_pat_[A-Za-z0-9_]{20,}"),
-    re.compile("sk-" + r"[A-Za-z0-9]{20,}"),
+    re.compile(r"(?<![A-Za-z0-9])" + "sk-" + r"[A-Za-z0-9-]{20,}"),
     re.compile("AK" + "IA[A-Z0-9]{16}"),
     re.compile("xox" + r"[abprs]-[A-Za-z0-9-]{10,}"),
     re.compile("-----BEGIN" + r"[A-Z ]*PRIVATE KEY-----"),
@@ -64,10 +64,30 @@ SECRET_PATTERNS = [
     ),
 ]
 
-# Private, machine-local absolute paths. A vendor-neutral shape: any path rooted
-# in a per-user home directory leaks the originating environment.
+# A private path token ends at a boundary: end-of-text, a path separator,
+# whitespace, or common surrounding/terminating punctuation (a quote, a
+# backtick, a closing bracket, a comma, colon, semicolon, or period).
+# Asserting this boundary -- rather than requiring the path to terminate the
+# whole scanned text -- lets the patterns catch a private path embedded in
+# prose, wrapped in quotes or backticks, or sitting just before a newline.
+PRIVATE_PATH_BOUNDARY = r"""(?=$|[/\s`'")\]},:;.])"""
+
+# The root account's home directory is a bare machine-local path with no
+# username segment, so the literal itself is a private value. Assemble it from
+# fragments so this file never stores the raw literal, mirroring the
+# "no self-match" rule the secret needles follow.
+_ROOT_HOME = "/" + "root"
+
+# Private, machine-local absolute paths. Covers Unix/macOS per-user home
+# directories whether the path ends at the username leaf or continues deeper,
+# the root account's home directory whether bare or with a subpath, and Windows
+# per-user home directories on any drive letter with either separator style.
+# Each may appear anywhere in a document -- mid-sentence, quoted, in backticks,
+# or before a newline -- via the shared boundary above.
 PRIVATE_PATH_PATTERNS = [
-    re.compile(r"/(?:home|Users|root)/[A-Za-z0-9._-]+/"),
+    re.compile(r"/(?:home|Users)/[A-Za-z0-9._-]+" + PRIVATE_PATH_BOUNDARY),
+    re.compile(_ROOT_HOME + PRIVATE_PATH_BOUNDARY),
+    re.compile(r"(?i)[A-Za-z]:[\\/]Users[\\/][^\\/\s]+"),
 ]
 
 # Unfinished-work placeholders, assembled from fragments for the same reason.
@@ -125,19 +145,41 @@ def run_self_tests() -> list[str]:
         "token-prefix-shape": "gh" + "p_" + "A" * 36,
         "long-access-token-shape": "github" + "_pat_" + "B" * 24,
         "secret-prefix-shape": "sk-" + "C" * 32,
-        "cloud-access-key-shape": "AK" + "IA" + "D" * 16,
+        "hyphenated-secret-shape": "sk-" + "proj-" + "D" * 28,
+        "cloud-access-key-shape": "AK" + "IA" + "E" * 16,
         "service-token-shape": "xox" + "b-" + "1" * 14,
         "private-key-header": "-----BEGIN" + " RSA PRIVATE KEY-----",
-        "key-assignment": "api" + "_token" + "=" + "E" * 24,
-        "home-path": "/" + "home/" + "examplecontributor/" + "project",
+        "key-assignment": "api" + "_token" + "=" + "F" * 24,
+        "home-path-nested": "/" + "home/" + "examplecontributor/" + "project",
+        "home-path-leaf": "/" + "home/" + "examplecontributor",
+        "users-path-leaf": "/" + "Users/" + "examplecontributor",
+        "root-path-leaf": "/" + "root",
+        "root-dotfile": "/" + "root/" + ".bash" + "rc",
+        "windows-home": "C:" + chr(92) + "Users" + chr(92) + "alice" + chr(92) + "project",
+        # Private paths embedded in text, not just terminating it: a dynamically
+        # built quoted path, a path mid-sentence, a path wrapped in backticks,
+        # and a root leaf sitting just before a newline. All built from
+        # fragments so this file stores no raw private literal.
+        "home-path-quoted": "path=" + chr(34) + "/" + "home/" + "alice" + chr(34),
+        "home-path-in-prose": "see " + "/" + "home/" + "examplecontributor" + " for details",
+        "root-path-in-prose": "see " + "/" + "root" + " for details",
+        "home-path-in-backticks": chr(96) + "/" + "home/" + "examplecontributor" + chr(96),
+        "root-path-before-newline": "/" + "root" + chr(10) + "next line",
         "placeholder": "left a " + "TO" + "DO marker",
     }
     for label, probe in bad_probes.items():
         if not scan_text(label, probe):
             failures.append(f"self-test: scanner failed to flag {label!r}")
-    clean_probe = "A governed change ships with reproducible evidence and no secrets."
-    if scan_text("clean", clean_probe):
-        failures.append("self-test: scanner flagged a known-clean probe")
+    clean_probes = {
+        "prose": "A governed change ships with reproducible evidence and no secrets.",
+        # 'task-' embeds the substring 'sk-' but is an ordinary hyphenated
+        # token, not a secret; the secret pattern's left boundary must keep it
+        # clean. Built from fragments at runtime.
+        "hyphenated-task-token": "task-" + "1" * 30,
+    }
+    for label, probe in clean_probes.items():
+        if scan_text(label, probe):
+            failures.append(f"self-test: scanner flagged a known-clean probe ({label})")
     return failures
 
 
