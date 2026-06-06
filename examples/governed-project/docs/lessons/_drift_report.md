@@ -7,4 +7,4 @@ With drift candidates: **0**
 Skipped (no `applies_to`): 0
 Skipped (no `last_validated_at`): 0
 
-No drift candidates. All knowledge docs are in sync with their `applies_to` paths since their `last_validated_at`.
+No drift candidates. All knowledge docs are in sync with their `applies_to` paths after their `last_validated_at` boundary.

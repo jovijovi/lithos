@@ -138,6 +138,7 @@ def main() -> int:
     check_markers()
     check_links_and_secrets()
     run_command([sys.executable, "tools/build_docs_index.py", "--check"], "docs index check failed")
+    run_command([sys.executable, "tools/docs_drift_signal.py", "--self-test"], "docs drift self-test failed")
     run_command([sys.executable, "tools/docs_drift_signal.py", "--check"], "docs drift check failed")
     run_command([sys.executable, "tools/static_safety_scan.py"], "static safety scan failed")
     print(f"Governed Lithos project verification passed. Checked {len(REQUIRED_FILES)} required files and {len(iter_text_files())} text files.")
