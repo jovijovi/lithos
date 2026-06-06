@@ -319,6 +319,12 @@ LITHOS_UMBRELLA_MARKERS = {
         "static safety scan",
         "not behavior proof",
     ],
+    "docs/local-adoption.md": [
+        "../skills/lithos/SKILL.md",
+        "operational entry point",
+        "focused create, audit, governed-upgrade, version-upgrade, pr-review, and release-gate procedures",
+        "docs/` authoritative",
+    ],
 }
 
 
