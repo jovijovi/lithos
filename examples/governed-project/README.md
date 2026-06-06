@@ -16,7 +16,27 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 - Knowledge capture through `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, root `LESSONS.md`, and generated drift reports — records that inform future work but never override the authority chain or clear an approval gate.
 - A Lithos conformance claim (version and depth) suitable for a machine-readable adoption manifest, kept vendor-neutral and portable across tools.
 - An autonomous PR policy: agents may open and update pull requests, but never self-approve, self-merge, enable ownerless auto-merge, delete branches, publish, or perform live/external actions without explicit owner approval.
+- Reproducible verification gates that actually run in this directory: a bundled local verifier (`scripts/verify_project.py`), a docs index check (`tools/build_docs_index.py`), an activity-aware drift signal (`tools/docs_drift_signal.py`), and a first-class static safety scan (`tools/static_safety_scan.py`).
+- Static safety as a first-class gate: `tools/static_safety_scan.py` rejects secret-shaped tokens, private machine-local paths, and unfinished-work placeholders, and runs inside `scripts/verify_project.py`.
+- Scenario-regression and release governance: `docs/evaluation/scenario-regression.md` pins behavior-bearing claims to named fixtures, and `docs/release/release-governance.md` keeps publishing owner-approved and provenance-bearing — never cut by an agent on its own authority.
+- Generated knowledge drift evidence in `docs/lessons/_drift_report.md`, produced by `tools/docs_drift_signal.py`.
 - Bilingual README governance through `README.md` and `README.zh-CN.md`.
+
+## Verification gates
+
+These gates are runnable from this example directory and are what an agent or contributor runs before opening a PR:
+
+```bash
+python scripts/verify_project.py
+python tools/build_docs_index.py --check
+python tools/docs_drift_signal.py --check
+python tools/static_safety_scan.py
+git diff --check
+```
+
+`scripts/verify_project.py` is the single local verifier entry point; it checks the governed spine and gate vocabulary, then runs the docs index check, the drift self-test and check, and the static safety scan. The repository's root verification (`scripts/verify_docs.py`) also invokes it, so the example's self-declared gates stay truthful.
+
+Granite is at R0, a documentation authority baseline, so it ships no product test suite yet. Behavior tests and scenario fixtures from `docs/evaluation/scenario-regression.md` become required once product implementation starts; the verification block never claims a behavior gate that does not yet exist.
 
 ## Files
 
@@ -27,6 +47,7 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 - [`AGENTS.md`](AGENTS.md) — agent-facing contract.
 - [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md) — PR evidence checklist.
 - [`docs/INDEX.md`](docs/INDEX.md) — generated docs-directory index.
+- [`scripts/verify_project.py`](scripts/verify_project.py) — bundled local verifier gate.
 - [`LESSONS.md`](LESSONS.md) — root entry point for lessons and practices.
 - [`ai-collaborative-development-standards.md`](ai-collaborative-development-standards.md) — compatibility pointer to `docs/AI_FLOW.md`.
 

@@ -12,7 +12,8 @@ that must never enter a governed repository:
 
 It is reproducible evidence: anyone can re-run it and observe the same pass or
 fail result, so a green run is proof rather than testimony. Run it with the
-other gates in ``docs/AI_FLOW.md`` before offering a change for review.
+other gates in ``docs/AI_FLOW.md``; ``scripts/verify_project.py`` invokes it as
+part of local and continuous-integration verification.
 
 Two design rules keep the scanner honest:
 
