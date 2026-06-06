@@ -2,10 +2,17 @@
 """Activity-aware drift signal for lessons and practices.
 
 For each lesson or practice that declares ``applies_to`` paths in frontmatter,
-check whether any of those paths changed in git history since the doc's
-``last_validated_at`` date. Output a summary to
+check whether any of those paths changed in git history after the doc's
+``last_validated_at`` boundary. Output a summary to
 ``docs/lessons/_drift_report.md`` so future contributors know which knowledge
 artifacts may need re-validation.
+
+Boundaries are evaluated against absolute commit timestamps (git ``%ct``), and a
+date-only ``last_validated_at`` is anchored to the end of that day in UTC. The
+report is therefore identical regardless of the timezone of the machine that
+runs it, and commits made earlier on the validation day itself are not
+re-reported as drift. Run ``--self-test`` to verify this boundary logic without
+touching a repository.
 """
 from __future__ import annotations
 
@@ -13,6 +20,7 @@ import argparse
 import re
 import subprocess
 import sys
+from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -64,7 +72,48 @@ def _is_git_working_tree() -> bool:
     return result.stdout.strip() == "true"
 
 
+def _project_prefix() -> str:
+    """Return the path from the repository root down to ``PROJECT_ROOT``.
+
+    ``git diff-tree`` reports paths relative to the repository root, while the
+    knowledge docs and their validation paths are expressed relative to
+    ``PROJECT_ROOT``. ``git rev-parse --show-prefix`` (evaluated at
+    ``PROJECT_ROOT``) yields the connecting prefix — e.g.
+    ``examples/governed-project/`` for a nested project, or an empty string when
+    ``PROJECT_ROOT`` is itself the repository root.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--show-prefix"],
+            cwd=PROJECT_ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return ""
+    return result.stdout.strip()
+
+
+def _repo_relative(path: str, prefix: str) -> str:
+    """Translate a ``PROJECT_ROOT``-relative path into its repo-root form.
+
+    ``prefix`` is ``git rev-parse --show-prefix`` evaluated at ``PROJECT_ROOT``:
+    empty when ``PROJECT_ROOT`` is the repository root (no translation needed),
+    otherwise the connecting directories. This is pure string logic so
+    ``--self-test`` can exercise it without a repository.
+    """
+    norm = prefix.strip().strip("/")
+    if not norm:
+        return path
+    return f"{norm}/{path}"
+
+
 def _commit_touches_path(commit: str, path: str) -> bool:
+    # ``git diff-tree`` filters by the cwd-relative pathspec but prints
+    # repo-root-relative paths, so compare against the repo-root form of
+    # ``path`` rather than its PROJECT_ROOT-relative value.
+    target = _repo_relative(path, _project_prefix())
     try:
         result = subprocess.run(
             ["git", "diff-tree", "--root", "--no-commit-id", "--name-only", "-r", commit, "--", path],
@@ -75,14 +124,57 @@ def _commit_touches_path(commit: str, path: str) -> bool:
         )
     except (subprocess.CalledProcessError, FileNotFoundError):
         return False
-    return any(line.strip() == path for line in result.stdout.splitlines())
+    return any(line.strip() == target for line in result.stdout.splitlines())
 
 
-def _git_log_changes(path: str, since: str, validation_doc: str) -> list[str]:
-    """Return commits touching ``path`` since ``since`` without validating ``validation_doc``."""
+def _validation_threshold_epoch(last_validated: str) -> float | None:
+    """Return the epoch boundary that separates validated from drifting commits.
+
+    A commit is drift only when its absolute timestamp is strictly greater than
+    this boundary. ``last_validated_at`` is interpreted deterministically so the
+    boundary never depends on the local timezone:
+
+    * a date-only ``YYYY-MM-DD`` means "validated through the end of that day"
+      and is anchored to ``23:59:59.999999`` UTC of that date, so commits made
+      earlier on the same day are not re-reported as drift;
+    * an ISO 8601 datetime is honored exactly; a trailing ``Z`` is treated as
+      UTC and a naive datetime is interpreted as UTC.
+
+    Empty or unparseable values return ``None`` (no boundary, no drift).
+    """
+    raw = last_validated.strip()
+    if not raw:
+        return None
+    try:
+        day = date.fromisoformat(raw)
+    except ValueError:
+        day = None
+    if day is not None:
+        return datetime.combine(day, time.max, tzinfo=timezone.utc).timestamp()
+    iso = raw[:-1] + "+00:00" if raw.endswith("Z") else raw
+    try:
+        moment = datetime.fromisoformat(iso)
+    except ValueError:
+        return None
+    if moment.tzinfo is None:
+        moment = moment.replace(tzinfo=timezone.utc)
+    return moment.timestamp()
+
+
+def _git_log_changes(path: str, last_validated: str, validation_doc: str) -> list[str]:
+    """Return commits touching ``path`` after the ``last_validated`` boundary.
+
+    Commits are filtered by their absolute committer timestamp (git ``%ct``)
+    rather than by a git ``--since`` date string, which git would otherwise
+    parse in the local timezone. Commits that also update ``validation_doc`` are
+    treated as re-validation changes and excluded.
+    """
+    threshold = _validation_threshold_epoch(last_validated)
+    if threshold is None:
+        return []
     try:
         result = subprocess.run(
-            ["git", "log", f"--since={since}", "--format=%H%x00%h %s", "--no-merges", "--", path],
+            ["git", "log", "--format=%H%x00%ct%x00%h %s", "--no-merges", "--", path],
             cwd=PROJECT_ROOT,
             capture_output=True,
             text=True,
@@ -92,9 +184,16 @@ def _git_log_changes(path: str, since: str, validation_doc: str) -> list[str]:
         return []
     changes: list[str] = []
     for line in result.stdout.splitlines():
-        if not line.strip() or "\0" not in line:
+        parts = line.split("\0")
+        if len(parts) != 3:
             continue
-        commit, summary = line.split("\0", 1)
+        commit, raw_epoch, summary = parts
+        try:
+            commit_epoch = int(raw_epoch)
+        except ValueError:
+            continue
+        if commit_epoch <= threshold:
+            continue
         if _commit_touches_path(commit, validation_doc):
             continue
         changes.append(summary)
@@ -155,7 +254,7 @@ def _build_report() -> str:
         "",
     ]
     if not drifts:
-        out.append("No drift candidates. All knowledge docs are in sync with their `applies_to` paths since their `last_validated_at`.")
+        out.append("No drift candidates. All knowledge docs are in sync with their `applies_to` paths after their `last_validated_at` boundary.")
         out.append("")
     else:
         out.append("## Candidates")
@@ -178,11 +277,114 @@ def _build_report() -> str:
     return "\n".join(out).rstrip() + "\n"
 
 
+def _run_self_test() -> int:
+    """Verify the drift boundary logic without touching a repository.
+
+    These pure assertions lock in the two behaviors the gate depends on: a
+    date-only ``last_validated_at`` is anchored to the end of its day in UTC (so
+    commits earlier on the validation day are not re-reported, and the verdict
+    does not depend on the runner's timezone), and an explicit ISO timestamp is
+    honored exactly. Each commit is modeled by its absolute epoch and compared
+    exactly as ``_git_log_changes`` compares it: ``epoch <= boundary`` is
+    in-sync, ``epoch > boundary`` is drift.
+    """
+    failures: list[str] = []
+
+    def expect(label: str, condition: bool) -> None:
+        if not condition:
+            failures.append(label)
+
+    utc = timezone.utc
+
+    day_boundary = _validation_threshold_epoch("2026-06-05")
+    expect("date-only value parses to a boundary", day_boundary is not None)
+    if day_boundary is not None:
+        # Commits anywhere on the validated day are in-sync, regardless of the
+        # timezone the commit was authored in.
+        expect(
+            "midnight start of the validated day is in-sync",
+            datetime(2026, 6, 5, 0, 0, 0, tzinfo=utc).timestamp() <= day_boundary,
+        )
+        expect(
+            "late commit on the validated day is in-sync",
+            datetime(2026, 6, 5, 22, 20, 16, tzinfo=utc).timestamp() <= day_boundary,
+        )
+        expect(
+            "evening commit in a +08:00 zone is in-sync",
+            datetime(2026, 6, 5, 23, 0, 0, tzinfo=timezone(timedelta(hours=8))).timestamp() <= day_boundary,
+        )
+        # The first instant of the next day is drift.
+        expect(
+            "start of the next day is drift",
+            datetime(2026, 6, 6, 0, 0, 0, tzinfo=utc).timestamp() > day_boundary,
+        )
+
+    exact_boundary = _validation_threshold_epoch("2026-06-05T12:00:00+00:00")
+    expect("ISO datetime value parses to a boundary", exact_boundary is not None)
+    if exact_boundary is not None:
+        expect(
+            "commit one second before the timestamp is in-sync",
+            datetime(2026, 6, 5, 11, 59, 59, tzinfo=utc).timestamp() <= exact_boundary,
+        )
+        expect(
+            "commit exactly at the timestamp is in-sync",
+            datetime(2026, 6, 5, 12, 0, 0, tzinfo=utc).timestamp() <= exact_boundary,
+        )
+        expect(
+            "commit one second after the timestamp is drift",
+            datetime(2026, 6, 5, 12, 0, 1, tzinfo=utc).timestamp() > exact_boundary,
+        )
+
+    expect(
+        "a trailing Z is treated as UTC",
+        _validation_threshold_epoch("2026-06-05T12:00:00Z") == exact_boundary,
+    )
+    expect(
+        "a naive datetime is treated as UTC",
+        _validation_threshold_epoch("2026-06-05T12:00:00") == exact_boundary,
+    )
+    expect("an empty value has no boundary", _validation_threshold_epoch("") is None)
+    expect("an unparseable value has no boundary", _validation_threshold_epoch("not a date") is None)
+
+    # Path normalization for _commit_touches_path: git diff-tree emits
+    # repo-root-relative paths, so a PROJECT_ROOT-relative validation path must
+    # be prefixed before the exact-match comparison can succeed.
+    expect(
+        "a nested-project prefix is prepended to the path",
+        _repo_relative("docs/practices/x.md", "examples/governed-project/")
+        == "examples/governed-project/docs/practices/x.md",
+    )
+    expect(
+        "a prefix missing its trailing slash still joins cleanly",
+        _repo_relative("docs/x.md", "templates/governed-project")
+        == "templates/governed-project/docs/x.md",
+    )
+    expect(
+        "an empty prefix (project at repo root) leaves the path unchanged",
+        _repo_relative("docs/x.md", "") == "docs/x.md",
+    )
+    expect(
+        "a bare-slash prefix leaves the path unchanged",
+        _repo_relative("docs/x.md", "/") == "docs/x.md",
+    )
+
+    if failures:
+        print("docs_drift_signal self-test failed:")
+        for failure in failures:
+            print(f"- {failure}")
+        return 1
+    print("docs_drift_signal self-test passed.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--self-test", action="store_true", help="verify boundary logic without a repository")
     args = parser.parse_args()
+    if args.self_test:
+        return _run_self_test()
     if not args.write and not args.check:
         args.write = True
     if not _is_git_working_tree():

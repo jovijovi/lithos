@@ -296,10 +296,14 @@ def run_subcheck(cwd: Path, args: list[str], errors: list[str]) -> None:
 
 
 def check_governed_project_generators(errors: list[str]) -> None:
+    # The template's verify_project.py runs the drift self-test itself, so the
+    # template's boundary logic is covered there. The example has no such
+    # wrapper, so run its drift self-test explicitly here.
     run_subcheck(ROOT / "templates/governed-project", [sys.executable, "scripts/verify_project.py"], errors)
     for rel in ("examples/governed-project",):
         cwd = ROOT / rel
         run_subcheck(cwd, [sys.executable, "tools/build_docs_index.py", "--check"], errors)
+        run_subcheck(cwd, [sys.executable, "tools/docs_drift_signal.py", "--self-test"], errors)
         run_subcheck(cwd, [sys.executable, "tools/docs_drift_signal.py", "--check"], errors)
         run_subcheck(cwd, [sys.executable, "tools/static_safety_scan.py"], errors)
 
