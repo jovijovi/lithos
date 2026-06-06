@@ -13,8 +13,26 @@ Fixture naming is the contract:
 * any fixture named ``invalid-*.json`` must violate at least one invariant, and
   where an intended reason is registered the failure must cite that reason
   (e.g. ``invalid-autonomous-self-merge.json`` must fail on ``agent_self_merge``,
-  ``invalid-autonomous-self-approval.json`` on ``agent_self_approval``, and
-  ``invalid-live-runtime-without-controls.json`` on ``live_runtime``).
+  ``invalid-autonomous-self-approval.json`` on ``agent_self_approval``,
+  ``invalid-live-runtime-without-controls.json`` on ``live_runtime``, and
+  ``invalid-workflow-path-traversal.json`` on ``path traversal``).
+
+Beyond the governance flags, the checker enforces that an arbitrary manifest
+carries only portable, non-sensitive values:
+
+* ``local_workflow_file`` must be a single, portable, repo-relative path — never
+  an absolute, home/private machine-local, URL-like, path-traversal, or
+  empty-segment path. A standalone checker cannot know an adopting repository's
+  root, so it verifies the *shape* of the path, not the physical presence of the
+  file; presence is the adopting project's local verifier and root workflow.
+* no string value anywhere in the manifest may be secret-shaped or a private
+  machine-local absolute path; the whole document is scanned recursively.
+
+To stay honest, the checker self-tests on startup: it mutates a known-good
+manifest in memory and confirms each invalid case fails for its intended reason.
+Sensitive probes are assembled at runtime from fragments, so no secret-shaped or
+private literal is ever stored in this file (mirroring
+``scripts/verify_static_safety.py``).
 
 A manifest declares conformance; it never authorizes anything. These checks
 verify the declaration is internally consistent with the governance model.
@@ -22,7 +40,9 @@ verify the declaration is internally consistent with the governance model.
 
 from __future__ import annotations
 
+import copy
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -101,7 +121,35 @@ INVALID_REASON_MARKERS = {
     "invalid-autonomous-self-approval.json": "agent_self_approval",
     "invalid-live-runtime-without-controls.json": "live_runtime",
     "invalid-live-runtime-non-object.json": "approval_gates.live_runtime",
+    "invalid-workflow-path-traversal.json": "path traversal",
 }
+
+# Secret/token shapes used to keep an arbitrary manifest free of sensitive
+# values. Each needle is assembled from fragments so this file never contains a
+# value that matches one of its own patterns (mirrors
+# scripts/verify_static_safety.py).
+SECRET_PATTERNS = [
+    re.compile("gh" + "p_[A-Za-z0-9]{20,}"),
+    re.compile("github" + "_pat_[A-Za-z0-9_]{20,}"),
+    re.compile("sk-" + r"[A-Za-z0-9]{20,}"),
+    re.compile("AK" + "IA[A-Z0-9]{16}"),
+    re.compile("xox" + r"[abprs]-[A-Za-z0-9-]{10,}"),
+    re.compile("-----BEGIN" + r"[A-Z ]*PRIVATE KEY-----"),
+    re.compile(
+        r"(?i)(api|access|secret|private|auth)[_-]?(key|token)\s*[:=]\s*"
+        r"['\"]?[A-Za-z0-9_./+=-]{16,}"
+    ),
+]
+
+# Private, machine-local absolute paths leak the originating environment into a
+# portable manifest. Covered shapes: Unix and macOS per-user and root home
+# directories (matching a trailing leaf such as a dotfile, not just nested
+# directories) and Windows per-user home directories on any drive letter and
+# either separator.
+PRIVATE_PATH_PATTERNS = [
+    re.compile(r"/(?:home|Users|root)/[A-Za-z0-9._-]+(?:/|$)"),
+    re.compile(r"(?i)[A-Za-z]:[\\/]Users[\\/][^\\/\s]+"),
+]
 
 
 def load_json(path: Path) -> object:
@@ -110,6 +158,14 @@ def load_json(path: Path) -> object:
 
 def is_nonempty_str(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
+
+
+def _looks_secret(value: str) -> bool:
+    return any(pattern.search(value) for pattern in SECRET_PATTERNS)
+
+
+def _looks_private_path(value: str) -> bool:
+    return any(pattern.search(value) for pattern in PRIVATE_PATH_PATTERNS)
 
 
 def validate_manifest(data: object) -> list[str]:
@@ -130,11 +186,7 @@ def validate_manifest(data: object) -> list[str]:
             f"{sorted(ADOPTION_PROFILES)} (got {profile!r})"
         )
 
-    workflow = data.get("local_workflow_file")
-    if isinstance(workflow, list):
-        reasons.append("local_workflow_file must be a single string, not an array")
-    elif not is_nonempty_str(workflow):
-        reasons.append("local_workflow_file must be a single non-empty string")
+    reasons.extend(_validate_workflow_path(data.get("local_workflow_file")))
 
     reasons.extend(_validate_roles(data.get("roles")))
     reasons.extend(_validate_gates(data.get("approval_gates")))
@@ -145,7 +197,68 @@ def validate_manifest(data: object) -> list[str]:
     if profile == "full-governed-project":
         reasons.extend(_validate_knowledge_governance(data.get("knowledge_governance")))
 
+    # Whole-manifest safety scan: no string value anywhere may be secret-shaped
+    # or a private machine-local absolute path.
+    _scan_sensitive_values(data, "", reasons)
+
     return reasons
+
+
+def _validate_workflow_path(workflow: object) -> list[str]:
+    """Enforce that ``local_workflow_file`` is one portable, repo-relative path.
+
+    A standalone checker cannot know an adopting repository's root, so it cannot
+    prove the file physically exists; it enforces a safe, portable *shape* and
+    leaves presence to the adopting project's local verifier. Secret-shaped and
+    private machine-local values are caught by the manifest-wide scan as well.
+    """
+    if isinstance(workflow, list):
+        return ["local_workflow_file must be a single string, not an array"]
+    if not is_nonempty_str(workflow):
+        return ["local_workflow_file must be a single non-empty string"]
+
+    reasons: list[str] = []
+    if workflow.startswith("~"):
+        reasons.append(
+            "local_workflow_file must be a portable repo-relative path, "
+            "not a home directory reference"
+        )
+    if workflow.startswith("/") or re.match(r"[A-Za-z]:[\\/]", workflow):
+        reasons.append(
+            "local_workflow_file must be a repo-relative path, not an absolute path"
+        )
+    if "\\" in workflow:
+        reasons.append(
+            "local_workflow_file must use portable '/' separators, not '\\'"
+        )
+    if "://" in workflow:
+        reasons.append("local_workflow_file must be a repo-relative path, not a URL")
+
+    parts = workflow.split("/")
+    if any(part == ".." for part in parts):
+        reasons.append("local_workflow_file must not contain path traversal ('..')")
+    if not workflow.startswith("/") and any(part == "" for part in parts):
+        reasons.append("local_workflow_file must not contain an empty path segment")
+    return reasons
+
+
+def _scan_sensitive_values(node: object, path: str, reasons: list[str]) -> None:
+    """Recursively flag any string value that is secret-shaped or a private path."""
+    if isinstance(node, dict):
+        for key, value in node.items():
+            child = f"{path}.{key}" if path else str(key)
+            _scan_sensitive_values(value, child, reasons)
+    elif isinstance(node, list):
+        for index, value in enumerate(node):
+            _scan_sensitive_values(value, f"{path}[{index}]", reasons)
+    elif isinstance(node, str):
+        label = path or "manifest"
+        if _looks_secret(node):
+            reasons.append(f"{label} must not contain a secret-shaped value")
+        elif _looks_private_path(node):
+            reasons.append(
+                f"{label} must not contain a private machine-local absolute path"
+            )
 
 
 def _validate_roles(roles: object) -> list[str]:
@@ -325,8 +438,85 @@ def check_failing(path: Path, errors: list[str]) -> bool:
     return True
 
 
+def run_self_tests() -> list[str]:
+    """Prove the safety/path invariants by mutating a known-good manifest in memory.
+
+    A clean run of this checker should mean the invariants are actually enforced,
+    not that no fixture happened to exercise them. So before scanning fixtures we
+    take a known-good manifest, mutate one field at a time into a known-bad shape,
+    and confirm each case fails for its intended reason. Sensitive probes are
+    assembled from fragments at runtime, so no secret-shaped or private literal is
+    stored in this file.
+    """
+    failures: list[str] = []
+    base_path = FIXTURES_DIR / "valid-lighter-governed-workflow.json"
+    try:
+        base = load_json(base_path)
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"self-test: could not load known-good manifest {base_path.name}: {exc}"]
+    if not isinstance(base, dict):
+        return ["self-test: known-good manifest is not a JSON object"]
+
+    baseline = validate_manifest(base)
+    if baseline:
+        return [f"self-test: known-good manifest unexpectedly failed: {baseline}"]
+
+    # Probes built from fragments so this file never stores a sensitive literal.
+    secret_probe = "gh" + "p_" + "S" * 32
+    home_probe = "/" + "home/" + "examplecontributor/" + "project/AI_FLOW.md"
+    root_probe = "/" + "root/" + ".bash" + "rc"
+    windows_home_probe = (
+        "C:" + "\\" + "Users" + "\\" + "alice" + "\\" + ".ssh" + "\\" + "id_rsa"
+    )
+
+    # (description, key path into the manifest, replacement value, required marker)
+    cases = [
+        ("secret in roles.owner.assigned_to",
+         ["roles", "owner", "assigned_to"], secret_probe, "secret-shaped"),
+        ("secret in local_workflow_file",
+         ["local_workflow_file"], secret_probe, "secret-shaped"),
+        ("private home path in local_workflow_file",
+         ["local_workflow_file"], home_probe, "private machine-local absolute path"),
+        ("root home path in roles.reviewer.assigned_to",
+         ["roles", "reviewer", "assigned_to"], root_probe, "private machine-local"),
+        ("windows home path in roles.reviewer.assigned_to",
+         ["roles", "reviewer", "assigned_to"], windows_home_probe, "private machine-local"),
+        ("absolute local_workflow_file",
+         ["local_workflow_file"], "/etc/lithos/AI_FLOW.md", "absolute"),
+        ("url-like local_workflow_file",
+         ["local_workflow_file"], "https://example.invalid/AI_FLOW.md", "URL"),
+        ("path traversal in local_workflow_file",
+         ["local_workflow_file"], "../" + "../outside-repo/AI_FLOW.md", "path traversal"),
+        ("empty segment in local_workflow_file",
+         ["local_workflow_file"], "docs//AI_FLOW.md", "empty path segment"),
+        ("empty local_workflow_file",
+         ["local_workflow_file"], "", "single non-empty string"),
+    ]
+    for description, key_path, value, marker in cases:
+        mutated = copy.deepcopy(base)
+        target = mutated
+        for key in key_path[:-1]:
+            target = target[key]
+        target[key_path[-1]] = value
+        reasons = validate_manifest(mutated)
+        if not any(marker in reason for reason in reasons):
+            failures.append(
+                f"self-test: mutation '{description}' did not fail for '{marker}'; "
+                f"reasons were: {reasons}"
+            )
+    return failures
+
+
 def main() -> int:
     errors: list[str] = []
+
+    self_test_failures = run_self_tests()
+    if self_test_failures:
+        print("Lithos conformance checker self-test failed:")
+        for failure in self_test_failures:
+            print(f"- {failure}")
+        return 2
+
     check_schema(errors)
 
     check_passing(TEMPLATE_PATH, "template", errors)
