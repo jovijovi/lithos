@@ -83,6 +83,7 @@ REQUIRED_FILES = [
     "fixtures/conformance/invalid-live-runtime-without-controls.json",
     "fixtures/conformance/invalid-live-runtime-non-object.json",
     "fixtures/conformance/invalid-workflow-path-traversal.json",
+    "fixtures/conformance/invalid-conformance-claim-false.json",
     "examples/governed-project/README.md",
     "examples/governed-project/ai-collaborative-development-standards.md",
     "examples/governed-project/GOAL.md",
@@ -175,6 +176,7 @@ JSON_FILES = [
     "fixtures/conformance/invalid-live-runtime-without-controls.json",
     "fixtures/conformance/invalid-live-runtime-non-object.json",
     "fixtures/conformance/invalid-workflow-path-traversal.json",
+    "fixtures/conformance/invalid-conformance-claim-false.json",
 ]
 
 BINARY_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf"}
