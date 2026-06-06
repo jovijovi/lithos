@@ -42,7 +42,7 @@ Lithos se lit sur trois plans :
 - **Gouvernance des releases et de la chaîne d'approvisionnement** — approbation propriétaire, provenance et limites de publication pour les artefacts distribués. Voir [`docs/release-and-supply-chain-governance.md`](docs/release-and-supply-chain-governance.md).
 - **Interopérabilité des outils** — les artefacts qui portent l'état de collaboration sont neutres vis-à-vis des fournisseurs et portables, de sorte qu'un projet peut changer d'outils sans perdre sa gouvernance. Voir [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Gouvernance des README bilingues** — le README source et les README localisés restent sémantiquement alignés lorsque les affirmations visibles changent.
-- **Compétences** — des procédures opérationnelles réutilisables dans [`skills/`](skills/) : la compétence parapluie [`lithos`](skills/lithos/SKILL.md) oriente un agent pour adopter, auditer, mettre à niveau, évaluer ou contrôler la publication d'un projet, aux côtés des compétences ciblées pour créer, auditer et adapter un flux IA local.
+- **Compétences** — des procédures opérationnelles réutilisables dans [`skills/`](skills/) : l'unique compétence parapluie [`lithos`](skills/lithos/SKILL.md) oriente un agent pour adopter, auditer, mettre à niveau, évaluer ou contrôler la publication d'un projet, avec une procédure par intention sous [`skills/lithos/references/`](skills/lithos/references/).
 - **Exemples** — une adoption gouvernée concrète dans [`examples/`](examples/).
 
 ## Portée — ce que Lithos n'est pas
@@ -89,10 +89,8 @@ Une démonstration complète se trouve dans [`examples/governed-project/`](examp
 │   └── versioning-and-governance.md
 ├── schemas/                   Schéma de manifeste d'adoption lisible par machine
 ├── skills/                    Procédures opérationnelles réutilisables
-│   ├── lithos/                Compétence parapluie : route adopter / auditer / mettre à niveau / évaluer / publier
-│   ├── create-local-ai-flow/
-│   ├── audit-local-ai-flow/
-│   └── adapt-ai-flow-for-governed-project/
+│   └── lithos/                Compétence parapluie unique : route adopter / auditer / mettre à niveau / évaluer / publier
+│       └── references/        Une procédure par intention : adopter, auditer, mise à niveau gouvernée, montée de version, revue de PR, contrôle de publication
 ├── templates/                 Fichiers d'adoption locale et structure de projet gouverné prêts à copier
 ├── fixtures/                  Fixtures de conformité (passantes et rejetantes)
 ├── examples/                  Adoptions concrètes
