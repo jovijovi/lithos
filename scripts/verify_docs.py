@@ -43,6 +43,15 @@ REQUIRED_FILES = [
     "skills/create-local-ai-flow/SKILL.md",
     "skills/audit-local-ai-flow/SKILL.md",
     "skills/adapt-ai-flow-for-governed-project/SKILL.md",
+    "skills/lithos/SKILL.md",
+    "skills/lithos/references/adopt-project.md",
+    "skills/lithos/references/audit-project.md",
+    "skills/lithos/references/governed-upgrade.md",
+    "skills/lithos/references/version-upgrade.md",
+    "skills/lithos/references/pr-review.md",
+    "skills/lithos/references/release-gate.md",
+    "skills/lithos/references/agent-role-boundaries.md",
+    "skills/lithos/references/conformance-truthfulness.md",
     "templates/governed-ai-flow.md",
     "templates/governed-project/GOAL.md",
     "templates/governed-project/AGENTS.md",
@@ -217,6 +226,101 @@ SKILL_SEMANTIC_MARKERS = {
     + ["provenance", "audit trail"],
 }
 
+# The umbrella `lithos` skill is the agent-facing operational entry point an
+# installed agent uses to apply Lithos to a real project, plus one reference per
+# intent it routes. These markers are exact, vendor-neutral invariants — the
+# references it links, the docs that remain the authority, and the load-bearing
+# boundaries (no self-approval/self-merge/ownerless auto-merge, no agent
+# self-release, the static safety scan is not behavior proof, the manifest is
+# not authorization) — so the capability pack cannot quietly drift behind the
+# standard or drop a boundary. Markers are lowercased substrings, matched
+# case-insensitively, exactly as the adoption-skill markers above.
+LITHOS_UMBRELLA_MARKERS = {
+    "skills/lithos/SKILL.md": [
+        "references/adopt-project.md",
+        "references/audit-project.md",
+        "references/governed-upgrade.md",
+        "references/version-upgrade.md",
+        "references/pr-review.md",
+        "references/release-gate.md",
+        "references/agent-role-boundaries.md",
+        "references/conformance-truthfulness.md",
+        "operational entry point",
+        "are the authority",
+        "does not make a project conformant",
+        "not authorization",
+    ],
+    "skills/lithos/references/adopt-project.md": [
+        "../../create-local-ai-flow/SKILL.md",
+        "lighter governed workflow",
+        "full governed project",
+        "no minimal profile",
+        "adoption manifest",
+        "not authorization",
+    ],
+    "skills/lithos/references/audit-project.md": [
+        "../../audit-local-ai-flow/SKILL.md",
+        "no minimal profile",
+        "adoption manifest",
+        "conformance fixtures",
+        "static safety scan",
+        "not behavior proof",
+        "scenario regression",
+    ],
+    "skills/lithos/references/governed-upgrade.md": [
+        "../../adapt-ai-flow-for-governed-project/SKILL.md",
+        "lighter governed workflow",
+        "full governed project",
+        "never loosen",
+        "knowledge spine",
+        "scenario regression",
+        "release and supply-chain",
+    ],
+    "skills/lithos/references/version-upgrade.md": [
+        "../../../docs/versioning-and-governance.md",
+        "claimed lithos version",
+        "missing deltas",
+        "adoption manifest",
+        "re-verified fresh",
+    ],
+    "skills/lithos/references/pr-review.md": [
+        "../../../docs/autonomous-pr-policy.md",
+        "role and gate drift",
+        "manifest truthfulness",
+        "self-approval",
+        "self-merge",
+        "ownerless auto-merge",
+        "static safety scan",
+        "scenario regression",
+    ],
+    "skills/lithos/references/release-gate.md": [
+        "../../../docs/release-and-supply-chain-governance.md",
+        "separate blockers from notes",
+        "no agent self-release",
+        "owner approval",
+        "provenance record",
+        "static safety scan",
+    ],
+    "skills/lithos/references/agent-role-boundaries.md": [
+        "../../../docs/roles.md",
+        "../../../docs/approval-semantics.md",
+        "approval authority is human-only",
+        "independent of the implementation",
+        "self-approval",
+        "self-merge",
+        "ownerless auto-merge",
+        "not authorization",
+    ],
+    "skills/lithos/references/conformance-truthfulness.md": [
+        "../../../docs/conformance-and-fixtures.md",
+        "what the project says must match what the project does",
+        "manifest, schema, and checker",
+        "worked-example commands",
+        "static safety scan",
+        "not behavior proof",
+    ],
+}
+
 
 def fail(message: str, errors: list[str]) -> None:
     errors.append(message)
@@ -277,6 +381,7 @@ def check_readme_semantic_sync(errors: list[str]) -> None:
         "templates/lithos-adoption-manifest.json",
         "fixtures/conformance/",
         "templates/governed-project/",
+        "skills/lithos/SKILL.md",
         "docs/dev_log/",
         "docs/lessons/",
         "docs/practices/",
@@ -382,6 +487,21 @@ def check_skill_semantic_sync(errors: list[str]) -> None:
                 fail(f"{rel}: missing first-class concept marker: {marker}", errors)
 
 
+def check_lithos_umbrella_sync(errors: list[str]) -> None:
+    """Require the umbrella `lithos` skill and its references to keep markers for
+    the standard's load-bearing concepts, so the operational entry point cannot
+    drift behind the docs or quietly drop a boundary."""
+    for rel, markers in LITHOS_UMBRELLA_MARKERS.items():
+        path = ROOT / rel
+        if not path.exists():
+            fail(f"missing required file: {rel}", errors)
+            continue
+        lowered = read_text(path).lower()
+        for marker in markers:
+            if marker.lower() not in lowered:
+                fail(f"{rel}: missing umbrella skill marker: {marker}", errors)
+
+
 def check_markdown_links(errors: list[str]) -> None:
     link_re = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
     for path in iter_text_files():
@@ -452,6 +572,7 @@ def main() -> int:
     check_static_safety(errors)
     check_skill_frontmatter(errors)
     check_skill_semantic_sync(errors)
+    check_lithos_umbrella_sync(errors)
     check_markdown_links(errors)
     check_forbidden_text(errors)
     check_json_files(errors)
