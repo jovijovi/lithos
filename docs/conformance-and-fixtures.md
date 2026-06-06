@@ -33,6 +33,7 @@ A claim is only as good as the evidence behind it. Lithos ships **conformance fi
 - [`fixtures/conformance/invalid-live-runtime-without-controls.json`](../fixtures/conformance/invalid-live-runtime-without-controls.json) — a manifest that must be rejected because it declares live/runtime in scope while waiving owner approval and the separate controls real systems require.
 - [`fixtures/conformance/invalid-live-runtime-non-object.json`](../fixtures/conformance/invalid-live-runtime-non-object.json) — a manifest that must be rejected because its live/runtime gate is present but is not an object (here `null`), which cannot carry the owner-approval and separate-controls flags the gate requires.
 - [`fixtures/conformance/invalid-workflow-path-traversal.json`](../fixtures/conformance/invalid-workflow-path-traversal.json) — a manifest that must be rejected because its local workflow path uses traversal (`..`) to point outside the repository, so it is not a portable repo-relative path. The offending value is non-secret and non-private, so it is safe to commit as a fixture.
+- [`fixtures/conformance/invalid-conformance-claim-false.json`](../fixtures/conformance/invalid-conformance-claim-false.json) — a manifest that must be rejected because it sets `conformance_claim.claims_conformance` to `false`: a manifest that declares it does not claim conformance is a non-claim, not a smaller claim, so the checker must not accept it as conforming.
 
 The fixtures are validated by a pure-stdlib checker, [`scripts/verify_conformance_fixtures.py`](../scripts/verify_conformance_fixtures.py), which parses the schema, the template, and the fixtures and enforces the core invariants below. The valid fixtures and the template pass; each invalid fixture fails, and for its intended reason.
 
@@ -40,6 +41,7 @@ The fixtures are validated by a pure-stdlib checker, [`scripts/verify_conformanc
 
 The checker enforces, at minimum, that a conforming manifest:
 
+- is itself a well-formed conformance declaration: it carries the manifest format version this checker validates, names the Lithos version it claims, and **actually claims conformance** — `conformance_claim` is an object whose `claims_conformance` is `true` and whose `statement` is a non-empty string. These fields are checked semantically, not by presence alone, so a manifest with a wrong-typed version, a missing or non-object claim, or `claims_conformance` set to `false` is rejected rather than silently accepted;
 - assigns every required [role](roles.md);
 - declares the four [approval gates](approval-semantics.md), and keeps owner approval distinct from verification evidence and from run records;
 - keeps the live/runtime gate behind owner approval and separate controls even when it is declared out of scope, so the gate can never be silently weakened;

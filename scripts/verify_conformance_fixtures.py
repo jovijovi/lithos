@@ -53,6 +53,13 @@ FIXTURES_DIR = ROOT / "fixtures/conformance"
 
 ADOPTION_PROFILES = {"lighter-governed-workflow", "full-governed-project"}
 
+# The adoption-manifest format version this checker validates. The schema types
+# manifest_version only as a string, but every fixture and the template carry
+# "1.0" and this checker understands exactly that format, so it enforces the
+# exact value rather than merely a non-empty string. When the manifest format
+# itself is revised, this constant and the fixtures/template move together.
+MANIFEST_FORMAT_VERSION = "1.0"
+
 REQUIRED_TOP_LEVEL = [
     "manifest_version",
     "lithos_version",
@@ -122,6 +129,7 @@ INVALID_REASON_MARKERS = {
     "invalid-live-runtime-without-controls.json": "live_runtime",
     "invalid-live-runtime-non-object.json": "approval_gates.live_runtime",
     "invalid-workflow-path-traversal.json": "path traversal",
+    "invalid-conformance-claim-false.json": "conformance_claim.claims_conformance",
 }
 
 # Secret/token shapes used to keep an arbitrary manifest free of sensitive
@@ -194,6 +202,20 @@ def validate_manifest(data: object) -> list[str]:
     for key in REQUIRED_TOP_LEVEL:
         if key not in data:
             reasons.append(f"missing required field: {key}")
+
+    # Schema/conformance-claim fields are validated semantically, not by presence
+    # alone: a present-but-wrong-shape value (a non-string version, a non-object
+    # or non-claiming conformance_claim) would otherwise be silently accepted,
+    # contradicting the schema and docs/conformance-and-fixtures.md, which
+    # describes the manifest as a machine-readable conformance declaration.
+    if data.get("manifest_version") != MANIFEST_FORMAT_VERSION:
+        reasons.append(
+            f"manifest_version must be the string {MANIFEST_FORMAT_VERSION!r} "
+            "(the adoption-manifest format version this checker validates)"
+        )
+    if not is_nonempty_str(data.get("lithos_version")):
+        reasons.append("lithos_version must be a non-empty string")
+    reasons.extend(_validate_conformance_claim(data.get("conformance_claim")))
 
     profile = data.get("adoption_profile")
     if profile not in ADOPTION_PROFILES:
@@ -275,6 +297,27 @@ def _scan_sensitive_values(node: object, path: str, reasons: list[str]) -> None:
             reasons.append(
                 f"{label} must not contain a private machine-local absolute path"
             )
+
+
+def _validate_conformance_claim(claim: object) -> list[str]:
+    """Enforce that the manifest actually declares conformance.
+
+    The schema types ``conformance_claim`` as an object carrying a boolean
+    ``claims_conformance`` and a string ``statement``, and
+    docs/conformance-and-fixtures.md describes the manifest as a machine-readable
+    conformance declaration. A manifest the checker accepts as conforming must
+    therefore *claim* conformance: ``claims_conformance`` must be exactly true (a
+    false or non-boolean value is a non-claim, not a smaller claim) and
+    ``statement`` must be a non-empty string describing the claim.
+    """
+    if not isinstance(claim, dict):
+        return ["conformance_claim must be an object"]
+    reasons: list[str] = []
+    if claim.get("claims_conformance") is not True:
+        reasons.append("conformance_claim.claims_conformance must be true")
+    if not is_nonempty_str(claim.get("statement")):
+        reasons.append("conformance_claim.statement must be a non-empty string")
+    return reasons
 
 
 def _validate_roles(roles: object) -> list[str]:
@@ -523,6 +566,33 @@ def run_self_tests() -> list[str]:
          ["local_workflow_file"], "docs//AI_FLOW.md", "empty path segment"),
         ("empty local_workflow_file",
          ["local_workflow_file"], "", "single non-empty string"),
+        # Schema/conformance-claim fields must be validated semantically, not by
+        # presence alone (the schema types these fields and
+        # docs/conformance-and-fixtures.md calls the manifest a machine-readable
+        # conformance declaration). A field that is present but the wrong type,
+        # empty, or a non-claim must be rejected, not silently accepted.
+        ("non-string manifest_version",
+         ["manifest_version"], 1, "manifest_version"),
+        ("unknown manifest_version format",
+         ["manifest_version"], "9.9", "manifest_version"),
+        ("non-string lithos_version",
+         ["lithos_version"], 1, "lithos_version"),
+        ("empty lithos_version",
+         ["lithos_version"], "   ", "lithos_version"),
+        ("null conformance_claim",
+         ["conformance_claim"], None, "conformance_claim must be an object"),
+        ("non-object conformance_claim",
+         ["conformance_claim"], "conforms to Lithos", "conformance_claim must be an object"),
+        ("claims_conformance false",
+         ["conformance_claim", "claims_conformance"], False, "claims_conformance"),
+        ("non-bool claims_conformance",
+         ["conformance_claim", "claims_conformance"], "yes", "claims_conformance"),
+        ("missing conformance_claim.statement",
+         ["conformance_claim"], {"claims_conformance": True}, "statement"),
+        ("empty conformance_claim.statement",
+         ["conformance_claim", "statement"], "   ", "statement"),
+        ("non-string conformance_claim.statement",
+         ["conformance_claim", "statement"], 123, "statement"),
     ]
     for description, key_path, value, marker in cases:
         mutated = copy.deepcopy(base)
