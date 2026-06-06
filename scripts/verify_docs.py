@@ -82,6 +82,7 @@ REQUIRED_FILES = [
     "fixtures/conformance/invalid-autonomous-self-approval.json",
     "fixtures/conformance/invalid-live-runtime-without-controls.json",
     "fixtures/conformance/invalid-live-runtime-non-object.json",
+    "fixtures/conformance/invalid-workflow-path-traversal.json",
     "examples/governed-project/README.md",
     "examples/governed-project/ai-collaborative-development-standards.md",
     "examples/governed-project/GOAL.md",
@@ -173,6 +174,7 @@ JSON_FILES = [
     "fixtures/conformance/invalid-autonomous-self-approval.json",
     "fixtures/conformance/invalid-live-runtime-without-controls.json",
     "fixtures/conformance/invalid-live-runtime-non-object.json",
+    "fixtures/conformance/invalid-workflow-path-traversal.json",
 ]
 
 BINARY_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf"}

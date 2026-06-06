@@ -1,5 +1,5 @@
 {
-  "_comment": "Lithos adoption manifest template. Copy into your repository and replace every [bracketed] value. A manifest declares conformance; it does not authorize anything. Field reference and allowed values: docs/conformance-and-fixtures.md. Validate with: python scripts/verify_conformance_fixtures.py.",
+  "_comment": "Lithos adoption manifest template. Copy into your repository and replace every [bracketed] value. local_workflow_file defaults to docs/AI_FLOW.md; replace it if your single local workflow file has a different repo-relative path. A manifest declares conformance; it does not authorize anything. Field reference and allowed values: docs/conformance-and-fixtures.md. Validate with: python scripts/verify_conformance_fixtures.py.",
   "manifest_version": "1.0",
   "lithos_version": "1.x",
   "adoption_profile": "full-governed-project",
@@ -7,7 +7,7 @@
     "claims_conformance": true,
     "statement": "[project] conforms to Lithos 1.x at the full-governed-project depth"
   },
-  "local_workflow_file": "[docs/AI_FLOW.md or the single local workflow file you chose]",
+  "local_workflow_file": "docs/AI_FLOW.md",
   "roles": {
     "owner": { "assigned_to": "[human owner or group]", "human": true },
     "controller": { "assigned_to": "[person or orchestrating agent under owner instruction]" },
