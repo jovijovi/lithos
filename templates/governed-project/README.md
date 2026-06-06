@@ -33,7 +33,7 @@ This knowledge is governed as durable, evidence-bearing artifacts: it records an
 
 ## Conformance
 
-`[project-name]` conforms to Lithos `[1.x]` as a full governed project. It declares that claim in an optional machine-readable adoption manifest (`[lithos-adoption-manifest.json]`) — the version and depth claimed, role holders, gate operation, and autonomous PR policy. The manifest is a declaration, not an authorization, and is kept vendor-neutral and portable.
+`[project-name]` conforms to Lithos `[1.x]` under the single full-lifecycle governance model. It declares that claim in a machine-readable adoption manifest (`[lithos-adoption-manifest.json]`) — the version, governance model, role holders, gate operation, verification evidence, and autonomous PR policy. The manifest is a declaration, not an authorization, and is kept vendor-neutral and portable.
 
 ## Release-safety and scenario governance
 

@@ -2,18 +2,18 @@
 
 Bring a repository that has decided to follow Lithos to its first conformant state: write its **local workflow file** and the companion artifacts that make its conformance claim inspectable. The output is documents the project commits — adoption changes no runtime behavior and grants no execution authority.
 
-## Decide the depth
+## Pick a starting point
 
-Lithos defines two governed adoption depths and **no minimal profile**. A small project adopts a lighter shape, never a weaker one.
+Lithos defines **exactly one governance model: the full lifecycle**, with **no adoption tiers** or profiles. A small project keeps the model's anchors concise, never weaker. Pick where to begin within that one model:
 
-- **Lighter governed workflow** — a local workflow file, an `AGENTS.md` contract, and a PR checklist. Start from [`templates/governed-ai-flow.md`](../../../templates/governed-ai-flow.md).
-- **Full governed project** — the lighter surface plus the document authority chain and the knowledge spine. Copy [`templates/governed-project/`](../../../templates/governed-project/) and follow [`docs/governed-project-structure.md`](../../../docs/governed-project-structure.md).
+- **The local workflow file on its own** — start from [`templates/governed-ai-flow.md`](../../../templates/governed-ai-flow.md), paired with an `AGENTS.md` contract and a PR checklist. This is the component a small or early-stage project writes first; the rest of the structure stays present even when terse.
+- **The full structure laid out** — copy [`templates/governed-project/`](../../../templates/governed-project/) and follow [`docs/governed-project-structure.md`](../../../docs/governed-project-structure.md) for the document authority chain and the knowledge spine.
 
-Choosing the lighter governed workflow is not dropping a requirement: roles, the four approval gates, isolation discipline, and evidence are preserved either way ([`docs/conformance-and-fixtures.md`](../../../docs/conformance-and-fixtures.md)).
+Starting concise is not dropping a requirement: roles, the four approval gates, isolation discipline, and evidence are present either way ([`docs/conformance-and-fixtures.md`](../../../docs/conformance-and-fixtures.md)).
 
 ## Write the local workflow file
 
-The owner chooses the filename — any discoverable name is valid (`AI_FLOW.md`, `docs/AI_FLOW.md`, `ai-collaborative-development-standards.md`); for full governed adoption prefer `docs/AI_FLOW.md` with `GOAL.md` as the stable source-of-truth index. Resolve every bracketed blank — an unfilled blank is a conformance gap. The file must:
+The owner chooses the filename — any discoverable name is valid (`AI_FLOW.md`, `docs/AI_FLOW.md`, `ai-collaborative-development-standards.md`); when laying out the full structure prefer `docs/AI_FLOW.md` with `GOAL.md` as the stable source-of-truth index. Resolve every bracketed blank — an unfilled blank is a conformance gap. The file must:
 
 1. **Assign [roles](../../../docs/roles.md)**, stating any combined roles; approval authority is human-only.
 2. **Operationalize the four [approval gates](../../../docs/approval-semantics.md)** — say how each is signaled — and state plainly whether the project operates at the live/runtime layer.
@@ -24,7 +24,7 @@ The owner chooses the filename — any discoverable name is valid (`AI_FLOW.md`,
 
 ## Make the claim inspectable
 
-1. Fill the **adoption manifest** from [`templates/lithos-adoption-manifest.json`](../../../templates/lithos-adoption-manifest.json) against its [schema](../../../schemas/lithos-adoption-manifest.schema.json) — version, depth, role holders, gate operation, and the autonomous PR policy — and confirm it the way the [conformance fixtures](../../../fixtures/conformance/) do, including the **invalid** cases that must be rejected. The manifest is a declaration, **not authorization**.
+1. Fill the **adoption manifest** from [`templates/lithos-adoption-manifest.json`](../../../templates/lithos-adoption-manifest.json) against its [schema](../../../schemas/lithos-adoption-manifest.schema.json) — version, governance model, role holders, gate operation, and the autonomous PR policy — and confirm it the way the [conformance fixtures](../../../fixtures/conformance/) do, including the **invalid** cases that must be rejected. The manifest is a declaration, **not authorization**.
 2. For a behavior-bearing project, pin advertised behaviors with a [scenario regression](../../../docs/scenario-regression-governance.md) suite. For a project that publishes artifacts, add [release and supply-chain](../../../docs/release-and-supply-chain-governance.md) governance.
 3. Where agent-executed units need auditability, retain an [agent run manifest](../../../docs/agent-run-manifest.md) for each run as a record — **not authorization** — keeping the approval reference distinct from the verification evidence.
 

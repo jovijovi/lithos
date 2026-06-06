@@ -1,10 +1,11 @@
 {
+  "_comment": "Conforming reference manifest for Lithos's single full-lifecycle governance model, with every optional field populated and the knowledge spine fully elaborated. Lithos defines exactly one governance model; this fixture shows it in full detail, while valid-concise-adoption.json shows the same model kept terse. A manifest declares conformance; it does not authorize anything.",
   "manifest_version": "1.0",
   "lithos_version": "1.x",
-  "adoption_profile": "full-governed-project",
+  "governance_model": "full-lifecycle-governance",
   "conformance_claim": {
     "claims_conformance": true,
-    "statement": "conforms to Lithos 1.x at the full-governed-project depth"
+    "statement": "conforms to Lithos 1.x under the full-lifecycle governance model"
   },
   "local_workflow_file": "docs/AI_FLOW.md",
   "roles": {

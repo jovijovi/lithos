@@ -2,7 +2,7 @@
   "_comment": "Intentionally non-conforming fixture. It must be rejected because conformance_claim.claims_conformance is false: a manifest that declares it does not claim conformance is a non-claim, not a smaller claim, so the checker must not accept it as a conforming manifest. Every other field is well-formed so the checker fails for the conformance-claim reason alone. The offending value is non-secret and non-private, so it is safe to commit as a fixture.",
   "manifest_version": "1.0",
   "lithos_version": "1.x",
-  "adoption_profile": "lighter-governed-workflow",
+  "governance_model": "full-lifecycle-governance",
   "conformance_claim": {
     "claims_conformance": false,
     "statement": "does not claim conformance to Lithos"
@@ -48,5 +48,14 @@
       "live-runtime",
       "external-destructive"
     ]
+  },
+  "knowledge_governance": {
+    "dev_log": "docs/dev_log/",
+    "lessons": "docs/lessons/",
+    "practices": "docs/practices/",
+    "generated_index": "docs/INDEX.md",
+    "drift_report": "docs/lessons/_drift_report.md",
+    "evidence_retention": "dev logs and run records retained under docs/dev_log/",
+    "stale_knowledge_handling": "use-driven validation; frozen records are immutable"
   }
 }

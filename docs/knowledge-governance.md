@@ -2,7 +2,7 @@
 
 A governed project accumulates knowledge: why a change was made, what broke, what pattern is worth repeating. Lithos treats that knowledge as a **governed artifact set**, not as chat history. This document defines the knowledge spine, how its artifacts live and expire, the evidence they retain, and — critically — the authority they do **not** hold.
 
-Knowledge governance is a capability of [full governed project adoption](governed-project-structure.md). A [lighter governed workflow](local-adoption.md) keeps reusable knowledge out of chat history but is not required to maintain the full spine below.
+Knowledge governance is part of Lithos's one [full-lifecycle governance model](governed-project-structure.md): every conforming project maintains the spine below. A small project keeps its lessons and practices anchors present but concise — empty but present is allowed; omission is not.
 
 ## The knowledge spine
 
@@ -26,7 +26,7 @@ Every non-trivial task **must** produce a development log. A task **should** pro
 
 ## Drift report
 
-`docs/lessons/_drift_report.md` is **generated** from the `applies_to` paths declared in each lesson and practice. It signals knowledge whose covered code or documents have moved since the artifact was last validated. The drift report is an *activity-aware backstop*, not an expiry clock: it surfaces candidates for re-validation; it does not itself deprecate anything. A full governed project runs the drift check with its other verification gates and commits the regenerated report whenever the underlying docs or covered paths change, so drift evidence cannot become an optional stale artifact.
+`docs/lessons/_drift_report.md` is **generated** from the `applies_to` paths declared in each lesson and practice. It signals knowledge whose covered code or documents have moved since the artifact was last validated. The drift report is an *activity-aware backstop*, not an expiry clock: it surfaces candidates for re-validation; it does not itself deprecate anything. A conforming project runs the drift check with its other verification gates and commits the regenerated report whenever the underlying docs or covered paths change, so drift evidence cannot become an optional stale artifact.
 
 ## Stale-knowledge handling
 
@@ -55,5 +55,5 @@ Treating historical logs, lessons, or chat notes as authority is an anti-pattern
 - The spine is part of [governed project structure](governed-project-structure.md); the directory map and preflight order live there.
 - Knowledge artifacts are [evidence](verification-standards.md) and may be referenced from an [agent run manifest](agent-run-manifest.md).
 - Generated indexes and drift reports are governed verification inputs for [scenario regression](scenario-regression-governance.md) and [release governance](release-and-supply-chain-governance.md); they record what knowledge was current, not what is approved.
-- A project declares that it maintains this spine in its [adoption manifest](conformance-and-fixtures.md); the fields are checked for full governed project adoption.
+- A project declares that it maintains this spine in its [adoption manifest](conformance-and-fixtures.md); the knowledge governance fields are required of every conforming manifest.
 - The artifacts are vendor-neutral and portable across tools; see [tooling interoperability](tooling-interoperability.md).

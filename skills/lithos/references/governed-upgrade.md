@@ -1,10 +1,10 @@
-# Upgrade to a Full Governed Project
+# Fill In a Concise Adoption
 
-Strengthen a project that outgrew a **lighter governed workflow** into a **full governed project** — for formal review, multiple agents, staged phases, runtime boundaries, or compliance needs. This is a governance-depth upgrade, distinct from moving to a newer Lithos version ([version upgrade](version-upgrade.md)).
+As a project grows — formal review, multiple agents, staged phases, runtime boundaries, or compliance needs — fill the concise anchors of Lithos's one full-lifecycle governance model in with full detail. Lithos has no tiers, so this is not moving between governance modes; it is elaborating the same model, distinct from moving to a newer Lithos version ([version upgrade](version-upgrade.md)).
 
 ## Tighten only
 
-The rule that governs the whole upgrade: you add and tighten; you **never loosen** a Lithos requirement. There is no minimal profile to drop toward — a lighter governed workflow and a full governed project differ in surface, not in whether roles, gates, isolation, and evidence hold. Start from the project's current file and [`templates/governed-ai-flow.md`](../../../templates/governed-ai-flow.md), and — for a full authority chain — [`docs/governed-project-structure.md`](../../../docs/governed-project-structure.md) plus [`templates/governed-project/`](../../../templates/governed-project/). Run [audit a project](audit-project.md) first to find the gaps, preserve any rules already stricter than the template, and resolve every bracketed decision as you go.
+The rule that governs the whole change: you add and tighten; you **never loosen** a Lithos requirement. There is no smaller tier to drop toward — a concise adoption and a fully elaborated one differ in how much content the anchors carry, not in whether roles, gates, isolation, and evidence hold. Start from the project's current file and [`templates/governed-ai-flow.md`](../../../templates/governed-ai-flow.md), and — for the full authority chain — [`docs/governed-project-structure.md`](../../../docs/governed-project-structure.md) plus [`templates/governed-project/`](../../../templates/governed-project/). Run [audit a project](audit-project.md) first to find the gaps, preserve any rules already stricter than the template, and resolve every bracketed decision as you go.
 
 ## What the upgrade adds
 
@@ -20,4 +20,4 @@ The rule that governs the whole upgrade: you add and tighten; you **never loosen
 
 ## Done when
 
-The manifest now claims `full-governed-project` and stays schema-valid, the knowledge spine exists, the full source-of-truth chain is in place, and [audit a project](audit-project.md) reports no open gaps. Tightening governance grants no new execution authority; see [agent role boundaries](agent-role-boundaries.md).
+The manifest claims Lithos's single `full-lifecycle-governance` model and stays schema-valid, the knowledge spine is fully elaborated, the full source-of-truth chain is in place, and [audit a project](audit-project.md) reports no open gaps. Tightening governance grants no new execution authority; see [agent role boundaries](agent-role-boundaries.md).

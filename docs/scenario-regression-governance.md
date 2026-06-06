@@ -2,7 +2,7 @@
 
 Some projects bear **behavior**: they make claims about what an input produces, ship examples that are supposed to work, and promise that a release does not quietly change those outcomes. For such projects, prose and tests are not enough on their own — the behavior a project advertises must be pinned to **named, committed scenario fixtures** so a regression is caught mechanically rather than discovered by a downstream consumer.
 
-This document defines how a behavior-bearing project governs scenario fixtures and prevents regressions in its claims, its examples, and its releases. It is a capability of [full governed project adoption](governed-project-structure.md); a project with no behavioral surface does not need it.
+This document defines how a behavior-bearing project governs scenario fixtures and prevents regressions in its claims, its examples, and its releases. It is part of Lithos's one [full-lifecycle governance model](governed-project-structure.md) and applies to any project that bears behavior; a project with no behavioral surface does not need it.
 
 ## What a scenario fixture is
 

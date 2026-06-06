@@ -51,7 +51,10 @@ SCHEMA_PATH = ROOT / "schemas/lithos-adoption-manifest.schema.json"
 TEMPLATE_PATH = ROOT / "templates/lithos-adoption-manifest.json"
 FIXTURES_DIR = ROOT / "fixtures/conformance"
 
-ADOPTION_PROFILES = {"lighter-governed-workflow", "full-governed-project"}
+# Lithos defines exactly one governance model. There are no adoption tiers; a
+# small project keeps the model's anchors concise but never omits them. The
+# manifest declares this single model by an exact value.
+GOVERNANCE_MODEL = "full-lifecycle-governance"
 
 # The adoption-manifest format version this checker validates. The schema types
 # manifest_version only as a string, but every fixture and the template carry
@@ -63,7 +66,7 @@ MANIFEST_FORMAT_VERSION = "1.0"
 REQUIRED_TOP_LEVEL = [
     "manifest_version",
     "lithos_version",
-    "adoption_profile",
+    "governance_model",
     "conformance_claim",
     "local_workflow_file",
     "roles",
@@ -71,6 +74,7 @@ REQUIRED_TOP_LEVEL = [
     "approval_authority",
     "verification",
     "autonomous_pr_policy",
+    "knowledge_governance",
 ]
 
 REQUIRED_ROLES = [
@@ -217,11 +221,11 @@ def validate_manifest(data: object) -> list[str]:
         reasons.append("lithos_version must be a non-empty string")
     reasons.extend(_validate_conformance_claim(data.get("conformance_claim")))
 
-    profile = data.get("adoption_profile")
-    if profile not in ADOPTION_PROFILES:
+    model = data.get("governance_model")
+    if model != GOVERNANCE_MODEL:
         reasons.append(
-            "adoption_profile must be one of "
-            f"{sorted(ADOPTION_PROFILES)} (got {profile!r})"
+            f"governance_model must be {GOVERNANCE_MODEL!r}; Lithos defines "
+            f"exactly one governance model and no adoption tiers (got {model!r})"
         )
 
     reasons.extend(_validate_workflow_path(data.get("local_workflow_file")))
@@ -232,8 +236,10 @@ def validate_manifest(data: object) -> list[str]:
     reasons.extend(_validate_verification(data.get("verification")))
     reasons.extend(_validate_pr_policy(data.get("autonomous_pr_policy")))
 
-    if profile == "full-governed-project":
-        reasons.extend(_validate_knowledge_governance(data.get("knowledge_governance")))
+    # The full-lifecycle model always maintains the knowledge spine, so its
+    # anchors are required of every conforming manifest. A small project may keep
+    # the values terse, but the fields are present, not optional.
+    reasons.extend(_validate_knowledge_governance(data.get("knowledge_governance")))
 
     # Whole-manifest safety scan: no string value anywhere may be secret-shaped
     # or a private machine-local absolute path.
@@ -422,7 +428,8 @@ def _validate_knowledge_governance(knowledge: object) -> list[str]:
     reasons: list[str] = []
     if not isinstance(knowledge, dict):
         return [
-            "knowledge_governance is required for full-governed-project and must be an object"
+            "knowledge_governance is required for the full-lifecycle governance "
+            "model and must be an object"
         ]
     for field in REQUIRED_KNOWLEDGE_GOVERNANCE:
         if not is_nonempty_str(knowledge.get(field)):
@@ -446,13 +453,16 @@ def check_schema(errors: list[str]) -> None:
     required = schema.get("required")
     if not isinstance(required, list) or sorted(required) != sorted(REQUIRED_TOP_LEVEL):
         errors.append("schema.required does not match the checker's REQUIRED_TOP_LEVEL")
-    enum = (
+    const = (
         schema.get("properties", {})
-        .get("adoption_profile", {})
-        .get("enum")
+        .get("governance_model", {})
+        .get("const")
     )
-    if not isinstance(enum, list) or set(enum) != ADOPTION_PROFILES:
-        errors.append("schema adoption_profile.enum does not match the checker's profiles")
+    if const != GOVERNANCE_MODEL:
+        errors.append(
+            "schema governance_model.const does not match the checker's single "
+            "governance model"
+        )
 
 
 def check_passing(path: Path, label: str, errors: list[str]) -> bool:
@@ -508,7 +518,7 @@ def run_self_tests() -> list[str]:
     stored in this file.
     """
     failures: list[str] = []
-    base_path = FIXTURES_DIR / "valid-lighter-governed-workflow.json"
+    base_path = FIXTURES_DIR / "valid-full-lifecycle-governance.json"
     try:
         base = load_json(base_path)
     except (OSError, json.JSONDecodeError) as exc:
@@ -566,6 +576,15 @@ def run_self_tests() -> list[str]:
          ["local_workflow_file"], "docs//AI_FLOW.md", "empty path segment"),
         ("empty local_workflow_file",
          ["local_workflow_file"], "", "single non-empty string"),
+        # Lithos defines exactly one governance model: any other value -- a
+        # removed tier name or an unknown string -- must be rejected, so the
+        # single-model invariant cannot be silently weakened back into tiers.
+        # The removed tier name is assembled from fragments so this file never
+        # stores the retired literal that the docs stale-term guard forbids.
+        ("removed-tier governance_model",
+         ["governance_model"], "lighter" + "-governed-workflow", "governance_model"),
+        ("unknown governance_model",
+         ["governance_model"], "lite", "governance_model"),
         # Schema/conformance-claim fields must be validated semantically, not by
         # presence alone (the schema types these fields and
         # docs/conformance-and-fixtures.md calls the manifest a machine-readable

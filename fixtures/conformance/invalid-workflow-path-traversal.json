@@ -2,7 +2,7 @@
   "_comment": "Intentionally non-conforming fixture. It must be rejected because local_workflow_file uses path traversal ('..') to point outside the repository, which is not a portable repo-relative path. The traversal value is safe to commit: it contains no secret-shaped or private machine-local value. Every other field is well-formed so the checker fails for the path-traversal reason alone.",
   "manifest_version": "1.0",
   "lithos_version": "1.x",
-  "adoption_profile": "lighter-governed-workflow",
+  "governance_model": "full-lifecycle-governance",
   "conformance_claim": {
     "claims_conformance": true,
     "statement": "claims to conform to Lithos 1.x while pointing its local workflow file outside the repository via path traversal"
@@ -48,5 +48,14 @@
       "live-runtime",
       "external-destructive"
     ]
+  },
+  "knowledge_governance": {
+    "dev_log": "docs/dev_log/",
+    "lessons": "docs/lessons/",
+    "practices": "docs/practices/",
+    "generated_index": "docs/INDEX.md",
+    "drift_report": "docs/lessons/_drift_report.md",
+    "evidence_retention": "dev logs and run records retained under docs/dev_log/",
+    "stale_knowledge_handling": "use-driven validation; frozen records are immutable"
   }
 }

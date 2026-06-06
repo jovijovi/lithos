@@ -6,7 +6,7 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 
 ## What this example demonstrates
 
-- The full governed document spine from [`docs/governed-project-structure.md`](../../docs/governed-project-structure.md).
+- The complete lifecycle document spine from [`docs/governed-project-structure.md`](../../docs/governed-project-structure.md).
 - `GOAL.md` as a stable product-positioning and source-of-truth index.
 - Product requirements in `docs/product/prd.md`.
 - System architecture and module detail split across `docs/design/architecture.md` and `docs/design/technical-solution.md`.
@@ -14,7 +14,7 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 - Task-level implementation plan rules in `docs/plans/README.md`.
 - The local Lithos workflow at `docs/AI_FLOW.md`.
 - Knowledge capture through `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, root `LESSONS.md`, and generated drift reports — records that inform future work but never override the authority chain or clear an approval gate.
-- A Lithos conformance claim (version and depth) suitable for a machine-readable adoption manifest, kept vendor-neutral and portable across tools.
+- A Lithos conformance claim suitable for a machine-readable adoption manifest: version, single full-lifecycle governance model, roles, gates, verification, and autonomous PR policy, kept vendor-neutral and portable across tools.
 - An autonomous PR policy: agents may open and update pull requests, but never self-approve, self-merge, enable ownerless auto-merge, delete branches, publish, or perform live/external actions without explicit owner approval.
 - Reproducible verification gates that actually run in this directory: a bundled local verifier (`scripts/verify_project.py`), a docs index check (`tools/build_docs_index.py`), an activity-aware drift signal (`tools/docs_drift_signal.py`), and a first-class static safety scan (`tools/static_safety_scan.py`).
 - Static safety as a first-class gate: `tools/static_safety_scan.py` rejects secret-shaped tokens, private machine-local paths, and unfinished-work placeholders, and runs inside `scripts/verify_project.py`.
@@ -59,4 +59,4 @@ Granite is at R0, a documentation authority baseline, so it ships no product tes
 4. Added the dev-log/lesson/practice knowledge spine and generated docs index/drift tooling.
 5. Updated `AGENTS.md`, bilingual READMEs, and the PR checklist to match the stricter flow.
 
-Compare with the workflow-only [`templates/governed-ai-flow.md`](../../templates/governed-ai-flow.md) template to see why a lighter governed workflow is intentionally thinner than the full governed spine.
+The local workflow template [`templates/governed-ai-flow.md`](../../templates/governed-ai-flow.md) remains a useful component reference, but this example demonstrates the complete lifecycle structure Lithos expects even when a real project keeps some content concise.

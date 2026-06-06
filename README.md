@@ -32,7 +32,7 @@ Read Lithos at three layers:
 - **Worktree & branch discipline** — isolation of in-progress work so human and agent changes stay reviewable. See [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Verification standards** — evidence over agreement: tests, CI, reviews, artifacts, reproducibility. See [`docs/verification-standards.md`](docs/verification-standards.md).
 - **Agent run manifest** — a per-run audit record of what was authorized, what actually ran, and the evidence and boundary involved; a record, not an authorization. See [`docs/agent-run-manifest.md`](docs/agent-run-manifest.md).
-- **Templates** — ready-to-copy local workflow files in [`templates/`](templates/), for workflow-only and full governed adoption.
+- **Templates** — ready-to-copy starting points in [`templates/`](templates/): the local workflow file on its own and the full project starter set, both components of the one full-lifecycle governance model.
 - **Governed project structure** — a fuller document authority chain for mature repos: `GOAL.md`, PRD, design, roadmap/status, feature tracker, phase plans, and `docs/AI_FLOW.md`. See [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Knowledge spine** — development logs, lessons, practices, generated docs-only indexes, and drift reports for governed repos: `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, and `tools/`. How this knowledge lives, expires by use, and stays subordinate to the authority chain is defined in [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
 - **Conformance & adoption manifest** — what a project may claim, declared in a machine-readable adoption manifest ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), filled from [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), with [conformance fixtures](fixtures/conformance/) showing what passes and what must fail. See [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
@@ -43,7 +43,7 @@ Read Lithos at three layers:
 - **Tooling interoperability** — the artifacts that carry collaboration state are vendor-neutral and portable, so a project can change tools without losing its governance. See [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Bilingual README governance** — source and localized README files stay semantically aligned when user-facing claims change.
 - **Skills** — reusable operational procedures in [`skills/`](skills/): the single [`lithos`](skills/lithos/SKILL.md) umbrella skill routes an agent to adopt, audit, upgrade, review, or release-gate a project, with one procedure per intent under [`skills/lithos/references/`](skills/lithos/references/).
-- **Examples** — a worked governed adoption in [`examples/`](examples/).
+- **Examples** — a worked adoption of the full-lifecycle model in [`examples/`](examples/).
 
 ## Scope — what Lithos is not
 
@@ -55,7 +55,7 @@ Adopting Lithos does **not** authorize autonomous or live AI execution. Its appr
 
 1. Read [`docs/philosophy.md`](docs/philosophy.md) and [`docs/core-concepts.md`](docs/core-concepts.md).
 2. Choose where your collaboration rules will live — pick your own local workflow filename (e.g. `AI_FLOW.md`, `ai-collaborative-development-standards.md`, or a name that fits your repo). See [`docs/local-adoption.md`](docs/local-adoption.md).
-3. Copy a starting point: [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) for workflow-only formal review, or the full [`templates/governed-project/`](templates/governed-project/) spine for a mature governed repo with dev logs, lessons, practices, generated docs index, drift report, and bilingual README rules.
+3. Copy a starting point — both are components of the one full-lifecycle model: [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) is the local workflow file on its own, kept concise; the full [`templates/governed-project/`](templates/governed-project/) spine lays the same model out end to end with dev logs, lessons, practices, generated docs index, drift report, and bilingual README rules.
 4. Add the [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) contract to your `AGENTS.md`.
 5. Adopt [`templates/pr-checklist.md`](templates/pr-checklist.md) and the [verification standards](docs/verification-standards.md), and declare what you conform to in an [adoption manifest](templates/lithos-adoption-manifest.json).
 

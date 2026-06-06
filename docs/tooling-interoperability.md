@@ -13,7 +13,7 @@ Each artifact has one boundary. Together they let agents and tools exchange role
 | Artifact | Carries | Owns | Must not own |
 |---|---|---|---|
 | [Local workflow file](local-adoption.md) | How this project operates the standard. | Role assignments, gate signalling, isolation and verification rules. | Per-run state or product authority. |
-| [Adoption manifest](conformance-and-fixtures.md) | The conformance claim. | Version, depth, roles, gate operation, autonomous PR policy, knowledge fields. | Approval grants; secret values. |
+| [Adoption manifest](conformance-and-fixtures.md) | The conformance claim. | Version, single governance model, roles, gate operation, verification stance, autonomous PR policy, knowledge fields. | Approval grants; secret values. |
 | [Environment policy](environment-and-sandbox-policy.md) | Where a run may execute and what it may touch. | Filesystem, network, credential, and side-effect limits. | Capability grants or live/runtime authorization. |
 | [Agent run manifest](agent-run-manifest.md) | What one run was authorized to do and did. | Approval reference, claimed vs actual, evidence, boundary, redaction, retention. | Approval itself; product authority. |
 | [PR checklist](local-adoption.md) | The per-unit review and evidence gate. | Review items, evidence capture, documents that change together. | Long-form design or roadmap content. |
