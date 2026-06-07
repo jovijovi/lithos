@@ -7,14 +7,15 @@
   "required": [
     "manifest_version",
     "lithos_version",
-    "adoption_profile",
+    "governance_model",
     "conformance_claim",
     "local_workflow_file",
     "roles",
     "approval_gates",
     "approval_authority",
     "verification",
-    "autonomous_pr_policy"
+    "autonomous_pr_policy",
+    "knowledge_governance"
   ],
   "properties": {
     "manifest_version": {
@@ -25,10 +26,10 @@
       "type": "string",
       "description": "The Lithos version the project claims to conform to, e.g. \"1.x\"."
     },
-    "adoption_profile": {
+    "governance_model": {
       "type": "string",
-      "description": "The governed adoption depth. Lithos defines no minimal profile.",
-      "enum": ["lighter-governed-workflow", "full-governed-project"]
+      "description": "Lithos defines exactly one governance model: the full lifecycle. There are no adoption tiers; a small project keeps the model's anchors concise but never omits them.",
+      "const": "full-lifecycle-governance"
     },
     "conformance_claim": {
       "type": "object",
@@ -174,7 +175,7 @@
     },
     "knowledge_governance": {
       "type": "object",
-      "description": "Required for full-governed-project adoption; see the conditional below.",
+      "description": "The knowledge spine the full-lifecycle governance model maintains. Always required; a small project keeps the anchors concise but present.",
       "required": [
         "dev_log",
         "lessons",
@@ -195,16 +196,6 @@
       }
     }
   },
-  "allOf": [
-    {
-      "if": {
-        "properties": { "adoption_profile": { "const": "full-governed-project" } }
-      },
-      "then": {
-        "required": ["knowledge_governance"]
-      }
-    }
-  ],
   "$defs": {
     "role": {
       "type": "object",

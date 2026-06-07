@@ -87,4 +87,4 @@ Normative changes to this file follow [Lithos governance](https://github.com/jov
 - PR checklist: `[path/to/pr-checklist.md]`.
 - Environment and sandbox policy: this file's boundaries section, or `[path/to/environment-policy.md]`.
 - Agent run manifest (per run, when auditability is needed): `[path/to/agent-run-manifest.json]`.
-- Adoption manifest (optional, declaring the conformance claim): `[path/to/lithos-adoption-manifest.json]`. It is a declaration, not an authorization, and is kept vendor-neutral and portable.
+- Adoption manifest declaring the conformance claim: `[path/to/lithos-adoption-manifest.json]`. It is a declaration, not an authorization, and is kept vendor-neutral and portable.

@@ -2,10 +2,10 @@
   "_comment": "Lithos adoption manifest template. Copy into your repository and replace every [bracketed] value. local_workflow_file defaults to docs/AI_FLOW.md; replace it if your single local workflow file has a different repo-relative path. A manifest declares conformance; it does not authorize anything. Field reference and allowed values: docs/conformance-and-fixtures.md. Validate with: python scripts/verify_conformance_fixtures.py.",
   "manifest_version": "1.0",
   "lithos_version": "1.x",
-  "adoption_profile": "full-governed-project",
+  "governance_model": "full-lifecycle-governance",
   "conformance_claim": {
     "claims_conformance": true,
-    "statement": "[project] conforms to Lithos 1.x at the full-governed-project depth"
+    "statement": "[project] conforms to Lithos 1.x under the full-lifecycle governance model"
   },
   "local_workflow_file": "docs/AI_FLOW.md",
   "roles": {

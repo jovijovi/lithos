@@ -32,7 +32,7 @@ Lithos se lee en tres planos:
 - **Disciplina de árboles de trabajo y ramas** — el aislamiento del trabajo en curso para que los cambios humanos y de los agentes sigan siendo revisables. Véase [`docs/core-concepts.md`](docs/core-concepts.md).
 - **Normas de verificación** — la evidencia por encima del acuerdo: pruebas, CI, revisiones, artefactos, reproducibilidad. Véase [`docs/verification-standards.md`](docs/verification-standards.md).
 - **Manifiesto de ejecución de agente** — un registro de auditoría por ejecución de qué se autorizó, qué se ejecutó realmente, y las evidencias y el límite implicados; un registro, no una autorización. Véase [`docs/agent-run-manifest.md`](docs/agent-run-manifest.md).
-- **Plantillas** — archivos de flujo local listos para copiar en [`templates/`](templates/), para adopción de solo flujo de trabajo y plenamente gobernada.
+- **Plantillas** — puntos de partida listos para copiar en [`templates/`](templates/): el archivo de flujo local por sí solo y el conjunto inicial de proyecto completo, ambos componentes del mismo modelo de gobernanza de ciclo de vida completo.
 - **Estructura de proyecto gobernado** — una cadena de autoridad documental más completa para repositorios maduros: `GOAL.md`, PRD, diseño, hoja de ruta/estado, seguimiento de funciones, planes de fase y `docs/AI_FLOW.md`. Véase [`docs/governed-project-structure.md`](docs/governed-project-structure.md).
 - **Columna vertebral de conocimiento** — registros de desarrollo, lecciones, prácticas, índices generados solo para `docs/` e informes de deriva para repositorios gobernados: `docs/dev_log/`, `docs/lessons/`, `docs/practices/` y `tools/`. Cómo vive ese conocimiento, expira por uso y permanece subordinado a la cadena de autoridad se define en [`docs/knowledge-governance.md`](docs/knowledge-governance.md).
 - **Conformidad y manifiesto de adopción** — qué puede afirmar un proyecto, declarado en un manifiesto de adopción legible por máquina ([`schemas/lithos-adoption-manifest.schema.json`](schemas/lithos-adoption-manifest.schema.json), rellenado a partir de [`templates/lithos-adoption-manifest.json`](templates/lithos-adoption-manifest.json)), con [fixtures de conformidad](fixtures/conformance/) que muestran qué pasa y qué debe fallar. Véase [`docs/conformance-and-fixtures.md`](docs/conformance-and-fixtures.md).
@@ -43,7 +43,7 @@ Lithos se lee en tres planos:
 - **Interoperabilidad de herramientas** — los artefactos que portan el estado de colaboración son neutrales respecto al proveedor y portables, de modo que un proyecto puede cambiar de herramientas sin perder su gobernanza. Véase [`docs/tooling-interoperability.md`](docs/tooling-interoperability.md).
 - **Gobernanza de README bilingües** — el README fuente y los README localizados se mantienen semánticamente alineados cuando cambian las afirmaciones visibles.
 - **Habilidades** — procedimientos operativos reutilizables en [`skills/`](skills/): la única habilidad paraguas [`lithos`](skills/lithos/SKILL.md) dirige a un agente para adoptar, auditar, actualizar, revisar o aplicar el control de publicación de un proyecto, con un procedimiento por intención en [`skills/lithos/references/`](skills/lithos/references/).
-- **Ejemplos** — una adopción gobernada trabajada en [`examples/`](examples/).
+- **Ejemplos** — una adopción trabajada del modelo de ciclo de vida completo en [`examples/`](examples/).
 
 ## Alcance — qué no es Lithos
 
@@ -55,7 +55,7 @@ Adoptar Lithos **no** autoriza la ejecución autónoma ni en vivo de la IA. Su s
 
 1. Lea [`docs/philosophy.md`](docs/philosophy.md) y [`docs/core-concepts.md`](docs/core-concepts.md).
 2. Decida dónde vivirán sus reglas de colaboración: elija su propio nombre de archivo de flujo local (p. ej. `AI_FLOW.md`, `ai-collaborative-development-standards.md`, o un nombre que encaje en su repositorio). Véase [`docs/local-adoption.md`](docs/local-adoption.md).
-3. Copie un punto de partida: [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) para una revisión formal de solo flujo de trabajo, o la estructura completa [`templates/governed-project/`](templates/governed-project/) para un repositorio gobernado maduro con registros de desarrollo, lecciones, prácticas, índice generado, informe de deriva y reglas de README bilingües.
+3. Copie un punto de partida — ambos son componentes del mismo modelo de ciclo de vida completo: [`templates/governed-ai-flow.md`](templates/governed-ai-flow.md) es el archivo de flujo local por sí solo, mantenido conciso; la estructura completa [`templates/governed-project/`](templates/governed-project/) despliega el mismo modelo de extremo a extremo con registros de desarrollo, lecciones, prácticas, índice generado, informe de deriva y reglas de README bilingües.
 4. Añada el contrato [`templates/AGENTS.md.snippet`](templates/AGENTS.md.snippet) a su `AGENTS.md`.
 5. Adopte [`templates/pr-checklist.md`](templates/pr-checklist.md) y las [normas de verificación](docs/verification-standards.md), y declare a qué se conforma en un [manifiesto de adopción](templates/lithos-adoption-manifest.json).
 

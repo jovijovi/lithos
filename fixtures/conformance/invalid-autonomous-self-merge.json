@@ -2,7 +2,7 @@
   "_comment": "Intentionally non-conforming fixture. It must be rejected because autonomous_pr_policy.agent_self_merge is true: Lithos adoption never authorizes an agent to merge its own pull request. Every other field is well-formed so the checker fails for this reason alone.",
   "manifest_version": "1.0",
   "lithos_version": "1.x",
-  "adoption_profile": "full-governed-project",
+  "governance_model": "full-lifecycle-governance",
   "conformance_claim": {
     "claims_conformance": true,
     "statement": "claims to conform to Lithos 1.x while permitting agent self-merge"

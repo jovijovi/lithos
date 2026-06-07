@@ -2,7 +2,7 @@
   "_comment": "Intentionally non-conforming fixture. It must be rejected because approval_gates.live_runtime is present but is not an object (here null). A null, string, list, or boolean gate entry cannot carry owner_approval_required or separate_controls_required, so a non-object live/runtime gate must fail rather than be silently accepted. Every other field is well-formed so the checker fails for the live_runtime reason alone.",
   "manifest_version": "1.0",
   "lithos_version": "1.x",
-  "adoption_profile": "lighter-governed-workflow",
+  "governance_model": "full-lifecycle-governance",
   "conformance_claim": {
     "claims_conformance": true,
     "statement": "claims to conform to Lithos 1.x while supplying a non-object live/runtime gate"
@@ -48,5 +48,14 @@
       "live-runtime",
       "external-destructive"
     ]
+  },
+  "knowledge_governance": {
+    "dev_log": "docs/dev_log/",
+    "lessons": "docs/lessons/",
+    "practices": "docs/practices/",
+    "generated_index": "docs/INDEX.md",
+    "drift_report": "docs/lessons/_drift_report.md",
+    "evidence_retention": "dev logs and run records retained under docs/dev_log/",
+    "stale_knowledge_handling": "use-driven validation; frozen records are immutable"
   }
 }

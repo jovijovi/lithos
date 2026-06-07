@@ -6,16 +6,13 @@ A project that says "we follow Lithos" makes a claim others rely on. This docume
 
 Conformance means a project meets the requirements in the [standard documents](versioning-and-governance.md): assigned [roles](roles.md), the four layered [approval gates](approval-semantics.md), worktree/branch discipline, and evidence-based [verification](verification-standards.md). A project states the version it conforms to (for example, "conforms to Lithos 1.x").
 
-Lithos defines **two governed adoption depths** and **no minimal profile**:
-
-- **Lighter governed workflow** — a local workflow file, an agent contract, and a PR checklist. Thinner than a full spine, but it still preserves roles, gates, isolation, and evidence.
-- **Full governed project** — the lighter surface plus the full documentation authority chain and the [knowledge spine](knowledge-governance.md).
+Lithos defines **exactly one governance model: the full lifecycle.** There are no adoption tiers or profiles. A small project keeps the model's anchors concise — terse files, short docs, lessons and practices anchors that are empty but present — yet it never omits governance structure. The full lifecycle covers the local workflow, the assigned roles, the four approval gates, worktree/branch discipline, verification evidence, environment and sandbox boundaries, the adoption manifest, the [knowledge spine](knowledge-governance.md), the static safety scan, and — as applicable — scenario regression and release/supply-chain governance.
 
 A project **may** be stricter than the standard and still conform. It **must not** drop a requirement and claim conformance: a claim that omits roles, collapses the gate layering, abandons isolation, or accepts work without evidence is not a smaller adoption of Lithos — it is not Lithos.
 
 ## The adoption manifest
 
-A project declares its conformance in a **machine-readable adoption manifest**: which version and depth it claims, who holds each role, how the gates are operated, the autonomous PR policy in force, and — for full governed projects — the knowledge governance fields. The manifest is a **declaration, not an authorization**: writing one grants no permission and clears no gate.
+A project declares its conformance in a **machine-readable adoption manifest**: which version it claims, who holds each role, how the gates are operated, the autonomous PR policy in force, and the knowledge governance fields the full-lifecycle model maintains. The manifest is a **declaration, not an authorization**: writing one grants no permission and clears no gate.
 
 - Schema: [`schemas/lithos-adoption-manifest.schema.json`](../schemas/lithos-adoption-manifest.schema.json).
 - Fillable template: [`templates/lithos-adoption-manifest.json`](../templates/lithos-adoption-manifest.json).
@@ -26,8 +23,8 @@ The manifest is deliberately small, vendor-neutral, and free of secret-shaped or
 
 A claim is only as good as the evidence behind it. Lithos ships **conformance fixtures** — example adoption manifests that demonstrate what passes and what must fail:
 
-- [`fixtures/conformance/valid-lighter-governed-workflow.json`](../fixtures/conformance/valid-lighter-governed-workflow.json) — a conforming lighter governed workflow.
-- [`fixtures/conformance/valid-full-governed-project.json`](../fixtures/conformance/valid-full-governed-project.json) — a conforming full governed project, with the knowledge governance fields populated.
+- [`fixtures/conformance/valid-concise-adoption.json`](../fixtures/conformance/valid-concise-adoption.json) — a small project under the one governance model, with every required anchor present but kept terse.
+- [`fixtures/conformance/valid-full-lifecycle-governance.json`](../fixtures/conformance/valid-full-lifecycle-governance.json) — the same governance model shown in full detail, with every optional field and the knowledge governance fields populated.
 - [`fixtures/conformance/invalid-autonomous-self-merge.json`](../fixtures/conformance/invalid-autonomous-self-merge.json) — a manifest that must be rejected because it claims an agent may self-merge.
 - [`fixtures/conformance/invalid-autonomous-self-approval.json`](../fixtures/conformance/invalid-autonomous-self-approval.json) — a manifest that must be rejected because it claims an agent may approve its own pull request.
 - [`fixtures/conformance/invalid-live-runtime-without-controls.json`](../fixtures/conformance/invalid-live-runtime-without-controls.json) — a manifest that must be rejected because it declares live/runtime in scope while waiving owner approval and the separate controls real systems require.
@@ -47,7 +44,7 @@ The checker enforces, at minimum, that a conforming manifest:
 - keeps the live/runtime gate behind owner approval and separate controls even when it is declared out of scope, so the gate can never be silently weakened;
 - names a **single, portable repo-relative** local workflow path, rejecting absolute, home or other private machine-local, URL-like, path-traversal, and empty-segment values. A standalone checker cannot know an adopting repository's root, so it verifies the path's **shape**, not the file's physical presence; actual file presence is checked by the adopting project's local verifier and its root workflow file, not by this checker;
 - has an [autonomous PR policy](autonomous-pr-policy.md) that does **not** permit agent self-approval, agent self-merge, ownerless auto-merge, ownerless branch deletion, ownerless release or publishing, or live/runtime behavior by default;
-- carries the [knowledge governance](knowledge-governance.md) fields when it claims full governed project adoption;
+- carries the [knowledge governance](knowledge-governance.md) fields, which the full-lifecycle model always maintains — terse anchor values are allowed, but the fields are not optional;
 - contains **no** secret-shaped or private machine-local values in any string field — the checker scans the whole manifest recursively and rejects them. (This proves an arbitrary adoption manifest is clean; it is distinct from the repository [static safety scan](static-safety-scan.md), which proves only the committed repository text is clean.)
 
 ## Informative versus normative

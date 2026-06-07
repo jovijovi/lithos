@@ -2,7 +2,7 @@
 
 Publishing a release is the moment a project's work crosses from its own repository into the world: a package others install, an artifact others run, a version others depend on. It is **destructive and external** in the sense of [approval semantics](approval-semantics.md) — hard to take back once downstream consumers have it. Lithos governs the release boundary so that what ships is owner-approved, provenance-bearing, and never published by an agent on its own authority.
 
-This document defines the release gate, the provenance evidence a release carries, the supply-chain rules a build obeys, and the boundary that keeps publishing distinct from ordinary development approval. It is a capability of [full governed project adoption](governed-project-structure.md).
+This document defines the release gate, the provenance evidence a release carries, the supply-chain rules a build obeys, and the boundary that keeps publishing distinct from ordinary development approval. It is part of Lithos's one [full-lifecycle governance model](governed-project-structure.md) and applies to any project that publishes releases.
 
 ## No agent self-release
 

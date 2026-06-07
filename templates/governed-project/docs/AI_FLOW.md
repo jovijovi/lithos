@@ -149,7 +149,7 @@ A manifest records a run; it does not authorize one and never licenses live/runt
 
 ## Conformance and portable artifacts
 
-This project declares its Lithos conformance — version, depth, role holders, gate operation, and the autonomous PR policy above — in a machine-readable adoption manifest. The manifest is a declaration, not an authorization: writing one grants no permission and clears no gate. Keep it and every committed collaboration artifact vendor-neutral, plain-text, and portable across tools, with no vendor or product names and no secret values. Knowledge artifacts (dev logs, lessons, practices) are part of this portable set: they record and inform, but never override the authority chain or grant approval.
+This project declares its Lithos conformance — version, single `full-lifecycle-governance` model, role holders, gate operation, verification stance, and the autonomous PR policy above — in a machine-readable adoption manifest. The manifest is a declaration, not an authorization: writing one grants no permission and clears no gate. Keep it and every committed collaboration artifact vendor-neutral, plain-text, and portable across tools, with no vendor or product names and no secret values. Knowledge artifacts (dev logs, lessons, practices) are part of this portable set: they record and inform, but never override the authority chain or grant approval.
 
 ## PR requirements
 

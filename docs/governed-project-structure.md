@@ -1,11 +1,8 @@
 # Governed Project Structure
 
-Lithos can be adopted at two governed depths:
+Lithos defines exactly one governance model: the full lifecycle. This document describes the structure that model uses — a documentation authority chain plus a knowledge spine that keeps product intent, design, roadmap, implementation plans, verification, lessons, practices, and agent behavior aligned. There are no adoption tiers; a small project keeps these anchors concise, but the structure is present either way.
 
-1. **Lighter governed workflow adoption** — a local workflow file, an agent contract, and a PR checklist. This is thinner than a full project spine, but it still preserves roles, approval gates, isolation discipline, and evidence.
-2. **Full governed project adoption** — a full documentation authority chain plus a knowledge spine that keeps product intent, design, roadmap, implementation plans, verification, lessons, practices, and agent behavior aligned.
-
-Small projects may start with the lighter governed workflow. Projects with formal review, multi-agent work, staged roadmaps, release gates, compliance needs, or product/runtime boundaries should use the full governed project structure.
+The local workflow file, an agent contract, and a PR checklist are components of this structure, not a separate adoption mode. A small, single-maintainer, or early-stage project may keep most files terse and its lessons and practices anchors empty but present; a project with formal review, multi-agent work, staged roadmaps, release gates, compliance needs, or product/runtime boundaries fills the same structure in with full detail.
 
 ## Authority chain
 
@@ -51,7 +48,7 @@ Agent pull-request activity follows the [autonomous PR policy](autonomous-pr-pol
 ├── README.zh-CN.md              # optional but recommended for bilingual projects
 ├── LESSONS.md
 ├── AGENTS.md
-├── lithos-adoption-manifest.json # optional machine-readable conformance declaration
+├── lithos-adoption-manifest.json # machine-readable conformance declaration
 ├── .github/PULL_REQUEST_TEMPLATE.md
 ├── .github/workflows/verify.yml
 ├── docs/
@@ -80,7 +77,7 @@ Agent pull-request activity follows the [autonomous PR policy](autonomous-pr-pol
 └── fixtures/ or examples/ when contract evidence matters
 ```
 
-The exact code layout is local choice. The governed document spine and knowledge spine above are the portable parts; their artifact boundaries and vendor-neutrality rules are defined in [tooling interoperability](tooling-interoperability.md). `docs/INDEX.md` should index only files under `docs/`; root entry points such as `README.md`, `GOAL.md`, and `LESSONS.md` stay outside that generated corpus. A project may also publish a machine-readable [adoption manifest](conformance-and-fixtures.md) (for example `lithos-adoption-manifest.json`) declaring its conformance; the manifest is a declaration, not part of the authority chain, and clears no gate.
+The exact code layout is local choice. The governed document spine and knowledge spine above are the portable parts; their artifact boundaries and vendor-neutrality rules are defined in [tooling interoperability](tooling-interoperability.md). `docs/INDEX.md` should index only files under `docs/`; root entry points such as `README.md`, `GOAL.md`, and `LESSONS.md` stay outside that generated corpus. A project claiming Lithos conformance keeps a machine-readable [adoption manifest](conformance-and-fixtures.md) (for example `lithos-adoption-manifest.json`) declaring the version, the single governance model, roles, gates, verification, and autonomous PR policy; the manifest is a declaration, not part of the authority chain, and clears no gate.
 
 ## Preflight rule for governed work
 
@@ -123,9 +120,9 @@ docs/plans/YYYY-MM-DD-<task-slug>.md
 
 A plan derives from PRD, design, roadmap, and current status. It must include context, checklist, acceptance criteria, likely changed files, verification gates, risks, and rollback. It must not redefine product goals or imply new live/runtime approval.
 
-## When to choose this structure
+## Where the structure becomes load-bearing
 
-Use the governed structure when any of these are true:
+The full lifecycle structure is always present; these conditions are where its heavier parts stop being terse anchors and must be filled in:
 
 - work proceeds through phases or release gates;
 - multiple agents or contributors may act in parallel;

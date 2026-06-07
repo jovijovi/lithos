@@ -82,8 +82,8 @@ REQUIRED_FILES = [
     "templates/agent-run-manifest.json",
     "schemas/lithos-adoption-manifest.schema.json",
     "templates/lithos-adoption-manifest.json",
-    "fixtures/conformance/valid-full-governed-project.json",
-    "fixtures/conformance/valid-lighter-governed-workflow.json",
+    "fixtures/conformance/valid-full-lifecycle-governance.json",
+    "fixtures/conformance/valid-concise-adoption.json",
     "fixtures/conformance/invalid-autonomous-self-merge.json",
     "fixtures/conformance/invalid-autonomous-self-approval.json",
     "fixtures/conformance/invalid-live-runtime-without-controls.json",
@@ -175,8 +175,8 @@ JSON_FILES = [
     "templates/agent-run-manifest.json",
     "schemas/lithos-adoption-manifest.schema.json",
     "templates/lithos-adoption-manifest.json",
-    "fixtures/conformance/valid-full-governed-project.json",
-    "fixtures/conformance/valid-lighter-governed-workflow.json",
+    "fixtures/conformance/valid-full-lifecycle-governance.json",
+    "fixtures/conformance/valid-concise-adoption.json",
     "fixtures/conformance/invalid-autonomous-self-merge.json",
     "fixtures/conformance/invalid-autonomous-self-approval.json",
     "fixtures/conformance/invalid-live-runtime-without-controls.json",
@@ -227,15 +227,16 @@ LITHOS_UMBRELLA_MARKERS = {
     ],
     "skills/lithos/references/adopt-project.md": [
         "write the local workflow file",
-        "lighter governed workflow",
-        "full governed project",
-        "no minimal profile",
+        "exactly one governance model",
+        "no adoption tiers",
+        "full lifecycle",
         "adoption manifest",
         "not authorization",
     ],
     "skills/lithos/references/audit-project.md": [
         "walk the conformance checklist",
-        "no minimal profile",
+        "no adoption tier or profile",
+        "full-lifecycle governance model",
         "adoption manifest",
         "conformance fixtures",
         "static safety scan",
@@ -244,8 +245,8 @@ LITHOS_UMBRELLA_MARKERS = {
     ],
     "skills/lithos/references/governed-upgrade.md": [
         "what the upgrade adds",
-        "lighter governed workflow",
-        "full governed project",
+        "one full-lifecycle governance model",
+        "no tiers",
         "never loosen",
         "knowledge spine",
         "scenario regression",
@@ -301,6 +302,36 @@ LITHOS_UMBRELLA_MARKERS = {
         "docs/` authoritative",
     ],
 }
+
+# Guard the owner decision that Lithos has one complete full-lifecycle
+# governance model, not adoption tiers/profiles. Build removed terms from
+# fragments so this verifier can scan the repository without matching its own
+# source. These phrases are stale when they appear in public/normative/
+# operational prose; the replacement wording is "single full-lifecycle
+# governance model" plus concise-but-complete structure.
+SINGLE_MODEL_STALE_PHRASES = [
+    "lighter" + "-governed-workflow",
+    "full" + "-governed-project",
+    "two governed" + " adoption paths",
+    "lighter governed" + " workflow",
+    "full governed" + " project",
+    "adoption" + "_profile",
+    "workflow-only" + " formal review",
+    "adoption" + " depth",
+    "adoption" + " profile",
+    "version" + " and depth",
+    "version" + ", depth",
+    "governance" + " depth",
+    "optional machine-readable" + " adoption manifest",
+    "optional machine-readable" + " conformance declaration",
+    "adoption manifest (" + "optional",
+    "may also publish a machine-readable" + " adoption manifest",
+    "if the project also publishes" + " an adoption manifest",
+    "版本" + "与深度",
+    "可选的机器可读" + "采纳清单",
+    "仅" + "工作流",
+]
+SINGLE_MODEL_STALE_EXCLUSIONS = {"scripts/verify_docs.py"}
 
 
 def fail(message: str, errors: list[str]) -> None:
@@ -506,6 +537,20 @@ def check_lithos_umbrella_sync(errors: list[str]) -> None:
                 fail(f"{rel}: missing umbrella skill marker: {marker}", errors)
 
 
+def check_single_governance_model_terms(errors: list[str]) -> None:
+    for path in iter_text_files():
+        rel = str(path.relative_to(ROOT))
+        if rel in SINGLE_MODEL_STALE_EXCLUSIONS:
+            continue
+        lowered = read_text(path).lower()
+        for phrase in SINGLE_MODEL_STALE_PHRASES:
+            if phrase.lower() in lowered:
+                fail(
+                    f"{rel}: stale multi-profile governance phrase: {phrase}",
+                    errors,
+                )
+
+
 def check_markdown_links(errors: list[str]) -> None:
     link_re = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
     for path in iter_text_files():
@@ -578,6 +623,7 @@ def main() -> int:
     check_retired_peer_skills_absent(errors)
     check_public_surface_retired_skills_absent(errors)
     check_lithos_umbrella_sync(errors)
+    check_single_governance_model_terms(errors)
     check_markdown_links(errors)
     check_forbidden_text(errors)
     check_json_files(errors)

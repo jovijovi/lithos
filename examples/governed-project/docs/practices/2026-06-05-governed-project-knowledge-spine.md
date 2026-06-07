@@ -22,7 +22,7 @@ applies_to:
 
 ## When to apply
 
-Apply this practice when a project adopts the full governed Lithos structure rather than only a local workflow file.
+Apply this practice when a project fills in the complete Lithos lifecycle structure rather than stopping after drafting the local workflow file component.
 
 ## Practice
 

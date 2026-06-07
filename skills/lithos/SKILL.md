@@ -1,6 +1,6 @@
 ---
 name: lithos
-description: Use when an agent must apply the Lithos AI-collaboration standard to a real software project — adopting a project into Lithos, auditing whether it conforms, upgrading its governance depth or its Lithos version, reviewing a pull request against Lithos, or running a release or acceptance gate — and whenever owner approval and multi-agent role boundaries must be preserved.
+description: Use when an agent must apply the Lithos AI-collaboration standard to a real software project — adopting a project into Lithos, auditing whether it conforms, filling concise full-lifecycle governance anchors with more detail, upgrading its Lithos version, reviewing a pull request against Lithos, or running a release or acceptance gate — and whenever owner approval and multi-agent role boundaries must be preserved.
 ---
 
 # Lithos
@@ -15,7 +15,7 @@ Installing this skill **does not make a project conformant**, and it is **not au
 |---|---|
 | Adopt a project into Lithos for the first time | [adopt a project](references/adopt-project.md) |
 | Check whether a project actually conforms | [audit a project](references/audit-project.md) |
-| Strengthen a lighter workflow into a full governed project | [governed upgrade](references/governed-upgrade.md) |
+| Fill a concise adoption's anchors in with full detail as it grows | [governed upgrade](references/governed-upgrade.md) |
 | Move a project from one Lithos version to a newer one | [version upgrade](references/version-upgrade.md) |
 | Review a pull request against Lithos | [PR review](references/pr-review.md) |
 | Run a release or acceptance gate | [release gate](references/release-gate.md) |
