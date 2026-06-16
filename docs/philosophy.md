@@ -16,6 +16,7 @@ That gap is not a tooling problem. It is a **standards** problem.
 4. **Evidence outranks agreement.** "The agent said it works" is not verification. Tests, CI results, reviews, artifacts, and reproducible steps are. See [verification standards](verification-standards.md).
 5. **Discipline protects reviewability.** Isolated worktrees and scoped branches keep in-progress work legible, so a human can see exactly what changed before it counts. See [core concepts](core-concepts.md).
 6. **Portability beats prescription.** Lithos describes the *shape* of good collaboration without dictating tools, vendors, or even filenames. A project adapts it locally. See [local adoption](local-adoption.md).
+7. **Govern safety strictly; govern status leanly.** Governance weight belongs on what can cause harm — authority, approval gates, environment boundaries, and evidence — not on restating status that the project's own history already records. A status record earns its place when it changes user-visible truth, phase authority, the current decision or tail state, or a safety boundary; routine bookkeeping that metadata or generated artifacts can derive does not. See [verification standards](verification-standards.md).
 
 ## What Lithos is not
 

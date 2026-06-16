@@ -40,6 +40,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] `docs/INDEX.md` and `docs/lessons/_drift_report.md` regenerated or checked when docs/knowledge files changed.
 - [ ] Scenario-regression and release-governance docs updated when behavior or publishing claims changed.
 - [ ] Dev log / lessons / practices updated when the change produced reusable knowledge or phase evidence.
+- [ ] No duplicate status churn: roadmap, current-status, and dev-log edits are included only when they change authority, a safety boundary, or current user-visible truth — not routine bookkeeping that git history or generated artifacts already record.
 
 ## Notes for the reviewer
 
