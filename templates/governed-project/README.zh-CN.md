@@ -29,7 +29,7 @@
 - [`LESSONS.md`](LESSONS.md) 是 lessons 与 practices 的根入口。
 - [`docs/lessons/_drift_report.md`](docs/lessons/_drift_report.md) 由 `tools/docs_drift_signal.py` 生成。
 
-这些知识作为持久的、可作证据的产物受治理：它记录并启发后续工作，但绝不授予批准，也不凌驾于权威链之上。
+这些知识作为持久的、可作证据的产物受治理：它记录并启发后续工作，但绝不授予批准，也不凌驾于权威链之上。状态记录保持精简：路线图、当前状态与开发日志只在改变阶段权威、当前决策、开放尾项、用户可见真相或安全边界时更新，而不重复记录 git 历史、CI、PR 元数据、`docs/INDEX.md` 或漂移报告已经证明的例行账。
 
 ## 一致性
 

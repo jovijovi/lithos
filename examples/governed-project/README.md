@@ -10,7 +10,7 @@ This stands in for a hypothetical payments library, **Granite**, maintained by a
 - `GOAL.md` as a stable product-positioning and source-of-truth index.
 - Product requirements in `docs/product/prd.md`.
 - System architecture and module detail split across `docs/design/architecture.md` and `docs/design/technical-solution.md`.
-- Feature/status governance split across `docs/roadmap/features.md` and `docs/roadmap/current-status.md`.
+- Feature/status governance split across `docs/roadmap/features.md` and `docs/roadmap/current-status.md`, with status records kept lean so they capture phase authority, current decisions, open tails, and safety boundaries rather than duplicating git history, CI, PR metadata, or generated artifacts.
 - Task-level implementation plan rules in `docs/plans/README.md`.
 - The local Lithos workflow at `docs/AI_FLOW.md`.
 - Knowledge capture through `docs/dev_log/`, `docs/lessons/`, `docs/practices/`, root `LESSONS.md`, and generated drift reports — records that inform future work but never override the authority chain or clear an approval gate.

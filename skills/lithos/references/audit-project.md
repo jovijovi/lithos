@@ -14,6 +14,7 @@ Record each item present / partial / missing with a pointer to the relevant Lith
 6. **Autonomous PR policy** — the file lets an agent open/update/close its own pull request as preparation but forbids **self-approval**, **self-merge**, and **ownerless auto-merge**, routing merging, branch deletion, releasing, and external communication to higher-gate owner approval ([`docs/autonomous-pr-policy.md`](../../../docs/autonomous-pr-policy.md)).
 7. **Conformance claim** — the manifest claims Lithos's one full-lifecycle governance model and the surface present matches it; there is **no adoption tier or profile** to fall back on, so concise content is fine but a missing governance anchor is a gap ([`docs/conformance-and-fixtures.md`](../../../docs/conformance-and-fixtures.md)).
 8. **Knowledge spine and discoverability** — the knowledge spine the [full-lifecycle model](../../../docs/knowledge-governance.md) maintains is present (anchors may be terse but not absent), and the local workflow file is a single source of truth referenced from `README`/`AGENTS.md`.
+9. **Status records stay lean** — roadmap, current-status, and dev-log entries record phase authority, current decisions, open tails, user-visible truth, and safety boundaries; they do not substitute for behavior/safety evidence or duplicate truth already carried by git history, CI, PR metadata, generated indexes, or drift reports.
 
 ## Check truth, not just presence
 

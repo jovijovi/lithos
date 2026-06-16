@@ -140,6 +140,35 @@ LANG_LINKS = {
     "Español": "README.es.md",
 }
 
+README_SAFETY_STATUS_MARKERS = {
+    "README.md": ["Safety-strict, status-lean governance", "status evidence stays lean"],
+    "README.zh-CN.md": ["安全治理严格、状态治理轻量", "状态证据保持精简"],
+    "README.es.md": ["Gobernanza estricta de seguridad y ligera de estado", "evidencia de estado se mantiene concisa"],
+    "README.fr.md": ["Gouvernance de sécurité stricte, gouvernance de statut légère", "preuves de statut restent concises"],
+    "README.ru.md": ["Строгое управление безопасностью и бережное управление статусом", "статусные доказательства остаются краткими"],
+}
+
+STATUS_LEAN_SURFACE_MARKERS = {
+    "docs/local-adoption.md": ["Roadmap, current-status, and dev-log records stay lean", "not behavior or safety proof"],
+    "templates/governed-ai-flow.md": ["Behavior evidence, safety evidence, and status evidence stay separate", "Status records stay lean"],
+    "templates/governed-project/README.md": ["Status records stay lean"],
+    "templates/governed-project/README.zh-CN.md": ["状态记录保持精简"],
+    "templates/governed-project/docs/roadmap/current-status.md": ["Keep this file lean", "do not use it as behavior/safety proof"],
+    "templates/governed-project/docs/design/architecture.md": [
+        "evidence retained; authority/status sync only when current truth",
+        "safety boundaries changed",
+    ],
+    "templates/governed-project/.github/PULL_REQUEST_TEMPLATE.md": ["No duplicate status churn"],
+    "examples/governed-project/README.md": ["status records kept lean"],
+    "examples/governed-project/README.zh-CN.md": ["状态记录保持精简"],
+    "examples/governed-project/docs/roadmap/current-status.md": ["Keep this file lean", "do not use it as behavior/safety proof"],
+    "examples/governed-project/.github/PULL_REQUEST_TEMPLATE.md": ["No duplicate status churn"],
+    "skills/lithos/SKILL.md": ["safety-strict, status-lean governance"],
+    "skills/lithos/references/adopt-project.md": ["Status records stay lean"],
+    "skills/lithos/references/audit-project.md": ["Status records stay lean", "do not substitute for behavior/safety evidence"],
+    "skills/lithos/references/governed-upgrade.md": ["Lean status records", "do not replace behavior/safety evidence"],
+}
+
 # Construct sensitive / placeholder needles so this checker does not match its
 # own source text while scanning repository files.
 FORBIDDEN_SUBSTRINGS = [
@@ -409,6 +438,26 @@ def check_readme_semantic_sync(errors: list[str]) -> None:
                 fail(f"{rel}: missing synchronized README marker: {marker}", errors)
 
 
+def check_safety_status_sync(errors: list[str]) -> None:
+    for rel, markers in README_SAFETY_STATUS_MARKERS.items():
+        path = ROOT / rel
+        if not path.exists():
+            continue
+        content = read_text(path)
+        for marker in markers:
+            if marker not in content:
+                fail(f"{rel}: missing safety/status README marker: {marker}", errors)
+    for rel, markers in STATUS_LEAN_SURFACE_MARKERS.items():
+        path = ROOT / rel
+        if not path.exists():
+            fail(f"missing required status-lean surface: {rel}", errors)
+            continue
+        content = read_text(path)
+        for marker in markers:
+            if marker not in content:
+                fail(f"{rel}: missing status-lean surface marker: {marker}", errors)
+
+
 def run_subcheck(cwd: Path, args: list[str], errors: list[str]) -> None:
     result = subprocess.run(args, cwd=cwd, text=True, capture_output=True)
     if result.returncode != 0:
@@ -615,6 +664,7 @@ def main() -> int:
     check_required_files(errors)
     check_readme_language_links(errors)
     check_readme_semantic_sync(errors)
+    check_safety_status_sync(errors)
     check_governed_project_generators(errors)
     check_example_verification_truthfulness(errors)
     check_conformance_fixtures(errors)

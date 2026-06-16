@@ -29,6 +29,7 @@ PRD -> design docs -> roadmap/current-status + feature tracker -> approved phase
 - `docs/design/technical-solution.md` defines the module-level technical solution.
 - `docs/roadmap/features.md` tracks feature/capability completion.
 - This file tracks engineering phases, status, tails, and acceptance criteria.
+- Keep this file lean: update it when the current direction, phase authority, open tails, acceptance criteria, user-visible truth, or safety boundaries change; do not use it as behavior/safety proof or duplicate git history, CI, PR metadata, `docs/INDEX.md`, or drift reports.
 - Per-phase implementation plans live under `docs/plans/` named `YYYY-MM-DD-<task-slug>.md`.
 
 ## 2. Current decision

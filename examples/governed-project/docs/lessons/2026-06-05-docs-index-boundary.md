@@ -2,7 +2,7 @@
 title: "Keep the generated docs index inside docs"
 status: active
 created_at: 2026-06-05
-last_validated_at: 2026-06-07T00:04:07Z
+last_validated_at: 2026-06-16T06:55:25Z
 description: "A governed project should keep root entry points and generated docs-directory indexes separate."
 dev_log: docs/dev_log/2026-06-05-governance-spine-adoption.md
 tags: [governance, documentation, lithos]
