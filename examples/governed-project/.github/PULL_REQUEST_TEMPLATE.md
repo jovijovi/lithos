@@ -12,6 +12,7 @@
 - [ ] One coherent intent; scope did not widen without owner approval.
 - [ ] Work happened on a branch or isolated worktree, not directly on `main`.
 - [ ] Feature tracker and current-status updates are included if completion state changed.
+- [ ] No duplicate status churn: roadmap/current-status/dev-log edits are included only when they change authority, a safety boundary, current decisions, open tails, or current user-visible truth — not routine bookkeeping that git history, CI, PR metadata, or generated artifacts already record.
 - [ ] `docs/INDEX.md`, `docs/lessons/_drift_report.md`, dev log, lessons, and practices are updated or checked when relevant.
 - [ ] `README.md` and `README.zh-CN.md` are semantically aligned if user-facing claims changed.
 - [ ] No agent self-approval, self-merge, ownerless auto-merge, branch deletion, or publishing occurred without explicit owner approval.

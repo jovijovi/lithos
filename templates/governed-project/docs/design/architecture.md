@@ -62,7 +62,7 @@ State which inputs are trusted, which are untrusted, which operations are local-
 Describe the core lifecycle from request to accepted evidence.
 
 ```text
-intent -> plan -> implementation -> verification -> review -> merge -> post-merge status update
+intent -> plan -> implementation -> verification -> review -> merge -> evidence retained; authority/status sync only when current truth, tails, or safety boundaries changed
 ```
 
 ## 5. Architecture evidence gates

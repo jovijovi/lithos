@@ -5,7 +5,7 @@ created_at: 2026-06-05
 ---
 # Roadmap Directory
 
-`docs/roadmap/` owns roadmap, phase status, and feature tracking.
+`docs/roadmap/` owns roadmap, phase status, and feature tracking. Keep status records lean: this directory records phase authority, current decisions, open tails, acceptance criteria, and safety boundaries, not duplicate bookkeeping already proven by git history, CI, PR metadata, or generated artifacts.
 
 | Concern | Home |
 |---|---|

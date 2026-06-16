@@ -24,6 +24,7 @@ Two concerns cut across every intent and are read alongside the procedure above:
 
 - [agent role boundaries](references/agent-role-boundaries.md) — owner-held approval, independent review and verification, and what an agent may never self-grant.
 - [conformance truthfulness](references/conformance-truthfulness.md) — prose, manifest, schema, checker, fixtures, and worked-example commands must all match reality.
+- [PR review](references/pr-review.md) — apply safety-strict, status-lean governance: block on crossed authority, approval, sandbox, credential, safety, or evidence boundaries; avoid manufacturing duplicate status churn.
 
 ## What this skill does not do
 

@@ -66,10 +66,11 @@ A unit is accepted only with reproducible evidence:
 - [ ] Independent reviewer's concerns resolved or explicitly accepted by the owner.
 - [ ] Failures, skips, and unverified areas reported faithfully.
 - [ ] Evidence retained in [location] for audit.
+- [ ] Behavior evidence, safety evidence, and status evidence stay separate: status records do not replace tests, CI, scenario fixtures, reviews, or static safety scans.
 
 ## Audit trail
 
-Approvals, reviews, and verification evidence are retained in [location] so any merged unit can be reconstructed after the fact.
+Approvals, reviews, and verification evidence are retained in [location] so any merged unit can be reconstructed after the fact. Status records stay lean: record phase authority, current decisions, open tails, and safety boundaries, not bookkeeping already proven by git history, CI, PR metadata, or generated artifacts.
 
 When a unit is agent-executed and needs auditability, retain an agent run manifest per run: what was authorized, what actually ran (each action marked local/offline or external/live), the verifying evidence, and the boundary that held. A manifest records a run; it does not authorize one and never licenses live/runtime execution.
 

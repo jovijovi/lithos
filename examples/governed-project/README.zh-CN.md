@@ -10,7 +10,7 @@
 - `GOAL.md` 作为稳定产品定位与权威入口。
 - `docs/product/prd.md` 中的产品需求与清单。
 - `docs/design/architecture.md` 与 `docs/design/technical-solution.md` 中的架构/技术方案分工。
-- `docs/roadmap/features.md` 与 `docs/roadmap/current-status.md` 中的功能状态治理。
+- `docs/roadmap/features.md` 与 `docs/roadmap/current-status.md` 中的功能状态治理；状态记录保持精简，只记录阶段权威、当前决策、开放尾项和安全边界，不重复记录 git 历史、CI、PR 元数据或生成产物已经证明的内容。
 - `docs/plans/README.md` 中的任务级计划规则。
 - `docs/AI_FLOW.md` 中的本地 Lithos 工作流。
 - `docs/dev_log/`、`docs/lessons/`、`docs/practices/` 中的知识脊柱——记录并启发后续工作，但绝不凌驾于权威链之上，也不清除审批门禁。

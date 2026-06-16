@@ -2,7 +2,7 @@
 title: "Governed project knowledge spine"
 status: active
 created_at: 2026-06-05
-last_validated_at: 2026-06-06T06:42:27Z
+last_validated_at: 2026-06-16T06:55:25Z
 description: "A mature governed Lithos project should capture dev logs, lessons, practices, docs-only indexes, drift reports, and bilingual README synchronization."
 dev_log: docs/dev_log/2026-06-05-governance-spine-adoption.md
 tags: [governance, documentation, lithos]
@@ -31,7 +31,8 @@ Apply this practice when a project fills in the complete Lithos lifecycle struct
 3. Generate `docs/INDEX.md` from docs-directory frontmatter only.
 4. Generate `docs/lessons/_drift_report.md` from lesson/practice `applies_to` paths.
 5. Keep `README.md` and localized README files semantically aligned.
-6. Make local verification and CI check the generated docs artifacts.
+6. Keep roadmap, current-status, and dev-log records lean: record phase authority, current decisions, open tails, and safety boundaries, but do not use status records as behavior/safety proof or duplicate generated evidence.
+7. Make local verification and CI check the generated docs artifacts.
 
 ## Evidence
 
