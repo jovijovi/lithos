@@ -9,6 +9,7 @@ Review a proposed change for whether it keeps the project conformant and whether
 - **Artifacts move together** — when a normative claim changes, do the skills, templates, docs, localized READMEs, and verifiers change with it, or has one drifted behind?
 - **Static safety** — does the [static safety scan](../../../docs/static-safety-scan.md) pass on the change, with no secret-shaped value, private machine-local path, or unfinished-work placeholder?
 - **Scenario and release implications** — does the change alter an advertised behavior without a justified [scenario regression](../../../docs/scenario-regression-governance.md) update, or move a project toward publishing without [release and supply-chain](../../../docs/release-and-supply-chain-governance.md) governance?
+- **Safety blockers vs. status churn** — separate a real safety finding (a crossed authority or approval gate, a sandbox or credential-scope escape, a secret or static-safety regression, or missing behavior/safety evidence for risky or runtime work) from status or prose churn (duplicated roadmap/status restatement, routine post-merge bookkeeping, repeated non-approval paragraphs, or stale-text hunts that git history, CI, pull-request metadata, or generated artifacts already settle). Block on the former; for the latter, prefer deriving the truth from metadata or generated artifacts over requesting more status prose. Distinguishing the two does not lower the bar on any safety boundary — see [verification standards](../../../docs/verification-standards.md).
 
 ## The line an agent may not cross
 

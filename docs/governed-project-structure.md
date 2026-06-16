@@ -110,6 +110,10 @@ The full lifecycle — born-state, use-driven validation, the immutability of fr
 
 If a project has localized README files, update them together with `README.md` whenever user-facing claims change. Semantic alignment matters more than literal translation.
 
+## Status records, kept lean
+
+`docs/roadmap/features.md`, `docs/roadmap/current-status.md`, and `docs/dev_log/` must keep what governs the work: phase authority, the current decision, open tails, and any safety boundary a reader needs in order to act safely. They **should not** carry duplicated status prose that git history, CI, pull-request metadata, or the generated `docs/INDEX.md` and drift report already make true. Add or change a status record when it moves user-visible truth, phase authority, the current decision or tail state, or a safety boundary; skip routine post-merge bookkeeping entries, repeated non-approval paragraphs, and stale-text hunts that derive no new truth. Keeping these anchors lean preserves the spine's authority and safety signal instead of burying it in churn — it does not relax the [verification](verification-standards.md) or [approval](approval-semantics.md) requirements those records sit beside.
+
 ## Plan placement rule
 
 Task-level implementation plans live in `docs/plans/` and are named:

@@ -30,6 +30,16 @@ To be accepted, a collaboration unit **must**:
 - Distinguish what was verified from what was merely asserted or assumed.
 - For release candidates, cite the exact revision, static safety scan, scenario regression outcome where relevant, generated drift evidence, and owner approval reference separately.
 
+## Behavior, safety, and status evidence
+
+Three kinds of evidence answer three different questions, and one never stands in for another:
+
+- **Behavior evidence** proves the unit does what it claims — automated tests, a CI run, a scenario regression suite, or reproducible steps with their output. Required for any behavioral change.
+- **Safety evidence** proves the unit cannot leak or do harm — static safety scans (no secret-shaped values, private machine-local paths, or unfinished-work placeholders), adherence to the declared environment and sandbox boundaries, and, for risky or runtime-adjacent work, race / idempotency / cleanup evidence and a rollback or kill-switch path where one applies. Independent review confirms it.
+- **Status evidence** records where the work stands — roadmap and current-status entries, the adoption manifest, dev-log decisions. It establishes phase authority, the current decision, and open tails; it does not by itself prove behavior or safety.
+
+A status record **must not** substitute for behavior or safety proof: "the roadmap says this phase is done" is not test output, and a manifest is not a sandbox boundary. The reverse also holds — status accounting that git history, CI, pull-request metadata, or a generated index or drift report already make true is not evidence, and **should not** be manufactured as governance overhead. Spend status records where they change user-visible truth, phase authority, the current decision or tail state, or a safety boundary.
+
 ## Reproducibility
 
 Evidence that cannot be reproduced is testimony, not proof. Prefer evidence that another person can regenerate from the repository: committed tests, pinned commands, CI configuration in version control. Where reproduction needs setup, document the setup as part of the evidence.
