@@ -5,7 +5,7 @@ created_at: 2026-06-05
 ---
 # Granite Roadmap Current Status
 
-> Living roadmap, phase tracker, and implementation-stage acceptance register.
+> Lean roadmap entrypoint, phase tracker, and implementation-stage acceptance register.
 
 ```text
 last_updated: 2026-06-05
@@ -28,8 +28,9 @@ PRD -> design docs -> roadmap/current-status + feature tracker -> approved phase
 - `docs/design/architecture.md` gives the system-level architecture.
 - `docs/design/technical-solution.md` defines the module-level technical solution.
 - `docs/roadmap/features.md` tracks feature/capability completion.
-- This file tracks engineering phases, status, tails, and acceptance criteria.
+- This file tracks the current engineering position: active phase, current decision, high-signal tails, acceptance gates, and safety boundaries.
 - Keep this file lean: update it when the current direction, phase authority, open tails, acceptance criteria, user-visible truth, or safety boundaries change; do not use it as behavior/safety proof or duplicate git history, CI, PR metadata, `docs/INDEX.md`, or drift reports.
+- If status detail grows into a ledger, split long history, evidence paths, generated metadata, or boundary registers into companion files under `docs/roadmap/`, then keep this file as the short entrypoint that links to them.
 - Per-phase implementation plans live under `docs/plans/` named `YYYY-MM-DD-<task-slug>.md`.
 
 ## 2. Current decision

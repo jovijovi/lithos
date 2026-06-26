@@ -21,7 +21,7 @@ Each link has one job:
 | `docs/design/architecture.md` | System-level architecture, diagrams, trust boundaries, responsibility split. | Product scope changes or phase closure claims. |
 | `docs/design/technical-solution.md` | Module-level design, data models, file responsibilities, test strategy. | Product requirement changes. |
 | `docs/roadmap/features.md` | Capability tracker: status, evidence, remaining acceptance. | Step-by-step execution plans. |
-| `docs/roadmap/current-status.md` | Living phase tracker, current decision, open tails, acceptance gates. | Product requirement redefinition. |
+| `docs/roadmap/current-status.md` | Lean current-decision entrypoint: active phase, high-signal tails, acceptance gates, and safety boundaries. | Product requirement redefinition, full history ledgers, generated metadata, PR/CI indexes, or bulky evidence catalogs. |
 | `docs/plans/` | Approved task or phase implementation plans. | Roadmap ownership or product authority. |
 | `docs/dev_log/` | Task evidence logs, decisions, review outcomes, verification summaries. | Product requirements or roadmap ownership. |
 | `docs/lessons/` | Reusable lessons learned from concrete work, with drift tracking when useful. | Raw task logs or temporary status. |
@@ -112,7 +112,9 @@ If a project has localized README files, update them together with `README.md` w
 
 ## Status records, kept lean
 
-`docs/roadmap/features.md`, `docs/roadmap/current-status.md`, and `docs/dev_log/` must keep what governs the work: phase authority, the current decision, open tails, and any safety boundary a reader needs in order to act safely. They **should not** carry duplicated status prose that git history, CI, pull-request metadata, or the generated `docs/INDEX.md` and drift report already make true. Add or change a status record when it moves user-visible truth, phase authority, the current decision or tail state, or a safety boundary; skip routine post-merge bookkeeping entries, repeated non-approval paragraphs, and stale-text hunts that derive no new truth. Keeping these anchors lean preserves the spine's authority and safety signal instead of burying it in churn — it does not relax the [verification](verification-standards.md) or [approval](approval-semantics.md) requirements those records sit beside.
+`docs/roadmap/features.md`, `docs/roadmap/current-status.md`, and `docs/dev_log/` must keep what governs the work: phase authority, the current decision, open tails, and any safety boundary a reader needs in order to act safely. They **should not** carry duplicated status prose that git history, CI, pull-request metadata, or the generated `docs/INDEX.md` and drift report already make true. Add or change a status record when it moves user-visible truth, phase authority, the current decision or tail state, or a safety boundary; skip routine post-merge bookkeeping entries, repeated non-approval paragraphs, and stale-text hunts that derive no new truth.
+
+Treat `docs/roadmap/current-status.md` as a dashboard entrypoint, not as the whole status database. When long phase history, full tail tables, evidence paths, generated machine metadata, reference lists, or boundary prose become too large for fast preflight reading, split them into named companion files under `docs/roadmap/` and leave concise pointers in `current-status.md`. Do not solve status bloat by deleting safety information; move bulky detail to the right owner and keep the entrypoint's current decision, high-signal tails, and explicit non-approvals intact. Keeping these anchors lean preserves the spine's authority and safety signal instead of burying it in churn — it does not relax the [verification](verification-standards.md) or [approval](approval-semantics.md) requirements those records sit beside.
 
 ## Plan placement rule
 
