@@ -9,6 +9,8 @@ created_at: 2026-06-05
 
 The system-level architecture lives in `docs/design/architecture.md`. This file is the module-level companion: per-file responsibilities, data models, artifact layout, and testing strategy.
 
+> **Abstraction level.** State Granite's module direction at the design level — responsibilities, data models, invariants, failure policy, and test strategy as intent — not concrete commands, shell pipelines, regex, or exact tool/verifier parameters. Implementation mechanism lives in code, in `docs/plans/`, or in the verification tooling it configures.
+
 ```text
 Caller
   -> transaction facts + policy version
@@ -65,6 +67,8 @@ Current status: Planned.
 - Redact sensitive values in logs, fixtures, examples, and artifacts.
 
 ## 6. Testing strategy
+
+State the strategy as intent — which behaviors, boundaries, and failure modes must be proven and why — not the exact commands a run executes.
 
 - Unit tests for policy validation, fee rules, and settlement-window classification.
 - Documentation verification for authority-chain consistency.

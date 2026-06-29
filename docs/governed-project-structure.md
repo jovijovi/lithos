@@ -18,8 +18,8 @@ Each link has one job:
 |---|---|---|
 | `GOAL.md` | Stable product positioning and source-of-truth index. | Phase status, task instructions, temporary evidence. |
 | `docs/product/prd.md` | Product requirements, users, non-users, principles, non-goals. | Module design, implementation sequencing. |
-| `docs/design/architecture.md` | System-level architecture, diagrams, trust boundaries, responsibility split. | Product scope changes or phase closure claims. |
-| `docs/design/technical-solution.md` | Module-level design, data models, file responsibilities, test strategy. | Product requirement changes. |
+| `docs/design/architecture.md` | System-level architecture, diagrams, trust boundaries, responsibility split. | Product scope changes, phase closure claims, or concrete implementation commands and tool-invocation detail. |
+| `docs/design/technical-solution.md` | Module-level design, data models, file responsibilities, test strategy. | Product requirement changes, or concrete implementation commands, shell pipelines, regex snippets, and exact tool/verifier parameters. |
 | `docs/roadmap/features.md` | Capability tracker: status, evidence, remaining acceptance. | Step-by-step execution plans. |
 | `docs/roadmap/current-status.md` | Lean current-decision entrypoint: active phase, high-signal tails, acceptance gates, and safety boundaries. | Product requirement redefinition, full history ledgers, generated metadata, PR/CI indexes, or bulky evidence catalogs. |
 | `docs/plans/` | Approved task or phase implementation plans. | Roadmap ownership or product authority. |
@@ -117,6 +117,12 @@ If a project has localized README files, update them together with `README.md` w
 Treat `docs/roadmap/current-status.md` as a dashboard entrypoint, not as the whole status database. When long phase history, full tail tables, evidence paths, generated machine metadata, reference lists, or boundary prose become too large for fast preflight reading, split them into named companion files under `docs/roadmap/` and leave concise pointers in `current-status.md`. Do not solve status bloat by deleting safety information; move bulky detail to the right owner and keep the entrypoint's current decision, high-signal tails, and explicit non-approvals intact. Keeping these anchors lean preserves the spine's authority and safety signal instead of burying it in churn — it does not relax the [verification](verification-standards.md) or [approval](approval-semantics.md) requirements those records sit beside.
 
 Task and status rows in these records are implementer progress check-ins: a `Done` or equivalent mark is the implementer's claim that the current task state is complete, which [verification](verification-standards.md), independent review, and CI confirm or send back for repair — it is not by itself quality, behavior, safety, or merge proof. Word each row for the current task state only (for example `Design task complete` or `Implementation task complete`), and keep future-process predictions — `waiting for review`, `pending the next gate`, `implementation will follow`, `after merge` — out of the row. Record future work, blockers, and explicit non-approvals in the tail and non-approval sections that own them.
+
+## Design abstraction boundary
+
+Design documents — `docs/design/architecture.md` and `docs/design/technical-solution.md` — state technical direction at the design level: system and module boundaries, responsibility splits, data models, invariants, trust and approval boundaries, state and acceptance semantics, risk classes, and a meaningful test strategy expressed as intent. They explain what the design must guarantee and why, so a reader can judge the approach and reconstruct the reasoning.
+
+They should not embed implementation mechanics — concrete shell commands, command pipelines, regex snippets, exact tool or verifier parameters, or step-by-step tool-invocation detail. That mechanism belongs in code, in `docs/plans/`, or in the verification tooling it configures, where it can be run and kept current; copied into a design document it drifts from the real command and pulls the design below its level. The one exception is when the command interface itself is the object being designed — a CLI contract or a public tool API, for example — where the interface is design-level content, though its incidental invocation details still are not. State the test strategy the same way: name the behavior, boundary, and failure classes that must be proven and why, not the exact commands a run will execute.
 
 ## Plan placement rule
 

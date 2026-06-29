@@ -22,6 +22,7 @@
 - [ ] An agent run manifest and audit evidence are attached or linked when the change was agent-executed or touched external/runtime boundaries.
 - [ ] Conformance claim (adoption manifest) and portable, vendor-neutral artifacts stay accurate; knowledge records inform but do not override the authority chain.
 - [ ] Scenario-regression and release-governance docs updated when behavior or publishing claims changed.
+- [ ] Design docs stay at the design level: `docs/design/architecture.md` and `docs/design/technical-solution.md` state direction, boundaries, invariants, state/acceptance semantics, risk classes, and test strategy as intent — not concrete commands, shell pipelines, regex, or exact tool/verifier parameters (unless a command interface is itself being designed).
 
 ## Verification
 

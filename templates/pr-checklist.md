@@ -42,6 +42,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] Dev log / lessons / practices updated when the change produced reusable knowledge or phase evidence.
 - [ ] No duplicate status churn: roadmap, current-status, and dev-log edits are included only when they change authority, a safety boundary, or current user-visible truth — not routine bookkeeping that git history or generated artifacts already record.
 - [ ] Status rows describe the current task state (e.g. `Design task complete` / `Implementation task complete`), not future-process predictions (`waiting for review`, `pending the next gate`, `after merge`); a `Done` mark is the implementer's claim for review and CI to confirm, and future work, blockers, and non-approvals stay in their own sections.
+- [ ] Design docs stay at the design level: `docs/design/architecture.md` and `docs/design/technical-solution.md` state direction, boundaries, invariants, state/acceptance semantics, risk classes, and test strategy as intent — not concrete commands, shell pipelines, regex, or exact tool/verifier parameters (unless a command interface is itself being designed).
 
 ## Notes for the reviewer
 
