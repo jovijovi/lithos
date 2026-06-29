@@ -30,6 +30,7 @@ PRD -> design docs -> roadmap/current-status + feature tracker -> approved phase
 - `docs/roadmap/features.md` tracks feature/capability completion.
 - This file tracks the current engineering position: active phase, current decision, high-signal tails, acceptance gates, and safety boundaries.
 - Keep this file lean: update it when the current direction, phase authority, open tails, acceptance criteria, user-visible truth, or safety boundaries change; do not use it as behavior/safety proof or duplicate git history, CI, PR metadata, `docs/INDEX.md`, or drift reports.
+- Word task and status rows for the current task state only (for example `Design task complete` or `Implementation task complete`). A `Done`/complete mark is the implementer's claim about the current task state, which verification, review, and CI confirm or send back for repair — not behavior, safety, or merge proof. Keep future-process predictions (`waiting for review`, `pending the next gate`, `implementation will follow`, `after merge`) out of status rows; record future work, blockers, and non-approvals in the tail register (section 4) and standing non-approvals (section 5).
 - If status detail grows into a ledger, split long history, evidence paths, generated metadata, or boundary registers into companion files under `docs/roadmap/`, then keep this file as the short entrypoint that links to them.
 - Per-phase implementation plans live under `docs/plans/` named `YYYY-MM-DD-<task-slug>.md`.
 

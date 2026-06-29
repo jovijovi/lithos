@@ -40,6 +40,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] `docs/INDEX.md` and `docs/lessons/_drift_report.md` regenerated or checked when docs/knowledge files changed.
 - [ ] Dev log / lessons / practices updated when the change produced reusable knowledge or phase evidence.
 - [ ] No duplicate status churn: roadmap, current-status, and dev-log edits are included only when they change authority, a safety boundary, current decisions, open tails, or current user-visible truth — not routine bookkeeping that git history, CI, PR metadata, or generated artifacts already record.
+- [ ] Status rows describe the current task state (e.g. `Design task complete` / `Implementation task complete`), not future-process predictions (`waiting for review`, `pending the next gate`, `after merge`); a `Done` mark is the implementer's claim for review and CI to confirm, and future work, blockers, and non-approvals stay in their own sections.
 - [ ] Conformance claim (adoption manifest) and portable, vendor-neutral artifacts stay accurate; knowledge records inform but do not override the authority chain.
 - [ ] Scenario-regression and release-governance docs updated when behavior or publishing claims changed.
 
