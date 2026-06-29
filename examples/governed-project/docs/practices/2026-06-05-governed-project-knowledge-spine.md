@@ -2,7 +2,7 @@
 title: "Governed project knowledge spine"
 status: active
 created_at: 2026-06-05
-last_validated_at: 2026-06-26T12:47:41Z
+last_validated_at: 2026-06-29T10:49:11Z
 description: "A mature governed Lithos project should capture dev logs, lessons, practices, docs-only indexes, drift reports, and bilingual README synchronization."
 dev_log: docs/dev_log/2026-06-05-governance-spine-adoption.md
 tags: [governance, documentation, lithos]

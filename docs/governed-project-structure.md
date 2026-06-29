@@ -116,6 +116,8 @@ If a project has localized README files, update them together with `README.md` w
 
 Treat `docs/roadmap/current-status.md` as a dashboard entrypoint, not as the whole status database. When long phase history, full tail tables, evidence paths, generated machine metadata, reference lists, or boundary prose become too large for fast preflight reading, split them into named companion files under `docs/roadmap/` and leave concise pointers in `current-status.md`. Do not solve status bloat by deleting safety information; move bulky detail to the right owner and keep the entrypoint's current decision, high-signal tails, and explicit non-approvals intact. Keeping these anchors lean preserves the spine's authority and safety signal instead of burying it in churn — it does not relax the [verification](verification-standards.md) or [approval](approval-semantics.md) requirements those records sit beside.
 
+Task and status rows in these records are implementer progress check-ins: a `Done` or equivalent mark is the implementer's claim that the current task state is complete, which [verification](verification-standards.md), independent review, and CI confirm or send back for repair — it is not by itself quality, behavior, safety, or merge proof. Word each row for the current task state only (for example `Design task complete` or `Implementation task complete`), and keep future-process predictions — `waiting for review`, `pending the next gate`, `implementation will follow`, `after merge` — out of the row. Record future work, blockers, and explicit non-approvals in the tail and non-approval sections that own them.
+
 ## Plan placement rule
 
 Task-level implementation plans live in `docs/plans/` and are named:

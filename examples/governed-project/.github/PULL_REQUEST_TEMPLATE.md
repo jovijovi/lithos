@@ -13,6 +13,7 @@
 - [ ] Work happened on a branch or isolated worktree, not directly on `main`.
 - [ ] Feature tracker and current-status updates are included if completion state changed.
 - [ ] No duplicate status churn: roadmap/current-status/dev-log edits are included only when they change authority, a safety boundary, current decisions, open tails, or current user-visible truth — not routine bookkeeping that git history, CI, PR metadata, or generated artifacts already record.
+- [ ] Status rows describe the current task state (e.g. `Design task complete` / `Implementation task complete`), not future-process predictions (`waiting for review`, `pending the next gate`, `after merge`); a `Done` mark is the implementer's claim for review and CI to confirm, and future work, blockers, and non-approvals stay in their own sections.
 - [ ] `docs/INDEX.md`, `docs/lessons/_drift_report.md`, dev log, lessons, and practices are updated or checked when relevant.
 - [ ] `README.md` and `README.zh-CN.md` are semantically aligned if user-facing claims changed.
 - [ ] No agent self-approval, self-merge, ownerless auto-merge, branch deletion, or publishing occurred without explicit owner approval.
