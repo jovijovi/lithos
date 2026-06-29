@@ -43,6 +43,7 @@ Lithos: https://github.com/jovijovi/lithos
 - [ ] Status rows describe the current task state (e.g. `Design task complete` / `Implementation task complete`), not future-process predictions (`waiting for review`, `pending the next gate`, `after merge`); a `Done` mark is the implementer's claim for review and CI to confirm, and future work, blockers, and non-approvals stay in their own sections.
 - [ ] Conformance claim (adoption manifest) and portable, vendor-neutral artifacts stay accurate; knowledge records inform but do not override the authority chain.
 - [ ] Scenario-regression and release-governance docs updated when behavior or publishing claims changed.
+- [ ] Design docs stay at the design level: `docs/design/architecture.md` and `docs/design/technical-solution.md` state direction, boundaries, invariants, state/acceptance semantics, risk classes, and test strategy as intent — not concrete commands, shell pipelines, regex, or exact tool/verifier parameters (unless a command interface is itself being designed).
 
 ## Notes for the reviewer
 

@@ -15,6 +15,8 @@ created_at: 2026-06-05
 
 Use this document for context, containers/components, lifecycles, boundaries, and evidence mapping.
 
+> **Abstraction level.** Keep this document at the design level — boundaries, responsibility splits, invariants, trust and approval gates, state/acceptance semantics, risk classes, and test strategy as intent. Do not embed concrete commands, shell pipelines, regex snippets, or exact tool/verifier parameters; that mechanism lives in code, in `docs/plans/`, or in the verification tooling it configures — unless a command interface is itself the object being designed.
+
 ### 0.1 Implementation-status markers
 
 | Marker | Meaning |

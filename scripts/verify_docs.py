@@ -169,6 +169,46 @@ STATUS_LEAN_SURFACE_MARKERS = {
     "skills/lithos/references/governed-upgrade.md": ["Lean status records", "do not replace behavior/safety evidence"],
 }
 
+# Design documents must stay at the design abstraction level: they state
+# technical direction, boundaries, invariants, state/acceptance semantics, risk
+# classes, and a meaningful test strategy as intent, and must not embed concrete
+# implementation mechanics (shell commands, pipelines, regex snippets, exact
+# tool/verifier parameters, or tool-invocation detail) unless a command
+# interface is itself the object being designed. These markers keep that
+# standard present across the normative doc, the design templates and worked
+# example, the PR checklists, and the PR-review reference so it cannot quietly
+# drift out of any one surface.
+DESIGN_ABSTRACTION_MARKERS = {
+    "docs/governed-project-structure.md": [
+        "## Design abstraction boundary",
+        "the command interface itself is the object being designed",
+    ],
+    "templates/governed-project/docs/design/architecture.md": [
+        "Keep this document at the design level",
+    ],
+    "templates/governed-project/docs/design/technical-solution.md": [
+        "State module direction at the design level",
+    ],
+    "examples/governed-project/docs/design/architecture.md": [
+        "Keep Granite's architecture at the design level",
+    ],
+    "examples/governed-project/docs/design/technical-solution.md": [
+        "State Granite's module direction at the design level",
+    ],
+    "templates/pr-checklist.md": [
+        "Design docs stay at the design level",
+    ],
+    "templates/governed-project/.github/PULL_REQUEST_TEMPLATE.md": [
+        "Design docs stay at the design level",
+    ],
+    "examples/governed-project/.github/PULL_REQUEST_TEMPLATE.md": [
+        "Design docs stay at the design level",
+    ],
+    "skills/lithos/references/pr-review.md": [
+        "Design altitude",
+    ],
+}
+
 # Construct sensitive / placeholder needles so this checker does not match its
 # own source text while scanning repository files.
 FORBIDDEN_SUBSTRINGS = [
@@ -458,6 +498,25 @@ def check_safety_status_sync(errors: list[str]) -> None:
                 fail(f"{rel}: missing status-lean surface marker: {marker}", errors)
 
 
+def check_design_abstraction_boundary(errors: list[str]) -> None:
+    """Require the design-abstraction-level standard to stay present across the
+    normative doc, the design templates and worked example, the PR checklists,
+    and the PR-review reference. Design documents state technical direction,
+    boundaries, invariants, state/acceptance semantics, risk classes, and a
+    meaningful test strategy as intent; they do not embed concrete commands,
+    pipelines, regex, or exact tool/verifier parameters unless a command
+    interface is itself the object being designed."""
+    for rel, markers in DESIGN_ABSTRACTION_MARKERS.items():
+        path = ROOT / rel
+        if not path.exists():
+            fail(f"missing required file: {rel}", errors)
+            continue
+        content = read_text(path)
+        for marker in markers:
+            if marker not in content:
+                fail(f"{rel}: missing design-abstraction marker: {marker}", errors)
+
+
 def run_subcheck(cwd: Path, args: list[str], errors: list[str]) -> None:
     result = subprocess.run(args, cwd=cwd, text=True, capture_output=True)
     if result.returncode != 0:
@@ -665,6 +724,7 @@ def main() -> int:
     check_readme_language_links(errors)
     check_readme_semantic_sync(errors)
     check_safety_status_sync(errors)
+    check_design_abstraction_boundary(errors)
     check_governed_project_generators(errors)
     check_example_verification_truthfulness(errors)
     check_conformance_fixtures(errors)

@@ -11,6 +11,8 @@ created_at: 2026-06-05
 
 Use this document for context, components, boundaries, and evidence mapping. For module-level detail, read `docs/design/technical-solution.md`.
 
+> **Abstraction level.** Keep Granite's architecture at the design level — boundaries, responsibility splits, invariants, trust and approval gates, state/acceptance semantics, risk classes, and test strategy as intent. It does not carry concrete commands, shell pipelines, regex, or exact tool/verifier parameters; that mechanism lives in code, in `docs/plans/`, or in the verification tooling it configures.
+
 ## 1. Product boundary and system context
 
 Granite sits between downstream services and local policy definitions. It owns deterministic rule evaluation and evidence. It does not own money movement or external payment-network calls.
